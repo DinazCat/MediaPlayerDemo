@@ -1,0 +1,51 @@
+﻿<Window x:Class="WpfApp1.View.AddPlaylistWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.View"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="AddPlaylistWindow" Height="300" Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Border Background="#000050" CornerRadius="40">
+        <StackPanel>
+            <Button Style ="{StaticResource MaterialDesignIconButton}"  
+                            HorizontalAlignment="Right" Margin="0,10,20,20"
+                            Height="25" Width="25"
+                            ToolTip="Close" Click="Button_Click">
+                <materialDesign:PackIcon Kind="Close"  
+                                         Foreground="White"/>
+            </Button>
+            <TextBlock Text="Tạo playlist mới"
+                   FontSize="25"
+                   Foreground="White" TextAlignment="Center"/>
+            <materialDesign:ColorZone Mode="Light" 
+                                      Padding="8 0"
+                                      Width="250"
+                                      Height="30"
+                                      CornerRadius="15"
+                                      Panel.ZIndex="1"
+                                      Margin="0 20 0 30"
+                                      materialDesign:ElevationAssist.Elevation="Dp2">
+                <TextBox materialDesign:HintAssist.Hint="Nhập tên playlist"
+                         materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                         BorderThickness="0"
+                         VerticalAlignment="Center" />
+            </materialDesign:ColorZone>
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
+                    Height="30"
+                    Width="150"
+                    Background="#000040"
+                    BorderBrush="White"
+                    Content="Tạo mới"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+            </Button>
+        </StackPanel>
+    </Border>
+</Window>
