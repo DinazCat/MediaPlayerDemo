@@ -30,6 +30,8 @@ namespace WpfApp1.Command
                 ViewModel.SelectedViewModel = new LibViewModel();
             else if (parameter.ToString() == "Genres")
                 ViewModel.SelectedViewModel = new GenresViewModel();
+            else if (parameter.ToString() == "Liked")
+                ViewModel.SelectedViewModel = new LikedViewModel();
         }
     }
 }

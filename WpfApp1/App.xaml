@@ -16,18 +16,17 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="/Resources/MainResource.xaml">
 
-                    <!--<Style x:Key="menuButton" TargetType="Button">
+                    <Style x:Key="letterButton" TargetType="Button">
                         <Setter Property="Height" Value="30"/>
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="#FFFF99"/>
+                        <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontSize" Value="17"/>
-                        <Setter Property="Margin" Value="20 10"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="Tag" Value="Collapsed"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="0">
                                         <ContentPresenter HorizontalAlignment="Stretch" 
                                                           VerticalAlignment="Center"/>
                                     </Border>
@@ -37,12 +36,12 @@
 
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FFFF99"/>
-                                <Setter Property="Foreground" Value="#000022"/>
+                                <Setter Property="Foreground" Value="#BBBBBB"/>
+                                <Setter Property="Cursor" Value="Hand"/>
                                 <Setter Property="Tag" Value="Visible"/>
                             </Trigger>
                         </Style.Triggers>
-                    </Style>-->
+                    </Style>
                     
                     <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
                         <uc:HomeView/>
@@ -52,6 +51,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type viewmodel:GenresViewModel}">
                         <uc:GenresView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodel:LikedViewModel}">
+                        <uc:LikedView/>
                     </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

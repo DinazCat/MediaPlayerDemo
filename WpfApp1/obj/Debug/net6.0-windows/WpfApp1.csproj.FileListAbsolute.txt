@@ -39,3 +39,7 @@ D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\UserControls\GenresView.g.cs
 D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\UserControls\GenresView.baml
 D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\View\AddPlaylistWindow.g.cs
 D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\View\AddPlaylistWindow.baml
+D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\UserControls\SongItem.g.cs
+D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\UserControls\SongItem.baml
+D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\UserControls\LikedView.g.cs
+D:\C#\WpfApp1\WpfApp1\obj\Debug\net6.0-windows\UserControls\LikedView.baml

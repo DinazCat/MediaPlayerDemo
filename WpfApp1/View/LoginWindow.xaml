@@ -43,10 +43,10 @@
                                                  Foreground="Black"/>
                     </Button>
                     <TextBlock Text="Đăng nhập" 
-                                   TextAlignment="Center"
-                                   FontSize="40"
-                                   FontWeight="Bold"
-                                   FontFamily="Sitka Text">
+                               TextAlignment="Center"
+                               FontSize="40"
+                               FontWeight="Bold"
+                               FontFamily="Sitka Text">
                     </TextBlock>
                 </StackPanel>
                 <StackPanel Width="250" Orientation="Horizontal">
@@ -67,17 +67,26 @@
                                      Width="215" FontSize="14"/>
                 </StackPanel>
                 <StackPanel Width="250">
-                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Content="Quên mật khẩu?" Foreground="Black" BorderThickness="0,0,0,0" Padding="0,0,0,0">
-                        <!--<Button.Style>
+                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" Content="Quên mật khẩu?" BorderThickness="0,0,0,0" Margin="0 8 0 0">
+                        <Button.Style>
                                 <Style TargetType="Button">
-                                    <Setter Property="Foreground" Value="#DD000000"></Setter>
-                                    <Style.Triggers>
+                                    <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Foreground" Value="#EE0000"/>
+                                        <Setter Property="Foreground" Value="#FF8D8D8D"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
-                            </Button.Style>-->
+                        </Button.Style>
                     </Button>
                 </StackPanel>
                 <StackPanel>

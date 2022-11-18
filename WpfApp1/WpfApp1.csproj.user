@@ -16,6 +16,12 @@
     <Compile Update="UserControls\LibView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\LikedView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UserControls\SongItem.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AddPlaylistWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +37,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\LibView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\LikedView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\SongItem.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AddPlaylistWindow.xaml">
