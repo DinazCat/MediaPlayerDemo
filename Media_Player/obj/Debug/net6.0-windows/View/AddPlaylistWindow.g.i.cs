@@ -56,7 +56,7 @@ namespace Media_Player.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Media_Player;V1.0.0.0;component/view/addplaylistwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Media_Player;component/view/addplaylistwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\AddPlaylistWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

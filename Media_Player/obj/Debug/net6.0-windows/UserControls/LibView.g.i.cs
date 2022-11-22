@@ -53,7 +53,7 @@ namespace Media_Player.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Media_Player;V1.0.0.0;component/usercontrols/libview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Media_Player;component/usercontrols/libview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\UserControls\LibView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
