@@ -24,9 +24,9 @@ namespace Media_Player.Command
 
         public void Execute(object parameter)
         {
-            if(parameter.ToString() == "Home")
+            if (parameter.ToString() == "Home")
                 ViewModel.SelectedViewModel = new HomeViewModel();
-            else if(parameter.ToString() == "Library")
+            else if (parameter.ToString() == "Library")
                 ViewModel.SelectedViewModel = new LibViewModel();
             else if (parameter.ToString() == "Genres")
                 ViewModel.SelectedViewModel = new GenresViewModel();

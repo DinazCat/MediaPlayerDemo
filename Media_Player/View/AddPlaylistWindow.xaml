@@ -11,7 +11,13 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent">
-    <Border Background="#000050" CornerRadius="40">
+    <Border CornerRadius="40">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0 1">
+                <GradientStop Color="#000010" Offset="1"/>
+                <GradientStop Color="#003366" Offset="0.1"/>
+            </LinearGradientBrush>
+        </Border.Background>
         <StackPanel>
             <Button Style ="{StaticResource MaterialDesignIconButton}"  
                             HorizontalAlignment="Right" Margin="0,10,20,20"
@@ -20,9 +26,10 @@
                 <materialDesign:PackIcon Kind="Close"  
                                          Foreground="White"/>
             </Button>
+           
             <TextBlock Text="Tạo playlist mới"
                    FontSize="25"
-                   Foreground="White" TextAlignment="Center"/>
+                   Foreground="White" TextAlignment="Center" FontFamily="Sitka Text"/>
             <materialDesign:ColorZone Mode="Light" 
                                       Padding="8 0"
                                       Width="250"
@@ -39,12 +46,17 @@
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
                     Height="30"
                     Width="150"
-                    Background="#000040"
                     BorderBrush="White"
                     Content="Tạo mới"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#00C0FF" Offset="1"/>
+                        <GradientStop Color="#003366" Offset="0"/>
+                    </LinearGradientBrush>
+                </Button.Background>
             </Button>
         </StackPanel>
     </Border>

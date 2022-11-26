@@ -20,11 +20,13 @@ namespace Media_Player.ViewModel
         public ICommand AddPlaylistWindowCommand { get; set; }
         public MainViewModel()
         {
-            LoadedWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 Isloaded = true;
-                //LoginWindow loginWindow = new LoginWindow();
-                //loginWindow.ShowDialog();
+                p.Hide();
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.ShowDialog();
+                p.Show();
             }
               );
             UpdateViewCommand = new UpdateViewCommand(this);

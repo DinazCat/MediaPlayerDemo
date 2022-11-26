@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Media_Player.UserControls;
 using Media_Player.ViewModel;
+using static Media_Player.MainWindow;
 
 namespace Media_Player
 {
@@ -54,8 +55,6 @@ namespace Media_Player
             Phatnhac.Isplaying2 = true;
             Phatnhac.mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
         }
-
-
 
         public void MediaPlayer_MediaOpened(object? sender, EventArgs e)
         {

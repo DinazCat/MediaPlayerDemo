@@ -9,7 +9,10 @@
 
   <ItemGroup>
     <None Remove="earphonesIcon.png" />
+    <None Remove="Images\discplayer.jpg" />
     <None Remove="Images\earphonesIcon.png" />
+    <None Remove="Images\loginbackground.png" />
+    <None Remove="Images\loginIcon.png" />
     <None Remove="View\earphonesIcon.png" />
     <None Remove="View\TaylorSwift.jpg" />
   </ItemGroup>
@@ -21,8 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\discplayer.jpg" />
     <Resource Include="Images\earphonesIcon.png" />
+    <Resource Include="Images\loginbackground.png" />
+    <Resource Include="Images\loginIcon.png" />
     <Resource Include="View\TaylorSwift.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

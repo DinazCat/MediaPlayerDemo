@@ -19,7 +19,7 @@
                     <Style x:Key="letterButton" TargetType="Button">
                         <Setter Property="Height" Value="30"/>
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Foreground" Value="#AAAAAA"/>
                         <Setter Property="FontSize" Value="17"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="Tag" Value="Collapsed"/>
@@ -27,8 +27,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
                                     <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="0">
-                                        <ContentPresenter HorizontalAlignment="Stretch" 
-                                                          VerticalAlignment="Center"/>
+                                        <ContentPresenter/>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -36,9 +35,19 @@
 
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#BBBBBB"/>
                                 <Setter Property="Cursor" Value="Hand"/>
                                 <Setter Property="Tag" Value="Visible"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="0">
+                                                <TextBlock TextDecorations="Underline">  
+                                                <ContentPresenter/>
+                                                </TextBlock>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </Style.Triggers>
                     </Style>

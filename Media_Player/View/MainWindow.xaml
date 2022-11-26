@@ -14,12 +14,15 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="#000015"
+        Title=""
+        Name="mainWindow"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen" Height="700" Width="1000"
         DataContext="{StaticResource MainVM}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}"/>
+            <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
+                                   CommandParameter="{Binding ElementName=mainWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <!--ResizeMode="NoResize"
@@ -76,7 +79,8 @@
                              Margin="2 5"
                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17"  Width="170"  />
+                             Foreground="White" FontSize="17" Width="170"/>
+
                 </StackPanel>
                 <!--Library-->
                 <StackPanel Orientation="Horizontal">
@@ -94,7 +98,7 @@
                              Margin="2 5 "
                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17"  Width="170"  />
+                             Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
                 <!--Genres-->
                 <StackPanel Orientation="Horizontal">
@@ -112,7 +116,7 @@
                              Margin="2 5 "
                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17"  Width="170"  />
+                             Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
                 <!--Charts-->
                 <StackPanel Orientation="Horizontal">
@@ -130,10 +134,10 @@
                              Margin="2 5 "
                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17"  Width="170"  />
+                             Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
 
-                <Border BorderThickness="0 1 0 0" BorderBrush="White" Margin="10 10"/>
+                <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="10 10"/>
                 <!--Add playlist-->
                 <StackPanel Orientation="Horizontal">
                     <Grid>
@@ -150,7 +154,7 @@
                              Margin="2 5 "
                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17"  Width="170"  />
+                             Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
                 <!--Liked-->
                 <StackPanel Orientation="Horizontal">
@@ -168,7 +172,7 @@
                              Margin="2 5 "
                              IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17"  Width="170"  />
+                             Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
 
             </StackPanel>
@@ -227,11 +231,7 @@
 
         <!--Main View-->
         <Grid Grid.Row="1" Grid.Column="1" Background="#000020">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="121*"/>
-                <ColumnDefinition Width="279*"/>
-            </Grid.ColumnDefinitions>
-            <ContentControl Content="{Binding SelectedViewModel}" Grid.ColumnSpan="2"/>
+            <ContentControl Content="{Binding SelectedViewModel}"/>
         </Grid>
 
         <!--Thanh phát nhạc-->
@@ -250,11 +250,12 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="45"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Button Style="{StaticResource letterButton}"
+                    <Button Style="{StaticResource letterButton}"                            
                             x:Name="TenBH"
+                            Foreground="White"
                             Margin="5 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Bottom">
