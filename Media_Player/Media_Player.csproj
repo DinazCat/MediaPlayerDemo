@@ -14,7 +14,6 @@
     <None Remove="Images\loginbackground.png" />
     <None Remove="Images\loginIcon.png" />
     <None Remove="View\earphonesIcon.png" />
-    <None Remove="View\TaylorSwift.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,11 +27,6 @@
     <Resource Include="Images\earphonesIcon.png" />
     <Resource Include="Images\loginbackground.png" />
     <Resource Include="Images\loginIcon.png" />
-    <Resource Include="View\TaylorSwift.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Model\" />
   </ItemGroup>
 
 </Project>

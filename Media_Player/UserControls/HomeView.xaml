@@ -50,9 +50,9 @@
 
                                 <Grid Width="130">
                                     <StackPanel Margin="4,1,0,0">
-                                        <TextBlock Text="{Binding songNames}" Foreground="White" FontSize="12" FontWeight="Medium"/>
+                                        <TextBlock Text="{Binding songName}" Foreground="White" FontSize="12" FontWeight="Medium"/>
 
-                                        <TextBlock Text="{Binding singerNames}" Foreground="#DDDDDD" FontSize="11" FontWeight="Medium"/>
+                                        <TextBlock Text="{Binding singerName}" Foreground="#DDDDDD" FontSize="11" FontWeight="Medium"/>
                                     </StackPanel>
                                 </Grid>
                             </DockPanel>
