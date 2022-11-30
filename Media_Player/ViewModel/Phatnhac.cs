@@ -15,8 +15,8 @@ namespace Media_Player.ViewModel
     public static class Phatnhac
     {
         public static MediaPlayer mediaPlayer = new MediaPlayer();
-        private static bool isplaying2 = true;
-        public static bool Isplaying2 { get { return isplaying2; } set { isplaying2 = value; } }
+        private static List<Song> Occupying;
+        public static List<Song> occupying { get { return Occupying; } set { Occupying = value; } }
         private static bool _playing = true;        
         public static bool isplaying
         {
@@ -49,45 +49,44 @@ namespace Media_Player.ViewModel
         public static void openmussic()
         {
             mediaPlayer.Open(new Uri(filename));
-            Isplaying2 = true;
             mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
         }
        
         private static void MediaPlayer_MediaOpened(object? sender, EventArgs e)
         {
-            if (Phatnhac.mediaPlayer.NaturalDuration.HasTimeSpan)
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
             {
-                thisSong.Duration = Phatnhac.mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                thisSong.Duration = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).txblDuration.Text
                     = new TimeSpan(0, (int)(thisSong.Duration / 60), (int)(thisSong.Duration % 60)).ToString(@"mm\:ss");
                 ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Maximum = thisSong.Duration;
                 thisSong.Position = 0;
-                Phatnhac.mediaPlayer.Position = new TimeSpan(0, 0, 0);
+                mediaPlayer.Position = new TimeSpan(0, 0, 0);
                 MainWindow.Timer.Start();
             }
         }
         private static void MediaPlayer_MediaEnded(object? sender, EventArgs e)
         {
-            thisSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
-            ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+            //thisSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
+            // ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
 
-            if (Phatnhac.isrepeat)
+            if (isrepeat)
             {
                 thisSong.Open = true;
                 HamTuongTac(thisSong);
-                if (Phatnhac.mediaPlayer.NaturalDuration.HasTimeSpan)
+                if (mediaPlayer.NaturalDuration.HasTimeSpan)
                 {
-                    thisSong.Duration = Phatnhac.mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                    thisSong.Duration = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
                     ((MainWindow)System.Windows.Application.Current.MainWindow).txblDuration.Text
                         = new TimeSpan(0, (int)(thisSong.Duration / 60), (int)(thisSong.Duration % 60)).ToString(@"mm\:ss");
                     ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Maximum = thisSong.Duration;
                     thisSong.Position = 0;
-                    Phatnhac.mediaPlayer.Position = new TimeSpan(0, 0, 0);
+                    mediaPlayer.Position = new TimeSpan(0, 0, 0);
                     MainWindow.Timer.Start();
                 }
             }
-            else if (Phatnhac.isshuffle)
+            else if (isshuffle)
             {
                 thisSong.Open = true;
                 int curindex = thisList.IndexOf(thisSong), index;
@@ -104,13 +103,18 @@ namespace Media_Player.ViewModel
         {
             if (song.Open == true)
             {
-                Phatnhac.mediaPlayer.Stop();
-                Phatnhac.Isplaying2 = false;
+                mediaPlayer.Stop();
                 for (int i = 0; i < thisList.Count; i++)
                 {
                     if (thisList[i].Open == false) thisList[i].Open = true;
                     thisList[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
                 }
+                if (occupying != null)
+                    for (int i = 0; i < occupying.Count; i++)
+                    {
+                        if (occupying[i].Open == false) occupying[i].Open = true;
+                        occupying[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
+                    }
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(song.linkanh));
                 ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = song.songName;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = song.singerName;
@@ -119,13 +123,13 @@ namespace Media_Player.ViewModel
 
             if (song.Open == true)
             {
-                Phatnhac.isplaying = true;
+                isplaying = true;
                 openmussic();
                 song.Open = false;
             }
 
-            Phatnhac.isplaying = !Phatnhac.isplaying;
-            if (Phatnhac.isplaying == true)
+            isplaying = !isplaying;
+            if (isplaying == true)
             {
                 song.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
                 ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));

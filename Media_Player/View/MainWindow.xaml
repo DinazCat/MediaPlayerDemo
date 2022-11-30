@@ -70,7 +70,7 @@
                     </Grid>
 
                     <Button  Style="{StaticResource MaterialDesignOutlinedButton}"
-                             Command="{Binding UpdateViewCommand}" CommandParameter="Home"
+                             Click="Button_Click"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                              materialDesign:ButtonProgressAssist.IsIndeterminate="True"
@@ -88,7 +88,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Command="{Binding UpdateViewCommand}" CommandParameter="Library"
+                    <Button  Click="Button_Click_1"
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -106,7 +106,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Command="{Binding UpdateViewCommand}" CommandParameter="Genres"                    
+                    <Button  Click="Button_Click_2"                   
                              Style="{StaticResource MaterialDesignOutlinedButton}"                             
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -124,7 +124,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Command="{Binding UpdateViewCommand}" CommandParameter="Charts"                    
+                    <Button  Click="Button_Click_4"                    
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -162,7 +162,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Command="{Binding UpdateViewCommand}" CommandParameter="Liked"                    
+                    <Button  Click="Button_Click_5"                    
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -191,10 +191,10 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
 
-                        <Button Style="{StaticResource MaterialDesignToolButton}">
+                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="Button_Click_3">
                             <materialDesign:PackIcon Kind="ArrowLeft" Width="30" Height="30" />
                         </Button>
-                        <Button Style="{StaticResource MaterialDesignToolButton}"
+                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="Button_Click_9"
                                 Margin="7 0 0 0">
                             <materialDesign:PackIcon Kind="ArrowRight" Width="30" Height="30"/>
                         </Button>
@@ -231,6 +231,7 @@
         <!--Main View-->
         <Grid Grid.Row="1" Grid.Column="1" Background="#000020">
             <ContentControl Content="{Binding SelectedViewModel}"/>
+            <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
         </Grid>
 
         <!--Thanh phát nhạc-->
@@ -320,7 +321,9 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock x:Name="txblPosition" Foreground="White" Margin="0 4 10 0"/>
                     <Slider  Width="400"
-                            Name="timelineSlider"                            
+                            Name="timelineSlider"   
+                            PreviewMouseDown="timelineSlider_PreviewMouseDown"
+                            PreviewMouseUp="timelineSlider_PreviewMouseUp"
                             ValueChanged="timelineSlider_ValueChanged"
                             Foreground="#FFF5F2F9" Maximum="1010" />
                     <TextBlock x:Name="txblDuration" Foreground="White" Margin="7 4 0 0"/>
@@ -329,9 +332,13 @@
 
             <!--Right Section-->
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Style="{StaticResource MaterialDesignIconButton}"
-                        Height="40" Width="40" Margin="10 0">
-                    <materialDesign:PackIcon Kind="VolumeHigh" Foreground="White"/>
+                <Button Click="Button_Click_6" x:Name="Volume"
+                        Height="20" Width="20" Margin="10 0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Image Source="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Button.Template>
                 </Button>
                 <Slider  VerticalAlignment="Center" 
                          x:Name="volumeSlider"
