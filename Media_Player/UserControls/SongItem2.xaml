@@ -16,15 +16,15 @@
                 </Style.Triggers>
             </Style>
         </Border.Style>
-        <DockPanel Margin="4">
-            <Grid Height="150" DockPanel.Dock="Top">
+        <DockPanel x:Name="ucitem2" Margin="4" >
+            <Grid  Height="150" DockPanel.Dock="Top">
                 <Border CornerRadius="10" Padding="3">
                     <Button Height="150" Background="Transparent" BorderBrush="Transparent"/>
                     <Border.Background>
                         <ImageBrush x:Name="Picture" ImageSource="{Binding linkanh}" Stretch="Fill"/>
                     </Border.Background>
                 </Border>
-                <Button x:Name="BtnPlay" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click" Visibility="Hidden">
+                <Button x:Name="BtnPlay" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click" Visibility="Hidden" Content="{Binding getPL}">
                     <Button.Template>
                         <ControlTemplate>
                             <Canvas>

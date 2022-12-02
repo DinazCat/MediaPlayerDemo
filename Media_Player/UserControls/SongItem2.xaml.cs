@@ -1,7 +1,10 @@
 ﻿using Media_Player.Model;
 using Media_Player.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +33,11 @@ namespace Media_Player.UserControls
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
+            if(BtnPlay.Content.ToString() == "Nhạc Pop")
+            {
+                MainWindow.getList = GenresView.getPopL;
+                Phatnhac.thisList = GenresView.getPopL;
+            }    
             Phatnhac.HamTuongTac(song);
             if (onAction != null) onAction.Invoke(this, e);
         }

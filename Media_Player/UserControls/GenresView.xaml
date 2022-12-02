@@ -57,9 +57,7 @@
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Button Click="PopItem_click" Height="200" Background="Transparent">
-                                <local:SongItem2/>
-                            </Button>
+                            <local:SongItem2/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

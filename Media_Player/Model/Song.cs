@@ -19,7 +19,8 @@ namespace Media_Player.Model
         private string linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
         private double duration;
         private double position;
-
+        private string GetPl;
+        public string getPL { get { return GetPl; } set { GetPl = value; } }
         public string Linkicon
         {
             get { return linkicon; }

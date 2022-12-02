@@ -27,6 +27,7 @@ namespace Media_Player.UserControls
     {
         List<PlayList> QuocGia;
         PlayList PopList;
+        public static List<Song> getPopL;
         public GenresView()
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace Media_Player.UserControls
             PopList = new PlayList();
             InitListPop(ref PopList, "Nhạc Pop");
             listPop.ItemsSource = PopList.songs;
+            getPopL = PopList.songs;
             ListQuocGia.ItemsSource = QuocGia;
             string[] tendaidien = new string[4];
             using (StreamReader sr = new StreamReader("Quocgia/Tendaidien.txt"))
@@ -55,6 +57,7 @@ namespace Media_Player.UserControls
                     title = tendaidien[k]
                 });
             }
+            
         }
         PlayListView page = new PlayListView();
         UserControl p;
@@ -83,10 +86,7 @@ namespace Media_Player.UserControls
                 MainWindow.CheckBack = false;
             }
         }
-        private void PopItem_click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("fsafsa");
-        }
+        
         void InitListPop(ref PlayList pl, string PlaylistName)
         {
             //Đổ các dữ liệu cơ bản của playlist
@@ -124,14 +124,16 @@ namespace Media_Player.UserControls
                             songName = dr[0].ToString(),
                             singerName = dr[1].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString() 
+                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString() ,
+                            getPL = "Nhạc Pop"
                         });
                         n++;
                     }
                 }
             }
-            
 
         }
+
+
     }
 }
