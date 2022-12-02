@@ -24,44 +24,60 @@ namespace Media_Player.UserControls
         {
             InitializeComponent();
         }
-        public string Title
-        {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
-        }
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SongItem));
+        //public string Title
+        //{
+        //    get { return (string)GetValue(TitleProperty); }
+        //    set { SetValue(TitleProperty, value); }
+        //}
+        //public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(SongItem));
 
-        public string Artist
-        {
-            get { return (string)GetValue(ArtistProperty); }
-            set { SetValue(ArtistProperty, value); }
-        }
-        public static readonly DependencyProperty ArtistProperty = DependencyProperty.Register("Artist", typeof(string), typeof(SongItem));
-        public string Album
-        {
-            get { return (string)GetValue(AlbumProperty); }
-            set { SetValue(AlbumProperty, value); }
-        }
-        public static readonly DependencyProperty AlbumProperty = DependencyProperty.Register("Album", typeof(string), typeof(SongItem));
+        //public string Artist
+        //{
+        //    get { return (string)GetValue(ArtistProperty); }
+        //    set { SetValue(ArtistProperty, value); }
+        //}
+        //public static readonly DependencyProperty ArtistProperty = DependencyProperty.Register("Artist", typeof(string), typeof(SongItem));
+        //public string Album
+        //{
+        //    get { return (string)GetValue(AlbumProperty); }
+        //    set { SetValue(AlbumProperty, value); }
+        //}
+        //public static readonly DependencyProperty AlbumProperty = DependencyProperty.Register("Album", typeof(string), typeof(SongItem));
 
-        public string Time
-        {
-            get { return (string)GetValue(TimeProperty); }
-            set { SetValue(TimeProperty, value); }
-        }
-        public static readonly DependencyProperty TimeProperty = DependencyProperty.Register("Time", typeof(string), typeof(SongItem));
-        public bool IsActive
-        {
-            get { return (bool)GetValue(IsActiveProperty); }
-            set { SetValue(IsActiveProperty, value); }
-        }
-        public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(SongItem));
+        //public string Time
+        //{
+        //    get { return (string)GetValue(TimeProperty); }
+        //    set { SetValue(TimeProperty, value); }
+        //}
+        //public static readonly DependencyProperty TimeProperty = DependencyProperty.Register("Time", typeof(string), typeof(SongItem));
+        //public bool IsActive
+        //{
+        //    get { return (bool)GetValue(IsActiveProperty); }
+        //    set { SetValue(IsActiveProperty, value); }
+        //}
+        //public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(SongItem));
 
-        public bool IsLiked
+        //public bool IsLiked
+        //{
+        //    get { return (bool)GetValue(IsLikedProperty); }
+        //    set { SetValue(IsLikedProperty, value); }
+        //}
+        //public static readonly DependencyProperty IsLikedProperty = DependencyProperty.Register("IsLiked", typeof(bool), typeof(SongItem));
+        private void BtnPlay_click(object sender, RoutedEventArgs e)
         {
-            get { return (bool)GetValue(IsLikedProperty); }
-            set { SetValue(IsLikedProperty, value); }
+
         }
-        public static readonly DependencyProperty IsLikedProperty = DependencyProperty.Register("IsLiked", typeof(bool), typeof(SongItem));
+
+        private void songitem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.BtnPlay.Visibility = Visibility.Visible;
+            this.Picture.Opacity = 0.6;
+        }
+
+        private void songitem_MouseLeave(object sender, MouseEventArgs e)
+        {
+            this.BtnPlay.Visibility = Visibility.Hidden;
+            this.Picture.Opacity = 1;
+        }
     }
 }

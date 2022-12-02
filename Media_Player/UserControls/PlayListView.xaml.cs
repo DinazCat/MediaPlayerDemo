@@ -35,15 +35,31 @@ namespace Media_Player.UserControls
                 string Path1 = "Quocgia\\ListAuMy";
                 string Path2 = "Quocgia/ListAuMy";
                 ReadFile.ReadSong(ref list, 7, Path1, Path2, ".jpg");
-                
-                txtName.Text = "Nhạc Âu Mỹ";
+
+                txtTitle.Text = "Nhạc Âu Mỹ";
+                if (Phatnhac.occupying != null)
+                    for (int i = 0; i < Phatnhac.occupying.Count; i++)
+                    {
+                        if (Phatnhac.occupying[i].Open == false && Phatnhac.occupying[i].savepath == list[i].savepath)
+                        {
+                            list[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png";
+                        }
+                    }
             }
             else if(Title == "Nhạc Việt Nam")
             {
                 string Path1 = "Quocgia\\ListVietNam";
                 string Path2 = "Quocgia/ListVietNam";
                 ReadFile.ReadSong(ref list, 7, Path1, Path2, ".jpg");
-                txtName.Text = "Nhạc Việt Nam";
+                txtTitle.Text = "Nhạc Việt Nam";
+                if (Phatnhac.occupying != null)
+                    for (int i = 0; i < Phatnhac.occupying.Count; i++)
+                    {
+                        if (Phatnhac.occupying[i].Open == false && Phatnhac.occupying[i].savepath == list[i].savepath)
+                        {
+                            list[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png";
+                        }
+                    }
 
             }
             

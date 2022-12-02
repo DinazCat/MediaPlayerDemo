@@ -30,8 +30,7 @@
                                Foreground="White"
                                FontSize="14"/>
                 </Grid>
-                <uc:SongItem Title="Blank Space" Time="4:02" Artist="Taylor Swift" Album ="1989" IsActive="True"/>
-                <uc:SongItem Title="Look what you make me do" Time="3:52" Artist="Taylor Swift" Album="Reputation"/>
+                <uc:SongItem></uc:SongItem>
             </StackPanel>
         </ScrollViewer>
     </Grid>

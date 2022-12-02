@@ -26,10 +26,10 @@
                 <materialDesign:PackIcon Kind="Close"  
                                          Foreground="White"/>
             </Button>
-           
+
             <TextBlock Text="Tạo playlist mới"
                    FontSize="25"
-                   Foreground="White" TextAlignment="Center" FontFamily="Sitka Text"/>
+                   Foreground="White" TextAlignment="Center" FontFamily="Sitka Text" FontWeight="Heavy"/>
             <materialDesign:ColorZone Mode="Light" 
                                       Padding="8 0"
                                       Width="250"
@@ -41,10 +41,11 @@
                 <TextBox materialDesign:HintAssist.Hint="Nhập tên playlist"
                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                          BorderThickness="0"
-                         VerticalAlignment="Center" />
+                         VerticalAlignment="Center" 
+                         FontSize="14"/>
             </materialDesign:ColorZone>
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" 
-                    Height="30"
+                    Height="35"
                     Width="150"
                     BorderBrush="White"
                     Content="Tạo mới"

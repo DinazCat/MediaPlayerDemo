@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
+using System.Data.SqlClient;
+using System.Data;
+using Media_Player.Model;
 
 namespace Media_Player.ViewModel
 {
-    internal class LoginViewModel:BaseViewModel
+    internal class LoginViewModel : BaseViewModel
     {
         public bool IsLogin { get; set; }
         private string _UserName;
@@ -19,17 +23,21 @@ namespace Media_Player.ViewModel
 
         public ICommand CloseCommand { get; set; }
         public ICommand LoginCommand { get; set; }
+        public ICommand PasswordChangedCommand { get; set; }
         public LoginViewModel()
         {
             IsLogin = false;
             Password = "";
             UserName = "";
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Login(p); });
-            CloseCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { p.Close(); });           
+            CloseCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { p.Close(); });
+            PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
         }
         void Login(Window p)
         {
-
+            if (p == null)
+                return;
+            
         }
     }
 }

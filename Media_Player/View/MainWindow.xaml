@@ -220,7 +220,8 @@
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
                                          MinWidth="350"
-                                         VerticalAlignment="Center" Grid.Row="1" />
+                                         VerticalAlignment="Center" Grid.Row="1" 
+                                         FontSize="14"/>
                             </Grid>
                         </materialDesign:ColorZone>
                     </StackPanel>
@@ -319,7 +320,7 @@
                     </Button>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock x:Name="txblPosition" Foreground="White" Margin="0 4 10 0"/>
+                    <TextBlock x:Name="txblPosition" Foreground="White" Margin="0 4 5 0" Width="35"/>
                     <Slider  Width="400"
                             Name="timelineSlider"   
                             PreviewMouseDown="timelineSlider_PreviewMouseDown"

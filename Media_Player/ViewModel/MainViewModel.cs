@@ -13,7 +13,7 @@ using Media_Player.View;
 namespace Media_Player.ViewModel
 {
     public class MainViewModel : BaseViewModel
-    {       
+    {
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UpdateViewCommand { get; set; }
@@ -27,6 +27,25 @@ namespace Media_Player.ViewModel
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
                 p.Show();
+                //Isloaded = true;
+                //if (p == null)
+                //    return;
+                //p.Hide();
+                //LoginWindow loginWindow = new LoginWindow();
+                //loginWindow.ShowDialog();
+
+                //if (loginWindow.DataContext == null)
+                //    return;
+                //var loginVM = loginWindow.DataContext as LoginViewModel;
+
+                //if (loginVM.IsLogin)
+                //{
+                //    p.Show();
+                //}
+                //else
+                //{
+                //    p.Close();
+                //}
             }
               );
             UpdateViewCommand = new UpdateViewCommand(this);
@@ -40,9 +59,10 @@ namespace Media_Player.ViewModel
         public BaseViewModel SelectedViewModel
         {
             get { return _selectedViewModel; }
-            set { 
+            set
+            {
                 _selectedViewModel = value;
-                OnPropertyChanged(nameof(SelectedViewModel));            
+                OnPropertyChanged(nameof(SelectedViewModel));
             }
         }
     }

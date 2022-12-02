@@ -10,11 +10,11 @@
         <ScrollViewer Background="#FFCBD0D4">
             <StackPanel  Background="#000020">
                 <TextBlock Text="Đã nghe gần đây" Foreground="White" FontSize="20" Margin="20"/>
-                <StackPanel Orientation="Horizontal" Height="200">
+                <StackPanel Orientation="Horizontal" Height="230">
                 </StackPanel>
 
-                <TextBlock  Text="Có thể bạn sẽ thích" Foreground="White" FontSize="20" Margin="5"/>
-                <ListView x:Name="listp2" Height="200" Background="#252525" 
+                <TextBlock Text="Có thể bạn sẽ thích" Foreground="White" FontSize="20" Margin="5"/>
+                <ListView x:Name="listp2" Height="230" Background="#252525" 
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -23,49 +23,55 @@
                     </ListView.ItemsPanel>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel Margin="4" Width="130">
-                                <DockPanel.Style>
-                                    <Style TargetType="DockPanel">
+                            <Border Width="150" CornerRadius="10" MouseEnter="songpnl_mouseEnter" MouseLeave="songpnl_mouseLeave" >
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="Transparent"/>
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Background" Value="#778899"/>
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </DockPanel.Style>
-                                <Grid Width="130" Height="140" DockPanel.Dock="Top">
+                                </Border.Style>
+                                <DockPanel Margin="4">
+                                    <Grid Height="150" DockPanel.Dock="Top">
+                                        <Border CornerRadius="10" Padding="3">
+                                            <Button Height="150" Background="Transparent" BorderBrush="Transparent"/>
+                                            <Border.Background>
+                                                <ImageBrush x:Name="Picture" ImageSource="{Binding linkanh}" Stretch="Fill"/>
+                                            </Border.Background>
+                                        </Border>
+                                        <Button x:Name="BtnPlay" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click">
+                                            <Button.Template>
+                                                <ControlTemplate>
+                                                    <Canvas>
+                                                        <Image x:Name="play" Source="{Binding Linkicon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </Canvas>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </Grid>
 
-                                    <Image Source="{Binding linkanh}" Stretch="Fill" Margin="3"/>
+                                    <Grid Width="130">
+                                        <StackPanel Margin="0,2,0,0">
+                                            <TextBlock Text="{Binding songName}" Foreground="White" FontSize="12" FontWeight="Medium"/>
 
-                                    <Button x:Name="BtnPlay" Height="30" Width="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click">
-                                        <Button.Template>
-                                            <ControlTemplate>
-                                                <Canvas>
-                                                    <Image x:Name="play" Source="{Binding Linkicon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                </Canvas>
-                                            </ControlTemplate>
-                                        </Button.Template>
-                                    </Button>
-                                </Grid>
-
-                                <Grid Width="130">
-                                    <StackPanel Margin="4,1,0,0">
-                                        <TextBlock Text="{Binding songName}" Foreground="White" FontSize="12" FontWeight="Medium"/>
-
-                                        <TextBlock Text="{Binding singerName}" Foreground="#DDDDDD" FontSize="11" FontWeight="Medium"/>
-                                    </StackPanel>
-                                </Grid>
-                            </DockPanel>
+                                            <TextBlock Text="{Binding singerName}" Foreground="#DDDDDD" FontSize="11" FontWeight="Medium"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DockPanel>
+                            </Border>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 
                 <TextBlock Text="Phổ biến" Foreground="White" FontSize="20" Margin="20"/>
-                <StackPanel Orientation="Horizontal" Height="200">
+                <StackPanel Orientation="Horizontal" Height="230">
                 </StackPanel>
 
                 <TextBlock Text="Mới phát hành" Foreground="White" FontSize="20" Margin="20"/>
-                <StackPanel Orientation="Horizontal" Height="200">
+                <StackPanel Orientation="Horizontal" Height="230">
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

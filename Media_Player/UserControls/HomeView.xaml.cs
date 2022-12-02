@@ -35,18 +35,31 @@ namespace Media_Player.UserControls
             string Path1 = "ListSongOutSide\\Cothebansethich";
             string Path2 = "ListSongOutSide/Cothebansethich";
             ReadFile.ReadSong(ref listMaybeulike, 15,Path1,Path2,".png");
-            listp2.ItemsSource = listMaybeulike;
+            listp2.ItemsSource = listMaybeulike; 
+            
+            
         }
 
         public EventHandler onAction = null;
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            Song song = (sender as Button).DataContext as Song;
             MainWindow.getList = listMaybeulike;
             Phatnhac.thisList = listMaybeulike;
+            Song song = (sender as Button).DataContext as Song;
             Phatnhac.HamTuongTac(song);
             Phatnhac.occupying = listMaybeulike;
             if (onAction != null) onAction.Invoke(this, e);
+        }
+        private void songpnl_mouseEnter(object sender, MouseEventArgs e)
+        {
+            //this.BtnPlay.Visibility = Visibility.Visible;
+            //this.Picture.Opacity = 0.6;
+        }
+
+        private void songpnl_mouseLeave(object sender, MouseEventArgs e)
+        {
+            //this.BtnPlay.Visibility = Visibility.Hidden;
+            //this.Picture.Opacity = 1;
         }
     }
 }
