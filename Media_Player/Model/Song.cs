@@ -20,13 +20,12 @@ namespace Media_Player.Model
         private double duration;
         private double position;
         private string GetPl;
-        public string getPL { get { return GetPl; } set { GetPl = value; } }
+        
         public string Linkicon
         {
             get { return linkicon; }
             set { linkicon = value; OnPropertyChanged("Linkicon"); }
         }
-
         public bool Open { get { return open; } set { open = value; } }
         public string songName { get => SongName; set => SongName = value; }
         public string singerName { get => SingerName; set => SingerName = value; }
@@ -35,6 +34,7 @@ namespace Media_Player.Model
         public string savepath { get => SavePath; set => SavePath = value; }
         public double Duration { get => duration; set => duration = value; }
         public double Position { get => position; set => position = value; }
+        public string getPL { get { return GetPl; } set { GetPl = value; } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string newname)

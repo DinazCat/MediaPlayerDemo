@@ -32,12 +32,16 @@
                     
                         <Image x:Name="Picture" Source="{Binding linkanh}" Height="50" Width="50"/>
 
-                    <Button x:Name="BtnPlay" Background="Transparent" BorderBrush="Transparent"  Height="50" Visibility="Hidden" Click="BtnPlay_click" >
-                        <Image x:Name="play" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                    <Button x:Name="BtnPlay" Background="Transparent" BorderBrush="Transparent"  Height="50" Visibility="Hidden" Click="BtnPlay_click" Content="{Binding getPL}" >
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image x:Name="play" VerticalAlignment="Center" HorizontalAlignment="Center" 
                                            Height="20" Width="20" Source="{Binding Linkicon}" Stretch="Fill"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
                 </Grid>
-
+                
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

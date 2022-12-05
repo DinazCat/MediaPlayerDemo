@@ -10,9 +10,9 @@ namespace Media_Player.Model
 {
     internal class Artist
     {
-        public string Name { get; set; }
-        public string Picture { get; set; }
-        public int SongCount { get; set; }
-        public int AlbumCount { get; set; }
+        private string Name { get; set; }
+        private string Picture { get; set; }
+        private int SongCount { get; set; }
+        private int AlbumCount { get; set; }
     }
 }

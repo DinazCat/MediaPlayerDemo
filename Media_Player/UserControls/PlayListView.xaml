@@ -63,7 +63,7 @@
                                Foreground="White"
                                FontSize="14"/>
                 </Grid>
-                <ListView x:Name="ListNhac">
+                <ListView x:Name="listSongItem">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <local:SongItem/>

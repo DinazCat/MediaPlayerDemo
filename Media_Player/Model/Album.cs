@@ -9,10 +9,10 @@ namespace Media_Player.Model
 {
     internal class Album
     {
-        public string Title { get; set; }
-        public string Artist { get; set; }
-        public string Genres { get; set; }
-        public string Thumbnail { get; set; }
-        public uint Year { get; set; }
+        private string Title { get; set; }
+        private string Artist { get; set; }
+        private string Genres { get; set; }
+        private string Thumbnail { get; set; }
+        private uint Year { get; set; }
     }
 }

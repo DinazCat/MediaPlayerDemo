@@ -33,11 +33,31 @@ namespace Media_Player.UserControls
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-            if(BtnPlay.Content.ToString() == "Nhạc Pop")
+            if (BtnPlay.Content.ToString() == "Có Thể Bạn Sẽ Thích")
+            {
+                MainWindow.getList = HomeView.getMaybeulikeL;
+                Phatnhac.thisList = HomeView.getMaybeulikeL;
+            }
+            if (BtnPlay.Content.ToString() == "Phổ Biến")
+            {
+                MainWindow.getList = HomeView.getMaybeulikeL;
+                Phatnhac.thisList = HomeView.getMaybeulikeL;
+            }
+            if (BtnPlay.Content.ToString() == "Mới Phát Hành")
+            {
+                MainWindow.getList = HomeView.getMaybeulikeL;
+                Phatnhac.thisList = HomeView.getMaybeulikeL;
+            }
+            if (BtnPlay.Content.ToString() == "Nhạc Pop")
             {
                 MainWindow.getList = GenresView.getPopL;
                 Phatnhac.thisList = GenresView.getPopL;
-            }    
+            }
+            if (BtnPlay.Content.ToString() == "Nhạc EDM")
+            {
+                MainWindow.getList = GenresView.getEDML;
+                Phatnhac.thisList = GenresView.getEDML;
+            }
             Phatnhac.HamTuongTac(song);
             if (onAction != null) onAction.Invoke(this, e);
         }

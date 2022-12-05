@@ -2,6 +2,8 @@
 using Media_Player.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,59 +25,99 @@ namespace Media_Player.UserControls
     /// </summary>
     public partial class PlayListView : UserControl
     {
-        public static List<Song> list;
         public static string Title;
+        public static List<Song> curlist;
+        PlayList USUKList;
+        PlayList VNList;
+        PlayList ChinaList;
+        PlayList KoreaList;
+        PlayList JapanList;
         public PlayListView()
         {
             InitializeComponent();
-            list = new List<Song>();
+            curlist= new List<Song>();
             imgScan.DataContext = new { prescanImage = AppDomain.CurrentDomain.BaseDirectory + "Quocgia/" + "AnhnenAuMy.jpg" };
+            txtTitle.Text = Title;
             if (Title == "Nhạc Âu Mỹ")
-            {
-                string Path1 = "Quocgia\\ListAuMy";
-                string Path2 = "Quocgia/ListAuMy";
-                ReadFile.ReadSong(ref list, 7, Path1, Path2, ".jpg");
-
-                txtTitle.Text = "Nhạc Âu Mỹ";
-                if (Phatnhac.occupying != null)
-                    for (int i = 0; i < Phatnhac.occupying.Count; i++)
-                    {
-                        if (Phatnhac.occupying[i].Open == false && Phatnhac.occupying[i].savepath == list[i].savepath)
-                        {
-                            list[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png";
-                        }
-                    }
+            {                
+                USUKList= new PlayList();
+                InitListbyNation(ref USUKList, "Nhạc Âu Mỹ", "Âu Mỹ");
+                listSongItem.ItemsSource = USUKList.songs;
+                curlist = USUKList.songs;
             }
             else if(Title == "Nhạc Việt Nam")
             {
-                string Path1 = "Quocgia\\ListVietNam";
-                string Path2 = "Quocgia/ListVietNam";
-                ReadFile.ReadSong(ref list, 7, Path1, Path2, ".jpg");
-                txtTitle.Text = "Nhạc Việt Nam";
-                if (Phatnhac.occupying != null)
-                    for (int i = 0; i < Phatnhac.occupying.Count; i++)
-                    {
-                        if (Phatnhac.occupying[i].Open == false && Phatnhac.occupying[i].savepath == list[i].savepath)
-                        {
-                            list[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png";
-                        }
-                    }
-
+                VNList = new PlayList();
+                InitListbyNation(ref VNList, "Nhạc Việt Nam", "Việt Nam");
+                listSongItem.ItemsSource = VNList.songs;
+                curlist = VNList.songs;
             }
-            
-            ListNhac.ItemsSource = list;
-           
+            else if(Title == "Nhạc Hàn Quốc")
+            {
+                KoreaList = new PlayList();
+                InitListbyNation(ref KoreaList, "Nhạc Hàn Quốc", "Hàn Quốc");
+                listSongItem.ItemsSource = KoreaList.songs;
+                curlist = KoreaList.songs;
+            }
+            else if (Title == "Nhạc Nhật Bản")
+            {
+                JapanList = new PlayList();
+                InitListbyNation(ref JapanList, "Nhạc Nhật Bản", "Nhật Bản");
+                listSongItem.ItemsSource = JapanList.songs;
+                curlist = JapanList.songs;
+            }
+            else if (Title == "Nhạc Trung Quốc")
+            {
+                ChinaList = new PlayList();
+                InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
+                listSongItem.ItemsSource = ChinaList.songs;
+                curlist = ChinaList.songs;
+            }
         }
 
-        public EventHandler onAction = null;
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
         {
-            Song song = (sender as Button).DataContext as Song;
-            MainWindow.getList = list;
-            Phatnhac.thisList = list;
-            Phatnhac.HamTuongTac(song);
-            Phatnhac.occupying = list;
-            if (onAction != null) onAction.Invoke(this, e);
+            //Đổ các dữ liệu cơ bản của playlist
+            String query = "SELECT * FROM Playlist WHERE Title=N'@Title'";
+
+            SqlParameter param = new SqlParameter("@Title", PlaylistName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    DataRow dr = dt.Rows[0];
+                    pl.title = dr[0].ToString();
+                    pl.picture = dr[1].ToString();
+                }
+            }
+            //Đổ dữ liệu cho songs
+            pl.songs = new List<Song>();
+            query = "SELECT * FROM Song WHERE Nation=@Nation ";
+            SqlParameter param1 = new SqlParameter("@Nation", Nation);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        pl.songs.Add(new Song()
+                        {
+                            songName = dr[0].ToString(),
+                            singerName = dr[1].ToString(),
+                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
+                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            getPL = PlaylistName
+                        });
+                        n++;
+                    }
+                }
+            }
+
         }
     }
 }

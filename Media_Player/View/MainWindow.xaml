@@ -344,7 +344,7 @@
                 <Slider  VerticalAlignment="Center" 
                          x:Name="volumeSlider"
                          ValueChanged="volumeSlider_ValueChanged"
-                         Minimum="0" Maximum="2" Value="0.5" 
+                         Minimum="0" Maximum="2" Value="1.5" 
                          Width="100" Foreground="#FFF5F2F9" />
                 <Border BorderBrush="#FF9A9393" BorderThickness="1 0" Margin="15 20 2 20"/>
                 <Button Style="{StaticResource MaterialDesignIconButton}"

@@ -14,26 +14,15 @@ namespace Media_Player.Model
         // SqlConnection connect = new SqlConnection(conn);
         public static SqlDataReader ExecuteReader(String commandText, CommandType commandType, params SqlParameter[] parameters)
         {
-            //using (SqlConnection conn = new SqlConnection(connectionStr))
-            //{
-            //    using (SqlCommand cmd = new SqlCommand(commandText, conn))
-            //    {
-            //        cmd.CommandType = commandType;
-            //        cmd.Parameters.AddRange(parameters);                    
-            //        conn.Open();
-            //        SqlDataReader reader = cmd.ExecuteReader();
-            //        return reader;
-            //    }
-            //}
             SqlConnection conn = new SqlConnection(connectionStr);
             
-                SqlCommand cmd = new SqlCommand(commandText, conn);
+            SqlCommand cmd = new SqlCommand(commandText, conn);
                 
-                    cmd.CommandType = commandType;
-                    cmd.Parameters.AddRange(parameters);
-                    conn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    return reader;
+            cmd.CommandType = commandType;
+            cmd.Parameters.AddRange(parameters);
+            conn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            return reader;
                 
             
         }
