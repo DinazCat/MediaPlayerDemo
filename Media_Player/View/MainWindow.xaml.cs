@@ -33,6 +33,8 @@ namespace Media_Player
 
             DataContext = new MainViewModel();
 
+           
+
             if (Phatnhac.isplaying == true)
             {
                 BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
@@ -49,6 +51,7 @@ namespace Media_Player
             frame.NavigationService.Navigate(page1);
             View.Add(page1);
             CurrentView = page1;
+            Phatnhac.Init();
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -110,12 +113,12 @@ namespace Media_Player
         private void volumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Phatnhac.mediaPlayer.Volume = (double)volumeSlider.Value;
-            if (OldVolume == true)
+            if (OldVolume == true && (double)volumeSlider.Value !=0)
             {
                 OldvolumeSize = (double)volumeSlider.Value;
                 OldVolume = false;
             }
-            if ((double)volumeSlider.Value == 0)
+            if ((double)volumeSlider.Value == 0.0)
                 Volume.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "mute.png"));
             else
                 Volume.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "volume.png"));

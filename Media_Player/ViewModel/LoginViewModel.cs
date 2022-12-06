@@ -37,7 +37,35 @@ namespace Media_Player.ViewModel
         {
             if (p == null)
                 return;
-            
+            SqlConnection sqlCon = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+            try
+            {
+                if (sqlCon.State == ConnectionState.Closed)
+                {
+                    sqlCon.Open();
+                    String query = "SELECT COUNT(1) FROM [User] WHERE Username=@Username AND Password=@Password";
+                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                    sqlCmd.CommandType = CommandType.Text;
+                    sqlCmd.Parameters.AddWithValue("@Username", UserName);
+                    sqlCmd.Parameters.AddWithValue("@Password", Password);
+                    int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        IsLogin = true;
+
+                        p.Close();
+                    }
+                    else
+                    {
+                        IsLogin = false;
+                        MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                    }
+                   
+                }
+            }
+            catch { }
+            finally { sqlCon.Close(); }
+
         }
     }
 }

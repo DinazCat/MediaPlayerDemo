@@ -253,3 +253,5 @@ D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\refint\
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Media_Player.pdb
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Media_Player.genruntimeconfig.cache
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\ref\Media_Player.dll
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.baml

@@ -30,6 +30,20 @@ namespace Media_Player.UserControls
         public static List<Song> getPopL;
         PlayList EDMList;
         public static List<Song> getEDML;
+        PlayList ClassicList;
+        public static List<Song> getClassicL;
+        PlayList OSTList;
+        public static List<Song> getOSTL;
+        PlayList RnBList;
+        public static List<Song> getRnBL;
+        PlayList JazzList;
+        public static List<Song> getJazzL;
+        PlayList InstrumentalList;
+        public static List<Song> getInstrumentalL;
+        PlayList AcousticList;
+        public static List<Song> getAcousticL;
+        PlayList HipHopList;
+        public static List<Song> getHipHopL;
         public GenresView()
         {
             InitializeComponent();
@@ -44,8 +58,44 @@ namespace Media_Player.UserControls
             listEDM.ItemsSource = EDMList.songs;
             getEDML = EDMList.songs;
 
+            ClassicList = new PlayList();
+            InitGenreList(ref ClassicList, "Nhạc Cổ Điển", "Cổ Điển");
+            listCoDien.ItemsSource = ClassicList.songs;
+            getClassicL = ClassicList.songs;
+
+            OSTList = new PlayList();
+            InitGenreList(ref OSTList, "Nhạc Phim", "Nhạc Phim");
+            listOST.ItemsSource = OSTList.songs;
+            getOSTL = OSTList.songs;
+
+            RnBList = new PlayList();
+            InitGenreList(ref RnBList, "Nhạc R&B", "R&B");
+            listRnB.ItemsSource = RnBList.songs;
+            getRnBL = RnBList.songs;
+
+            JazzList = new PlayList();
+            InitGenreList(ref JazzList, "Nhạc Jazz", "Jazz");
+            listJazz.ItemsSource = JazzList.songs;
+            getJazzL = JazzList.songs;
+
+            InstrumentalList = new PlayList();
+            InitGenreList(ref InstrumentalList, "Nhạc Không Lời", "Nhạc Không Lời");
+            listKhongLoi.ItemsSource = InstrumentalList.songs;
+            getInstrumentalL = InstrumentalList.songs;
+
+            AcousticList = new PlayList();
+            InitGenreList(ref AcousticList, "Nhạc Acoustic", "Acoustic");
+            listAcoustic.ItemsSource = AcousticList.songs;
+            getAcousticL = AcousticList.songs;
+
+            HipHopList = new PlayList();
+            InitGenreList(ref HipHopList, "Nhạc Hip Hop", "Hip Hop");
+            listHipHop.ItemsSource = HipHopList.songs;
+            getHipHopL = HipHopList.songs;
+
             QuocGiaPLs = new List<PlayList>();
             ListQuocGia.ItemsSource = QuocGiaPLs;
+
             string[] tendaidien = new string[5] { 
                 "Nhạc Việt Nam", "Nhạc Âu Mỹ", "Nhạc Hàn Quốc", "Nhạc Trung Quốc", "Nhạc Nhật Bản"
             };            
@@ -123,8 +173,10 @@ namespace Media_Player.UserControls
                         {
                             songName = dr[0].ToString(),
                             singerName = dr[1].ToString(),
+                            album = dr[2].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
                             getPL = PlaylistName
                         });
                         n++;
@@ -168,8 +220,10 @@ namespace Media_Player.UserControls
                         {
                             songName = dr[0].ToString(),
                             singerName = dr[1].ToString(),
+                            album = dr[2].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
                             getPL = PlaylistName
                         }) ;
                         n++;

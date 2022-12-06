@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\App.xaml
-11-1412972532
+12-815695755
 
-27-260307566
+28-1452012059
 201552577164
-Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\PlayListView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;
+Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\PlayListView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;
 
 False
 

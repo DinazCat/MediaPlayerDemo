@@ -26,11 +26,25 @@ namespace Media_Player.ViewModel
                 p.Hide();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
-                p.Show();
+                //p.Show();
                 //Isloaded = true;
                 //if (p == null)
                 //    return;
                 //p.Hide();
+
+                if (loginWindow.DataContext == null)
+                    return;
+                var loginVM = loginWindow.DataContext as LoginViewModel;
+
+                if (loginVM.IsLogin)
+                {
+                    p.Show();
+                }
+                else
+                {
+                    p.Close();
+                }
+
                 //LoginWindow loginWindow = new LoginWindow();
                 //loginWindow.ShowDialog();
 

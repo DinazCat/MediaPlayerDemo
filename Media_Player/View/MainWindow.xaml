@@ -230,10 +230,12 @@
         </Grid>
 
         <!--Main View-->
-        <Grid Grid.Row="1" Grid.Column="1" Background="#000020">
-            <ContentControl Content="{Binding SelectedViewModel}"/>
-            <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
-        </Grid>
+        <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4">
+            <Grid >
+                <ContentControl Content="{Binding SelectedViewModel}"/>
+                <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
+            </Grid>
+        </ScrollViewer>
 
         <!--Thanh phát nhạc-->
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
@@ -245,7 +247,7 @@
 
             <!--left section-->
             <StackPanel Orientation="Horizontal">
-                <Image x:Name="Anh" 
+                <Image x:Name="Anh"  Stretch="Fill"
                            Height="60" Width="60" 
                            Margin="10 10 5 10"/>
 
@@ -320,7 +322,7 @@
                     </Button>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock x:Name="txblPosition" Foreground="White" Margin="0 4 5 0" Width="35"/>
+                    <TextBlock x:Name="txblPosition" Text="00:00" Foreground="White" Margin="0 4 5 0" Width="35"/>
                     <Slider  Width="400"
                             Name="timelineSlider"   
                             PreviewMouseDown="timelineSlider_PreviewMouseDown"

@@ -8,12 +8,18 @@
     <Compile Update="UserControls\SongItem2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\SignupWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="UserControls\PlayListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\SongItem2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SignupWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

@@ -38,27 +38,48 @@ namespace Media_Player.UserControls
                 MainWindow.getList = HomeView.getMaybeulikeL;
                 Phatnhac.thisList = HomeView.getMaybeulikeL;
             }
-            if (BtnPlay.Content.ToString() == "Phổ Biến")
+            else if (BtnPlay.Content.ToString() == "Phổ Biến")
             {
-                MainWindow.getList = HomeView.getMaybeulikeL;
-                Phatnhac.thisList = HomeView.getMaybeulikeL;
+                MainWindow.getList = HomeView.getPopularL;
+                Phatnhac.thisList = HomeView.getPopularL;
             }
-            if (BtnPlay.Content.ToString() == "Mới Phát Hành")
+            else if (BtnPlay.Content.ToString() == "Mới Phát Hành")
             {
-                MainWindow.getList = HomeView.getMaybeulikeL;
-                Phatnhac.thisList = HomeView.getMaybeulikeL;
+                MainWindow.getList = HomeView.getNewrealeasesL;
+                Phatnhac.thisList = HomeView.getNewrealeasesL;
             }
-            if (BtnPlay.Content.ToString() == "Nhạc Pop")
+            else if (BtnPlay.Content.ToString() == "Nhạc Pop")
             {
                 MainWindow.getList = GenresView.getPopL;
                 Phatnhac.thisList = GenresView.getPopL;
             }
-            if (BtnPlay.Content.ToString() == "Nhạc EDM")
+            else if (BtnPlay.Content.ToString() == "Nhạc EDM")
             {
                 MainWindow.getList = GenresView.getEDML;
                 Phatnhac.thisList = GenresView.getEDML;
             }
+            else if (BtnPlay.Content.ToString() == "Nhạc Cổ Điển")
+            {
+                MainWindow.getList = GenresView.getClassicL;
+                Phatnhac.thisList = GenresView.getClassicL;
+            }
+            else if (BtnPlay.Content.ToString() == "Nhạc Phim")
+            {
+                MainWindow.getList = GenresView.getOSTL;
+                Phatnhac.thisList = GenresView.getOSTL;
+            }
+            else if (BtnPlay.Content.ToString() == "Nhạc R&B")
+            {
+                MainWindow.getList = GenresView.getRnBL;
+                Phatnhac.thisList = GenresView.getRnBL;
+            }
+            else if (BtnPlay.Content.ToString() == "Nhạc Jazz")
+            {
+                MainWindow.getList = GenresView.getJazzL;
+                Phatnhac.thisList = GenresView.getJazzL;
+            }
             Phatnhac.HamTuongTac(song);
+            Phatnhac.occupying = Phatnhac.thisList;
             if (onAction != null) onAction.Invoke(this, e);
         }
 

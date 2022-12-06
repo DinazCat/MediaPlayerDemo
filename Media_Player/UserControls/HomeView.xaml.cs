@@ -31,8 +31,8 @@ namespace Media_Player.UserControls
     {
         PlayList MaybeulikeList;
         public static List<Song> getMaybeulikeL;
-        PlayList PoppularList;
-        public static List<Song> getPoppularL;
+        PlayList PopularList;
+        public static List<Song> getPopularL;
         PlayList NewReleasesList;
         public static List<Song> getNewrealeasesL;
         public HomeView()
@@ -44,15 +44,18 @@ namespace Media_Player.UserControls
             listCothebansethich.ItemsSource = MaybeulikeList.songs;
             getMaybeulikeL = MaybeulikeList.songs;
 
-            PoppularList = new PlayList();
-            InitList(ref PoppularList, "Phổ Biến");
-            listPhobien.ItemsSource= PoppularList.songs;
-            getPoppularL= PoppularList.songs;
+            PopularList = new PlayList();
+            InitList(ref PopularList, "Phổ Biến");
+            listPhobien.ItemsSource= PopularList.songs;
+            getPopularL= PopularList.songs;
 
             NewReleasesList = new PlayList();
             InitList(ref NewReleasesList, "Mới Phát Hành");
             listMoiphathanh.ItemsSource= NewReleasesList.songs;
             getNewrealeasesL = NewReleasesList.songs;
+
+            Phatnhac.thisList = MaybeulikeList.songs; 
+            Phatnhac.thisSong = MaybeulikeList.songs[0];
         }
 
         public EventHandler onAction = null;
@@ -91,8 +94,10 @@ namespace Media_Player.UserControls
                         {
                             songName = dr[0].ToString(),
                             singerName = dr[1].ToString(),
+                            album = dr[2].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
                             getPL = PlaylistName
                         });
                         n++;

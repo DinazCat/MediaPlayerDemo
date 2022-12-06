@@ -9,15 +9,15 @@
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Background" Value="Transparent"/>
-                <Style.Triggers>
+                <!--<Style.Triggers>
                     <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#778899"/>
+                        <Setter Property="Background" Value="#000025"/>
                     </Trigger>
-                </Style.Triggers>
+                </Style.Triggers>-->
             </Style>
         </Border.Style>
         <DockPanel x:Name="ucitem2" Margin="4" >
-            <Grid  Height="170" DockPanel.Dock="Top">
+            <Grid  DockPanel.Dock="Top">
                 <Border CornerRadius="10" Padding="3">
                     <Button Height="170" Background="Transparent" BorderBrush="Transparent"/>
                     <Border.Background>
@@ -38,8 +38,8 @@
             <Grid>
                 <StackPanel Margin="0,2,0,0">
                     <TextBlock Text="{Binding songName}" Foreground="White" FontSize="12" FontWeight="Medium"/>
-
-                    <TextBlock Text="{Binding singerName}" Foreground="#DDDDDD" FontSize="11" FontWeight="Medium"/>
+                    <Button Grid.Row="1" Style="{DynamicResource letterButton}" Content="{Binding singerName}" FontWeight="Medium" FontSize="11" Height="22"/>
+                    <!--<TextBlock Text="{Binding singerName}" Foreground="#DDDDDD" FontSize="11" FontWeight="Medium"/>-->
                 </StackPanel>
             </Grid>
         </DockPanel>

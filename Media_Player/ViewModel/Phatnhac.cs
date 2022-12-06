@@ -1,7 +1,9 @@
 ﻿using Media_Player.Model;
+using Media_Player.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,7 +48,7 @@ namespace Media_Player.ViewModel
         private static List<Song> _thisList;
         public static List<Song> thisList { get { return _thisList; } set { _thisList = value; } }
         public static string filename;
-        public static void openmussic()
+        public static void openmusic()
         {
             mediaPlayer.Open(new Uri(filename));
             mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
@@ -57,19 +59,24 @@ namespace Media_Player.ViewModel
         {
             if (mediaPlayer.NaturalDuration.HasTimeSpan)
             {
-                thisSong.Duration = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                thisSong.duration = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).txblDuration.Text
-                    = new TimeSpan(0, (int)(thisSong.Duration / 60), (int)(thisSong.Duration % 60)).ToString(@"mm\:ss");
-                ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Maximum = thisSong.Duration;
+                    = new TimeSpan(0, (int)(thisSong.duration / 60), (int)(thisSong.duration % 60)).ToString(@"mm\:ss");
+                ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Maximum = thisSong.duration;
                 thisSong.Position = 0;
                 mediaPlayer.Position = new TimeSpan(0, 0, 0);
+                if (!isInit)
+                {
+                    isInit = true;
+                    return;
+                }
                 MainWindow.Timer.Start();
             }
         }
         private static void MediaPlayer_MediaEnded(object? sender, EventArgs e)
         {
             //thisSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
-            // ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+            //((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
 
             if (isrepeat)
             {
@@ -77,10 +84,10 @@ namespace Media_Player.ViewModel
                 HamTuongTac(thisSong);
                 if (mediaPlayer.NaturalDuration.HasTimeSpan)
                 {
-                    thisSong.Duration = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+                    thisSong.duration = mediaPlayer.NaturalDuration.TimeSpan.TotalSeconds;
                     ((MainWindow)System.Windows.Application.Current.MainWindow).txblDuration.Text
-                        = new TimeSpan(0, (int)(thisSong.Duration / 60), (int)(thisSong.Duration % 60)).ToString(@"mm\:ss");
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Maximum = thisSong.Duration;
+                        = new TimeSpan(0, (int)(thisSong.duration / 60), (int)(thisSong.duration % 60)).ToString(@"mm\:ss");
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Maximum = thisSong.duration;
                     thisSong.Position = 0;
                     mediaPlayer.Position = new TimeSpan(0, 0, 0);
                     MainWindow.Timer.Start();
@@ -97,6 +104,17 @@ namespace Media_Player.ViewModel
                 } while (curindex == index);
                 MainWindow.getSong = thisList[index];
                 HamTuongTac(thisList[index]);
+            }
+            else
+            {
+                thisSong.Open = true;
+                int curindex = thisList.IndexOf(thisSong);
+                curindex++;
+                if (curindex < thisList.Count)
+                {
+                    MainWindow.getSong = thisList[curindex];
+                    HamTuongTac(thisList[curindex]);
+                }
             }
         }
         public static void HamTuongTac(Song song)
@@ -124,7 +142,7 @@ namespace Media_Player.ViewModel
             if (song.Open == true)
             {
                 isplaying = true;
-                openmussic();
+                openmusic();
                 song.Open = false;
             }
 
@@ -144,6 +162,18 @@ namespace Media_Player.ViewModel
 
             MainWindow.getSong = song;
             thisSong = song;
+           
+        }
+        private static bool isInit = false;
+        public static void Init()
+        {
+            thisList = HomeView.getMaybeulikeL;
+            thisSong = HomeView.getMaybeulikeL[0];
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
+            ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;
+            filename = thisSong.savepath;
+            openmusic();
         }
     }
 }

@@ -29,8 +29,7 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
                 <Grid>
-                    
-                        <Image x:Name="Picture" Source="{Binding linkanh}" Height="50" Width="50"/>
+                    <Image x:Name="Picture" Source="{Binding linkanh}" Height="50" Width="50" Stretch="Fill"/>
 
                     <Button x:Name="BtnPlay" Background="Transparent" BorderBrush="Transparent"  Height="50" Visibility="Hidden" Click="BtnPlay_click" Content="{Binding getPL}" >
                         <Button.Template>
@@ -63,7 +62,7 @@
                         Content="{Binding album}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center" 
-                        FontSize="15">
+                        FontSize="14">
                 </Button>
             </Grid>
             <Grid Grid.Column="2">
@@ -73,9 +72,9 @@
                         <materialDesign:PackIcon Kind="Heart" Width="20" Height="20"
                                              Foreground="White" />
                     </Button>
-                    <TextBlock Text="{Binding Duration}"                              
+                    <TextBlock Text="{Binding time}"                              
                                Padding="10"    
-                               Margin="45 0"
+                               Margin="42 0"
                                VerticalAlignment="Center"
                                Foreground="White"
                                FontSize="16"/>

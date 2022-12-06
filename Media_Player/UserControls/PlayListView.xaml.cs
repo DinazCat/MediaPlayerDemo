@@ -109,8 +109,10 @@ namespace Media_Player.UserControls
                         {
                             songName = dr[0].ToString(),
                             singerName = dr[1].ToString(),
+                            album = dr[2].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
                             getPL = PlaylistName
                         });
                         n++;
