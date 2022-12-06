@@ -118,7 +118,7 @@ namespace Media_Player.UserControls
         {
             PlayList item = (sender as Button).DataContext as PlayList;
             PlayListView.Title = item.title;
-            if(item.haveOpened == false)
+            if (item.haveOpened == false)
             {
 
                 for (int i = 0; i < QuocGiaPLs.Count; i++)
@@ -126,8 +126,8 @@ namespace Media_Player.UserControls
                     QuocGiaPLs[i].haveOpened = false;
                 }
                 page = new PlayListView();
-                item.haveOpened = true;  
-            }    
+                item.haveOpened = true;
+            }
             p = page;
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
             MainWindow.View.Add(p);

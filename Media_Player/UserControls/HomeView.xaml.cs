@@ -54,8 +54,8 @@ namespace Media_Player.UserControls
             listMoiphathanh.ItemsSource= NewReleasesList.songs;
             getNewrealeasesL = NewReleasesList.songs;
 
-            Phatnhac.thisList = MaybeulikeList.songs; 
-            Phatnhac.thisSong = MaybeulikeList.songs[0];
+            //Phatnhac.thisList = MaybeulikeList.songs;
+            //Phatnhac.thisSong = MaybeulikeList.songs[0];
         }
 
         public EventHandler onAction = null;
@@ -79,7 +79,7 @@ namespace Media_Player.UserControls
             }
             //Đổ dữ liệu cho songs
             pl.songs = new List<Song>();
-            query = "SELECT S.* FROM Belong B JOIN Song S ON S.Name=B.SongName WHERE PlaylistName=@PlaylistName";
+            query = "SELECT * FROM Belong B JOIN Song S ON S.Name=B.SongName WHERE PlaylistName=@PlaylistName";
             SqlParameter param1 = new SqlParameter("@PlaylistName", PlaylistName);
             using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
             {
@@ -92,9 +92,9 @@ namespace Media_Player.UserControls
                     {
                         pl.songs.Add(new Song()
                         {
-                            songName = dr[0].ToString(),
-                            singerName = dr[1].ToString(),
-                            album = dr[2].ToString(),
+                            songName = dr["SongName"].ToString(),
+                            singerName = dr["Artist"].ToString(),
+                            album = dr["Album"].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
                             time = dr["Duration"].ToString(),

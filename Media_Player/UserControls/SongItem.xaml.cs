@@ -43,9 +43,21 @@ namespace Media_Player.UserControls
         private void BtnPlay_click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-            MainWindow.getList = PlayListView.curlist;
-            Phatnhac.thisList =PlayListView.curlist;
+            if (PlayListView.curlist.Count != 0)
+            {
+                MainWindow.getList = PlayListView.curlist;
+                Phatnhac.thisList = PlayListView.curlist;
+            }
+            else
+            {
+                if (BtnPlay.Content.ToString() == "Result")
+                {
+                    MainWindow.getList = ResultView.result;
+                    Phatnhac.thisList = ResultView.result;
+                }
+            }
             Phatnhac.HamTuongTac(song);
+            Phatnhac.occupying = Phatnhac.thisList;
             if (onAction != null) onAction.Invoke(this, e);
         }
 

@@ -212,16 +212,16 @@
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource MaterialDesignToolButton}" Margin="0,0,0,-2" Grid.RowSpan="2">
+                                <Button x:Name="BtnFind" Style="{StaticResource MaterialDesignToolButton}" Margin="0,0,0,-2" Grid.RowSpan="2" Click="BtnFind_Click">
                                     <materialDesign:PackIcon Kind="Search"  Width="20" Height="20" Opacity=".56" />
                                 </Button>
-                                <TextBox Grid.Column="1" Margin="8,0,0,0"
+                                <TextBox Grid.Column="1" Margin="8,0,0,0" x:Name="txtKetqua"
                                          materialDesign:HintAssist.Hint="Tìm kiếm bài hát, nghệ sĩ,..."
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                                          BorderThickness="0"
+                                         TextChanged="txtKetqua_TextChanged"
                                          MinWidth="350"
-                                         VerticalAlignment="Center" Grid.Row="1" 
-                                         FontSize="14"/>
+                                         VerticalAlignment="Center" Grid.Row="1" />
                             </Grid>
                         </materialDesign:ColorZone>
                     </StackPanel>
@@ -325,8 +325,6 @@
                     <TextBlock x:Name="txblPosition" Text="00:00" Foreground="White" Margin="0 4 5 0" Width="35"/>
                     <Slider  Width="400"
                             Name="timelineSlider"   
-                            PreviewMouseDown="timelineSlider_PreviewMouseDown"
-                            PreviewMouseUp="timelineSlider_PreviewMouseUp"
                             ValueChanged="timelineSlider_ValueChanged"
                             Foreground="#FFF5F2F9" Maximum="1010" />
                     <TextBlock x:Name="txblDuration" Foreground="White" Margin="7 4 0 0"/>

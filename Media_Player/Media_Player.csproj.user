@@ -5,6 +5,9 @@
     <Compile Update="UserControls\PlayListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UserControls\ResultView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="UserControls\SongItem2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -14,6 +17,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="UserControls\PlayListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UserControls\ResultView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="UserControls\SongItem2.xaml">

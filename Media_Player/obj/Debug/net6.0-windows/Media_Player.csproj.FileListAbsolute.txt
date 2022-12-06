@@ -255,3 +255,7 @@ D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Media_P
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\ref\Media_Player.dll
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.g.cs
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\ResultView.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\ResultView.baml

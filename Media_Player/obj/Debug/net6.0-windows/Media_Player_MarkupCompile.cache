@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\
 Media_Player
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-D:\C#\Media Player\MediaPlayerDemo\Media_Player\App.xaml
-12-815695755
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\App.xaml
+13-1936197054
 
-28-1452012059
-201552577164
-Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\PlayListView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;
+29-418761581
+201-1119673955
+Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;
 
 False
 

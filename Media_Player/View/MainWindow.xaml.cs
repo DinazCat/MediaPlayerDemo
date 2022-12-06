@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -32,9 +33,6 @@ namespace Media_Player
             InitializeComponent();
 
             DataContext = new MainViewModel();
-
-           
-
             if (Phatnhac.isplaying == true)
             {
                 BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
@@ -48,15 +46,17 @@ namespace Media_Player
             Timer.Tick += Timer_Tick;
             getList = Phatnhac.thisList;
             getSong = Phatnhac.thisSong;
-            frame.NavigationService.Navigate(page1);
             View.Add(page1);
             CurrentView = page1;
-            Phatnhac.Init();
+            //Phatnhac.Init();
         }
-
+        public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)
         {
-            getSong.Position++;
+            if (getSong.Position - oldPosition > 0)
+                Phatnhac.mediaPlayer.Position = new TimeSpan(0, 0, (int)getSong.Position);
+            getSong.Position += 1;
+            oldPosition = getSong.Position;
             timelineSlider.Value = getSong.Position;
         }
 
@@ -124,24 +124,11 @@ namespace Media_Player
                 Volume.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "volume.png"));
         }
 
-        bool isDraging = false;
-        private void timelineSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            isDraging = true;
-        }
-
-        private void timelineSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            isDraging = false;
-        }
+       
 
         private void timelineSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(isDraging)
-            {
-                getSong.Position = timelineSlider.Value;
-                Phatnhac.mediaPlayer.Position = new TimeSpan(0, 0, (int)getSong.Position);
-            }    
+            getSong.Position = timelineSlider.Value;
             txblPosition.Text = new TimeSpan(0, (int)(getSong.Position / 60), (int)(getSong.Position % 60)).ToString(@"mm\:ss");
         }
 
@@ -182,6 +169,7 @@ namespace Media_Player
         int index;
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
+            txtKetqua.Text = "";
             index = View.IndexOf(CurrentView);
             if (index > 0)
             {
@@ -189,7 +177,7 @@ namespace Media_Player
                 CurrentView = View[index - 1];
                 CheckBack = true;
             }
-
+            else if(index == 0) frame.NavigationService.Navigate(View[index]);
         }
         //Nút Next view
         private void Button_Click_9(object sender, RoutedEventArgs e)
@@ -201,21 +189,23 @@ namespace Media_Player
                 CurrentView = View[index + 1];
             }
         }
-        HomeView page1 = new HomeView();
-        LibView page2 = new LibView();
+        HomeView page1;
+        LibView page2 = new LibView() ;
         GenresView page3 = new GenresView();
         LikedView page4 = new LikedView();
         UserControl page;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            page = page1;
-            frame.NavigationService.Navigate(page);
+            // page = page1;
+            txtKetqua.Text = "";
+            frame.NavigationService.Navigate(page1);
             View.Add(page1);
             CurrentView = page1;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            txtKetqua.Text = "";
             page = page2;
             frame.NavigationService.Navigate(page);
             View.Add(page2);
@@ -225,7 +215,7 @@ namespace Media_Player
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             page = page3;
-
+            txtKetqua.Text = "";
             frame.NavigationService.Navigate(page);
             View.Add(page3);
             CurrentView = page3;
@@ -238,6 +228,7 @@ namespace Media_Player
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
+            txtKetqua.Text = "";
             page = page4;
             frame.NavigationService.Navigate(page);
             View.Add(page4);
@@ -259,7 +250,108 @@ namespace Media_Player
                 OldVolume = true;
             }
         }
+       // ResultView pageKq = new ResultView();
+        private void BtnFind_Click(object sender, RoutedEventArgs e)
+        {
+            if (txtKetqua.Text != "")
+            {
+                ResultView.setTextKq = "Không tìm thấy kết quả nào";
+                ResultView.Result = new List<Song>();
+                ResultView.Result.Clear();
+                string query = "SELECT * FROM Song";
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text))
+                {
+                    DataTable dt = new DataTable();
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (dr[0].ToString().ToUpper().Contains(txtKetqua.Text.ToUpper()) || dr[1].ToString().ToUpper().Contains(txtKetqua.Text.ToUpper()))
+                            {
+                                ResultView.Result.Add(new Song()
+                                {
+                                    songName = dr[0].ToString(),
+                                    singerName = dr[1].ToString(),
+                                    linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
+                                    savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                                    getPL = "Result"
+                                });
+                                ResultView.setTextKq = "Kết quả tìm kiếm";
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < ResultView.Result.Count - 1; i++)
+                {
+                    string namesong = ResultView.Result[i].songName;
+                    for (int j = i + 1; j < ResultView.Result.Count; j++)
+                    {
+                        if (ResultView.Result[j].songName == namesong)
+                        {
+                            ResultView.Result.RemoveAt(j);
+                        }
+                    }
+                }
+            }
+            else ResultView.setTextKq = "Có thể bạn muốn tìm";
+            ResultView pageKq = new ResultView();
+            frame.NavigationService.Navigate(pageKq);
+            View.Add(pageKq);
+            CurrentView = pageKq;
+        }
 
-       
+
+
+        private void txtKetqua_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtKetqua.Text != "")
+            {
+                ResultView.setTextKq = "Không tìm thấy kết quả nào";
+                ResultView.Result = new List<Song>();
+                ResultView.Result.Clear();
+                string query = "SELECT * FROM Song";
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text))
+                {
+                    DataTable dt = new DataTable();
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (dr[0].ToString().ToUpper().Contains(txtKetqua.Text.ToUpper()) || dr[1].ToString().ToUpper().Contains(txtKetqua.Text.ToUpper()))
+                            {
+                                ResultView.Result.Add(new Song()
+                                {
+                                    songName = dr[0].ToString(),
+                                    singerName = dr[1].ToString(),
+                                    linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
+                                    savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                                    getPL = "Result"
+                                });
+                                ResultView.setTextKq = "Kết quả tìm kiếm";
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < ResultView.Result.Count - 1; i++)
+                {
+                    string namesong = ResultView.Result[i].songName;
+                    for (int j = i + 1; j < ResultView.Result.Count; j++)
+                    {
+                        if (ResultView.Result[j].songName == namesong)
+                        {
+                            ResultView.Result.RemoveAt(j);
+                        }
+                    }
+                }
+            }
+            else ResultView.setTextKq = "Có thể bạn muốn tìm";
+                ResultView pageKq = new ResultView();
+                frame.NavigationService.Navigate(pageKq);
+            
+
+        }
+
     }
 }
