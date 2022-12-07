@@ -20,23 +20,19 @@ namespace Media_Player.ViewModel
         public ICommand AddPlaylistWindowCommand { get; set; }
         public MainViewModel()
         {
+
             LoadedWindowCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 Isloaded = true;
                 p.Hide();
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
-                //p.Show();
-                //Isloaded = true;
-                //if (p == null)
-                //    return;
-                //p.Hide();
 
                 if (loginWindow.DataContext == null)
                     return;
                 var loginVM = loginWindow.DataContext as LoginViewModel;
 
-                if (loginVM.IsLogin)
+                if (loginVM.IsLogin || loginVM.IsSkip)
                 {
                     p.Show();
                 }
@@ -44,24 +40,9 @@ namespace Media_Player.ViewModel
                 {
                     p.Close();
                 }
-
-                //LoginWindow loginWindow = new LoginWindow();
-                //loginWindow.ShowDialog();
-
-                //if (loginWindow.DataContext == null)
-                //    return;
-                //var loginVM = loginWindow.DataContext as LoginViewModel;
-
-                //if (loginVM.IsLogin)
-                //{
-                //    p.Show();
-                //}
-                //else
-                //{
-                //    p.Close();
-                //}
             }
               );
+
             UpdateViewCommand = new UpdateViewCommand(this);
             AddPlaylistWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

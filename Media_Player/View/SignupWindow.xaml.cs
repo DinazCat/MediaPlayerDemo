@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Media_Player.ViewModel;
 
 namespace Media_Player.View
 {
@@ -29,9 +30,9 @@ namespace Media_Player.View
             InitializeComponent();
         }
         private LoginWindow loginwd;
-        public SignupWindow (Window callingwd)
+        public SignupWindow(Window callingwd)
         {
-            loginwd= callingwd as LoginWindow;
+            loginwd = callingwd as LoginWindow;
             InitializeComponent();
         }
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -49,22 +50,22 @@ namespace Media_Player.View
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            loginwd.Show();
             this.Close();
+            loginwd.ShowDialog();
         }
 
         private void BtnSignup_click(object sender, RoutedEventArgs e)
         {
-            if(Email.Text == "" || Username.Text =="" || Displayname.Text == "" || PasswordBox1.Password == "" || PasswordBox2.Password == "")
+            if (Email.Text == "" || Username.Text == "" || Displayname.Text == "" || PasswordBox1.Password == "" || PasswordBox2.Password == "")
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 Email.Focus();
             }
-            else if(PasswordBox1.Password != PasswordBox2.Password)
+            else if (PasswordBox1.Password != PasswordBox2.Password)
             {
                 MessageBox.Show("Mật khẩu không trùng nhau!");
             }
-            else if(!Regex.IsMatch(Email.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+            else if (!Regex.IsMatch(Email.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
             {
                 MessageBox.Show("Email không hợp lê!");
             }
@@ -82,11 +83,6 @@ namespace Media_Player.View
                 loginwd.Show();
                 this.Close();
             }
-            
-        }
-
-        private void BtnSkip_Click(object sender, RoutedEventArgs e)
-        {
 
         }
     }

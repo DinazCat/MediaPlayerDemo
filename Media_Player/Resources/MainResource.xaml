@@ -4,5 +4,4 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
-    <viewmodel:SignupViewModel x:Key="SignupVM"></viewmodel:SignupViewModel>
 </ResourceDictionary>

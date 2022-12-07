@@ -16,12 +16,14 @@ namespace Media_Player.ViewModel
     internal class LoginViewModel : BaseViewModel
     {
         public bool IsLogin { get; set; }
+        public bool IsSkip { get; set; }
         private string _UserName;
         public string UserName { get => _UserName; set { _UserName = value; OnPropertyChanged(); } }
         private string _Password;
         public string Password { get => _Password; set { _Password = value; OnPropertyChanged(); } }
 
         public ICommand CloseCommand { get; set; }
+        public ICommand SkipCommand { get; set; }
         public ICommand LoginCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
         public LoginViewModel()
@@ -30,6 +32,7 @@ namespace Media_Player.ViewModel
             Password = "";
             UserName = "";
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { Login(p); });
+            SkipCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { IsSkip = true; p.Close(); });
             CloseCommand = new RelayCommand<Window>((p) => { return true; }, (p) => { p.Close(); });
             PasswordChangedCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) => { Password = p.Password; });
         }
@@ -60,7 +63,7 @@ namespace Media_Player.ViewModel
                         IsLogin = false;
                         MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
                     }
-                   
+
                 }
             }
             catch { }

@@ -54,8 +54,8 @@ namespace Media_Player.UserControls
             listMoiphathanh.ItemsSource= NewReleasesList.songs;
             getNewrealeasesL = NewReleasesList.songs;
 
-            //Phatnhac.thisList = MaybeulikeList.songs;
-            //Phatnhac.thisSong = MaybeulikeList.songs[0];
+            Phatnhac.thisList = MaybeulikeList.songs;
+            Phatnhac.thisSong = MaybeulikeList.songs[0];
         }
 
         public EventHandler onAction = null;

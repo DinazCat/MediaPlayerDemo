@@ -43,12 +43,12 @@ namespace Media_Player
             }
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 1);
-            Timer.Tick += Timer_Tick;
-            getList = Phatnhac.thisList;
-            getSong = Phatnhac.thisSong;
+            Timer.Tick += Timer_Tick;            
             View.Add(page1);
             CurrentView = page1;
-            //Phatnhac.Init();
+            Phatnhac.Init();
+            getList = Phatnhac.thisList;
+            getSong = Phatnhac.thisSong;
         }
         public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Media_Player"
+        xmlns:vm="clr-namespace:Media_Player.ViewModel"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -15,10 +16,10 @@
         Background="Transparent"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"       
-        Name="signupWindow" Height="600" Width="600"
+        Name="signupWindow" Height="550" Width="600"
         ResizeMode="NoResize"
-        WindowStyle="None"
-        DataContext="{StaticResource SignupVM}">
+        WindowStyle="None">
+
     <Border MouseDown="Grid_Mousedown">
         <Border.Background>
             <LinearGradientBrush StartPoint="0 0" EndPoint="0 1">
@@ -35,7 +36,7 @@
             <StackPanel>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Style ="{StaticResource MaterialDesignIconButton}" Margin="0 5 10 45"
+                        <Button Style ="{StaticResource MaterialDesignIconButton}" Margin="0 5 10 45"                                
                             Height="25" Width="25" Click="BtnBack_Click"
                             ToolTip="Go Back" OverridesDefaultStyle="True">
                             <materialDesign:PackIcon Kind="ArrowLeft"
@@ -106,47 +107,13 @@
                 <StackPanel>
                     <Button Style="{StaticResource MaterialDesignOutlinedLightButton}"
                             materialDesign:ButtonAssist.CornerRadius="5" Click="BtnSignup_click"
-                            Width="100" Content="Đăng ký" Foreground="White" FontSize="14" Margin="0 20">
+                            Width="100" Content="Đăng ký" Foreground="White" FontSize="14" Margin="0 30">
                         <Button.Background>
                             <LinearGradientBrush>
                                 <GradientStop Color="#0222" Offset="1"/>
                                 <GradientStop Color="#000022" Offset="0"/>
                             </LinearGradientBrush>
                         </Button.Background>
-                    </Button>
-                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Center" Content="Bỏ qua bước này và bắt đầu" BorderThickness="0,0,0,0"
-                            Click="BtnSkip_Click">
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Foreground" Value="White"></Setter>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Foreground" Value="#CCCCCC"/>
-                                        <Setter Property="Cursor" Value="Hand"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}" BorderThickness="0">
-                                                        <TextBlock TextDecorations="Underline">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                        </TextBlock>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
                     </Button>
                 </StackPanel>
             </StackPanel>

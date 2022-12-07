@@ -44,7 +44,7 @@ namespace Media_Player
         }
         private void BtnLogin_click(object sender, RoutedEventArgs e)
         {
-           
+
         }
         public Window loginwd()
         {

@@ -66,11 +66,11 @@ namespace Media_Player.ViewModel
                 thisSong.Position = 0;
                 MainWindow.oldPosition = 0;
                 mediaPlayer.Position = new TimeSpan(0, 0, 0);
-                //if (!isInit)
-                //{
-                //    isInit = true;
-                //    return;
-                //}
+                if (!isInit)
+                {
+                    isInit = true;
+                    return;
+                }
                 MainWindow.Timer.Start();
             }
         }
@@ -165,16 +165,16 @@ namespace Media_Player.ViewModel
             thisSong = song;
            
         }
-        //private static bool isInit = false;
-        //public static void Init()
-        //{
-        //    thisList = HomeView.getMaybeulikeL;
-        //    thisSong = HomeView.getMaybeulikeL[0];
-        //    ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
-        //    ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
-        //    ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;
-        //    filename = thisSong.savepath;
-        //    openmusic();
-        //}
+        private static bool isInit = false;
+        public static void Init()
+        {
+            thisList = GenresView.getPopL;
+            thisSong = GenresView.getPopL[0];
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
+            ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;
+            filename = thisSong.savepath;
+            openmusic();
+        }
     }
 }

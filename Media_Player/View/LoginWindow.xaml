@@ -15,10 +15,11 @@
         Background="Transparent"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"       
-        Name="loginWindow" Height="450" Width="630"
+        Name="loginWindow" Height="470" Width="630"
         ResizeMode="NoResize"
         WindowStyle="None"
         DataContext="{StaticResource LoginVM}">
+
     <Border MouseDown="Grid_MouseDown">
         <Border.Background>
             <LinearGradientBrush StartPoint="0 0" EndPoint="0 1">
@@ -121,7 +122,44 @@
                             </LinearGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Center" Content="Bạn chưa có tài khoản? Đăng ký" BorderThickness="0,0,0,0" Click="BtnSignup_Click">
+
+                    <Button Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Center" Content="Bạn chưa có tài khoản? Đăng ký ngay" BorderThickness="0,0,0,0"
+                                Click="BtnSignup_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Foreground" Value="White"></Setter>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Foreground" Value="#CCCCCC"/>
+                                        <Setter Property="Cursor" Value="Hand"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                                                        <TextBlock TextDecorations="Underline">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                        </TextBlock>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="SkipBtn" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Center" Content="Bỏ qua bước này và bắt đầu" BorderThickness="0,0,0,0" Margin="15"
+                                Command="{Binding SkipCommand}" CommandParameter="{Binding ElementName=loginWindow}">
+                        <!--Command="{Binding SkipCommand}" CommandParameter="{Binding ElementName=Skipbtn}"-->
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Foreground" Value="White"></Setter>
