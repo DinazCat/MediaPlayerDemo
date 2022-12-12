@@ -62,7 +62,7 @@
                                Foreground="White"
                                FontSize="14"/>
             </Grid>
-            <ListView x:Name="listSongItem">
+            <ListView x:Name="listSongItem" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <local:SongItem/>

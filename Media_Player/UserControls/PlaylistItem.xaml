@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Media_Player.UserControls.PlaylistItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Media_Player.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">
+    <Grid MouseEnter="PlaylistItem_MouseEnter" MouseLeave="PlaylistItem_MouseLeave">
+        <DockPanel Margin="4">
+            <Grid Height="190" Width="240" DockPanel.Dock="Top">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Border CornerRadius="15">
+                    <Button Height="190" Background="Transparent" BorderBrush="Transparent" Click="PlaylistOpen_Click"/>
+                    <Border.Background>
+                        <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                    </Border.Background>
+                </Border>
+                <Button x:Name="BtnDelete" Height="50" Width="50" VerticalAlignment="Center" Margin="0 0 130 0" Visibility="Hidden" 
+                        Style ="{StaticResource MaterialDesignIconButton}" Click="BtnDelete_Click">
+                    <materialDesign:PackIcon Kind="TrashCanOutline" Foreground="White" Height="35" Width="35"/>
+                </Button>
+                <Button x:Name="BtnPlay" Height="50" Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click" Visibility="Hidden" Content="{Binding getPL}">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Canvas>
+                                <Image x:Name="play" Source="{Binding Linkicon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Canvas>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+            <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
+        </DockPanel>
+    </Grid>
+</UserControl>

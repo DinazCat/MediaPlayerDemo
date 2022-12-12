@@ -70,7 +70,7 @@
                     </Grid>
 
                     <Button  Style="{StaticResource MaterialDesignOutlinedButton}"
-                             Click="Button_Click"
+                             Click="mainViewBtn_Click"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                              materialDesign:ButtonProgressAssist.IsIndeterminate="True"
@@ -88,7 +88,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Click="Button_Click_1"
+                    <Button  Click="libraryViewBtn_Click"
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -106,7 +106,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Click="Button_Click_2"                   
+                    <Button  Click="genresViewBtn_Click"                   
                              Style="{StaticResource MaterialDesignOutlinedButton}"                             
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -124,7 +124,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Click="Button_Click_4"                    
+                    <Button  Click="chartViewBtn_Click"                    
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -144,7 +144,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Command="{Binding AddPlaylistWindowCommand}"                     
+                    <Button  Click="addNewPLBtn_Click"                   
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -162,7 +162,7 @@
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Click="Button_Click_5"                    
+                    <Button  Click="likedViewBtn_Click"                    
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -191,10 +191,10 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
 
-                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="Button_Click_3">
+                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="backViewBtn_Click">
                             <materialDesign:PackIcon Kind="ArrowLeft" Width="30" Height="30" />
                         </Button>
-                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="Button_Click_9"
+                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="nextViewBtn_Click"
                                 Margin="7 0 0 0">
                             <materialDesign:PackIcon Kind="ArrowRight" Width="30" Height="30"/>
                         </Button>
@@ -230,7 +230,7 @@
         </Grid>
 
         <!--Main View-->
-        <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4">
+        <ScrollViewer x:Name="scrollviewer"  Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4" >
             <Grid >
                 <ContentControl Content="{Binding SelectedViewModel}"/>
                 <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
@@ -283,7 +283,7 @@
                 </Button>
 
                 <Button Style ="{StaticResource MaterialDesignIconButton}"  
-                        Height="30" Width="30">
+                        Height="30" Width="30" Click="addSongToPLbtn_Click">
                     <materialDesign:PackIcon Kind="PlusCircle" 
                                              Height="25" Width="25"
                                              Foreground="White"/>
@@ -333,7 +333,7 @@
 
             <!--Right Section-->
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Click="Button_Click_6" x:Name="Volume"
+                <Button Click="volumeBtn_Click" x:Name="Volume"
                         Height="20" Width="20" Margin="10 0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -348,7 +348,7 @@
                          Width="100" Foreground="#FFF5F2F9" />
                 <Border BorderBrush="#FF9A9393" BorderThickness="1 0" Margin="15 20 2 20"/>
                 <Button Style="{StaticResource MaterialDesignIconButton}"
-                        Height="40" Width="40">
+                        Height="40" Width="40" Click="openCurPLBtn_Click">
                     <materialDesign:PackIcon Kind="PlaylistMusicOutline" Foreground="White"/>
                 </Button>
             </StackPanel>

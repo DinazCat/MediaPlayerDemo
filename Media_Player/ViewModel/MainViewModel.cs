@@ -17,7 +17,7 @@ namespace Media_Player.ViewModel
         public bool Isloaded = false;
         public ICommand LoadedWindowCommand { get; set; }
         public ICommand UpdateViewCommand { get; set; }
-        public ICommand AddPlaylistWindowCommand { get; set; }
+        //public ICommand AddPlaylistWindowCommand { get; set; }
         public MainViewModel()
         {
 
@@ -44,12 +44,19 @@ namespace Media_Player.ViewModel
               );
 
             UpdateViewCommand = new UpdateViewCommand(this);
-            AddPlaylistWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                AddPlaylistWindow wd = new AddPlaylistWindow();
-                wd.ShowDialog();
-            });
+            //AddPlaylistWindowCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            //{
+            //    AddPlaylistWindow wd = new AddPlaylistWindow();
+            //    wd.AddNewPlaylistEvent += Wd_AddNewPlaylistEvent;
+            //    wd.ShowDialog();
+            //});
         }
+
+        private void Wd_AddNewPlaylistEvent(string playlistName)
+        {
+            throw new NotImplementedException();
+        }
+
         private BaseViewModel _selectedViewModel = new HomeViewModel();
         public BaseViewModel SelectedViewModel
         {

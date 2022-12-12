@@ -55,7 +55,7 @@ namespace Media_Player.ViewModel
                     if (count > 0)
                     {
                         IsLogin = true;
-
+                        MainWindow.userName = UserName;
                         p.Close();
                     }
                     else

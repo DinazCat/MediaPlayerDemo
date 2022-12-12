@@ -113,7 +113,7 @@
                 <StackPanel>
                     <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=loginWindow}"
                             Style="{StaticResource MaterialDesignOutlinedLightButton}"
-                            materialDesign:ButtonAssist.CornerRadius="5" Click="BtnLogin_click"
+                            materialDesign:ButtonAssist.CornerRadius="5"
                             Width="100" Content="Đăng nhập" Foreground="White" FontSize="14" Margin="0 20">
                         <Button.Background>
                             <LinearGradientBrush>
@@ -159,7 +159,6 @@
                     </Button>
                     <Button x:Name="SkipBtn" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Center" Content="Bỏ qua bước này và bắt đầu" BorderThickness="0,0,0,0" Margin="15"
                                 Command="{Binding SkipCommand}" CommandParameter="{Binding ElementName=loginWindow}">
-                        <!--Command="{Binding SkipCommand}" CommandParameter="{Binding ElementName=Skipbtn}"-->
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Foreground" Value="White"></Setter>

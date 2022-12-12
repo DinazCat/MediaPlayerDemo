@@ -2,6 +2,8 @@
 using Media_Player.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,36 +27,22 @@ namespace Media_Player.UserControls
         public SongItem()
         {
             InitializeComponent();
-        }
-        //public bool IsActive
-        //{
-        //    get { return (bool)GetValue(IsActiveProperty); }
-        //    set { SetValue(IsActiveProperty, value); }
-        //}
-        //public static readonly DependencyProperty IsActiveProperty = DependencyProperty.Register("IsActive", typeof(bool), typeof(SongItem));
+        }        
 
-        //public bool IsLiked
-        //{
-        //    get { return (bool)GetValue(IsLikedProperty); }
-        //    set { SetValue(IsLikedProperty, value); }
-        //}
-        //public static readonly DependencyProperty IsLikedProperty = DependencyProperty.Register("IsLiked", typeof(bool), typeof(SongItem));
         public EventHandler onAction = null;
         private void BtnPlay_click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-            if (PlayListView.curlist.Count != 0)
+            if (BtnPlay.Content.ToString() == "Result")
             {
-                MainWindow.getList = PlayListView.curlist;
-                Phatnhac.thisList = PlayListView.curlist;
+                MainWindow.getList = ResultView.result;
+                Phatnhac.thisList = ResultView.result;
             }
             else
             {
-                if (BtnPlay.Content.ToString() == "Result")
-                {
-                    MainWindow.getList = ResultView.result;
-                    Phatnhac.thisList = ResultView.result;
-                }
+
+                MainWindow.getListName = song.getPL;
+                MainWindow.getList = Phatnhac.thisList = song.getList;
             }
             Phatnhac.HamTuongTac(song);
             Phatnhac.occupying = Phatnhac.thisList;
@@ -71,6 +59,106 @@ namespace Media_Player.UserControls
         {
             this.BtnPlay.Visibility = Visibility.Hidden;
             this.Picture.Opacity = 1;
+        }
+        List<Song> songs;
+        PlayListView page = new PlayListView();
+        UserControl p;
+        private void artistBtn_click(object sender, RoutedEventArgs e)
+        {
+            Song song = (sender as Button).DataContext as Song;
+            PlayListView.Title = song.singerName;
+
+            songs = new List<Song>();
+            string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
+            SqlParameter param1 = new SqlParameter("@Artist", song.singerName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        songs.Add(new Song()
+                        {
+                            songName = dr["Name"].ToString(),
+                            singerName = dr["Artist"].ToString(),
+                            album = dr["Album"].ToString(),
+                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
+                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
+                            getPL = song.singerName
+                        });
+                        n++;
+                    }
+                    foreach (Song s in songs)
+                    {
+                        s.getList = songs;
+                    }
+                }
+            }
+
+            page = new PlayListView(songs, song.singerName);
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(p);
+                MainWindow.View.RemoveAt(index - 1);
+                MainWindow.CheckBack = false;
+            }
+        }
+
+        private void albumBtn_click(object sender, RoutedEventArgs e)
+        {
+            Song song = (sender as Button).DataContext as Song;
+            PlayListView.Title = song.album;
+
+            songs = new List<Song>();
+            string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Album=@Album";
+            SqlParameter param1 = new SqlParameter("@Album", song.album);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        songs.Add(new Song()
+                        {
+                            songName = dr["Name"].ToString(),
+                            singerName = dr["Artist"].ToString(),
+                            album = dr["Album"].ToString(),
+                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
+                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
+                            getPL = song.album,
+                        });
+                        n++;
+                    }
+                    foreach (Song s in songs)
+                    {
+                        s.getList = songs;
+                    }
+                }
+            }
+
+            page = new PlayListView(songs, song.album);
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(p);
+                MainWindow.View.RemoveAt(index - 1);
+                MainWindow.CheckBack = false;
+            }
         }
     }
 }

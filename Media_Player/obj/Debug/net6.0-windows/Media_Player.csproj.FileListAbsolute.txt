@@ -263,3 +263,5 @@ D:\C#\MediaPlayer\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserCont
 D:\C#\MediaPlayer\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.g.cs
 D:\C#\MediaPlayer\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\ResultView.baml
 D:\C#\MediaPlayer\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SignupWindow.baml
+D:\C#\MediaPlayer\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\PlaylistItem.g.cs
+D:\C#\MediaPlayer\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\PlaylistItem.baml

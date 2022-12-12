@@ -30,11 +30,8 @@ namespace Media_Player.UserControls
     public partial class HomeView : UserControl
     {
         PlayList MaybeulikeList;
-        public static List<Song> getMaybeulikeL;
         PlayList PopularList;
-        public static List<Song> getPopularL;
         PlayList NewReleasesList;
-        public static List<Song> getNewrealeasesL;
         public HomeView()
         {
             InitializeComponent();
@@ -42,20 +39,14 @@ namespace Media_Player.UserControls
             MaybeulikeList = new PlayList();
             InitList(ref MaybeulikeList, "Có Thể Bạn Sẽ Thích");
             listCothebansethich.ItemsSource = MaybeulikeList.songs;
-            getMaybeulikeL = MaybeulikeList.songs;
 
             PopularList = new PlayList();
             InitList(ref PopularList, "Phổ Biến");
             listPhobien.ItemsSource= PopularList.songs;
-            getPopularL= PopularList.songs;
 
             NewReleasesList = new PlayList();
             InitList(ref NewReleasesList, "Mới Phát Hành");
             listMoiphathanh.ItemsSource= NewReleasesList.songs;
-            getNewrealeasesL = NewReleasesList.songs;
-
-            Phatnhac.thisList = MaybeulikeList.songs;
-            Phatnhac.thisSong = MaybeulikeList.songs[0];
         }
 
         public EventHandler onAction = null;
@@ -79,7 +70,7 @@ namespace Media_Player.UserControls
             }
             //Đổ dữ liệu cho songs
             pl.songs = new List<Song>();
-            query = "SELECT * FROM Belong B JOIN Song S ON S.Name=B.SongName WHERE PlaylistName=@PlaylistName";
+            query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Belong B JOIN Song S ON S.Name=B.SongName WHERE PlaylistName=@PlaylistName";
             SqlParameter param1 = new SqlParameter("@PlaylistName", PlaylistName);
             using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
             {
@@ -92,7 +83,7 @@ namespace Media_Player.UserControls
                     {
                         pl.songs.Add(new Song()
                         {
-                            songName = dr["SongName"].ToString(),
+                            songName = dr["Name"].ToString(),
                             singerName = dr["Artist"].ToString(),
                             album = dr["Album"].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
@@ -101,6 +92,10 @@ namespace Media_Player.UserControls
                             getPL = PlaylistName
                         });
                         n++;
+                    }
+                    foreach (Song s in pl.songs)
+                    {
+                        s.getList = pl.songs;
                     }
                 }
             }

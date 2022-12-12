@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using MaterialDesignThemes.Wpf;
 using Media_Player.Model;
 using Media_Player.UserControls;
+using Media_Player.View;
 using Media_Player.ViewModel;
 using static Media_Player.MainWindow;
 
@@ -44,8 +45,8 @@ namespace Media_Player
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 1);
             Timer.Tick += Timer_Tick;            
-            View.Add(page1);
-            CurrentView = page1;
+            View.Add(homepage);
+            CurrentView = homepage;
             Phatnhac.Init();
             getList = Phatnhac.thisList;
             getSong = Phatnhac.thisSong;
@@ -65,7 +66,10 @@ namespace Media_Player
         public static List<Song> getList { get { return _getList; } set { _getList = value; } }
         private static Song _getSong;
         public static Song getSong { get { return _getSong; } set { _getSong = value; } }
-
+        private static string _getListName;
+        public static string getListName { get { return _getListName; } set { _getListName = value; } }
+        private static string _userName;
+        public static string userName { get { return _userName; } set { _userName = value; }}
         private void Backsongbtn_Click(object sender, RoutedEventArgs e)
         {
             
@@ -162,12 +166,11 @@ namespace Media_Player
             else { repeaticon.Foreground = new SolidColorBrush(Colors.White); }
 
         }
-        //Nút back view
         public static List<UserControl> View = new List<UserControl>();
         public static UserControl CurrentView;
         public static bool CheckBack = false;
         int index;
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void backViewBtn_Click(object sender, RoutedEventArgs e)
         {
             txtKetqua.Text = "";
             index = View.IndexOf(CurrentView);
@@ -179,8 +182,7 @@ namespace Media_Player
             }
             else if(index == 0) frame.NavigationService.Navigate(View[index]);
         }
-        //Nút Next view
-        private void Button_Click_9(object sender, RoutedEventArgs e)
+        private void nextViewBtn_Click(object sender, RoutedEventArgs e)
         {
             index = View.IndexOf(CurrentView);
             if (index < View.Count - 1)
@@ -189,53 +191,70 @@ namespace Media_Player
                 CurrentView = View[index + 1];
             }
         }
-        HomeView page1;
-        LibView page2 = new LibView() ;
-        GenresView page3 = new GenresView();
-        LikedView page4 = new LikedView();
+        HomeView homepage;
+        LibView libpage;
+        GenresView genrepage = new GenresView();
+        LikedView likedpage;
         UserControl page;
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void mainViewBtn_Click(object sender, RoutedEventArgs e)
         {
             // page = page1;
             txtKetqua.Text = "";
-            frame.NavigationService.Navigate(page1);
-            View.Add(page1);
-            CurrentView = page1;
+            frame.NavigationService.Navigate(homepage);
+            View.Add(homepage);
+            CurrentView = homepage;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void libraryViewBtn_Click(object sender, RoutedEventArgs e)
         {
+            if(MainWindow.userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                if (loginwd.isClosed)
+                    return;
+            }
+            libpage = new LibView();
             txtKetqua.Text = "";
-            page = page2;
+            page = libpage;
             frame.NavigationService.Navigate(page);
-            View.Add(page2);
-            CurrentView = page2;
+            View.Add(libpage);
+            CurrentView = libpage;
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void genresViewBtn_Click(object sender, RoutedEventArgs e)
         {
-            page = page3;
+            page = genrepage;
             txtKetqua.Text = "";
             frame.NavigationService.Navigate(page);
-            View.Add(page3);
-            CurrentView = page3;
+            View.Add(genrepage);
+            CurrentView = genrepage;
         }
 
-        private void Button_Click_4(object sender, RoutedEventArgs e)
+        private void chartViewBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Button_Click_5(object sender, RoutedEventArgs e)
+        private void likedViewBtn_Click(object sender, RoutedEventArgs e)
         {
+            if (MainWindow.userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                if (loginwd.isClosed)
+                    return;
+            }
+            likedpage = new LikedView();
             txtKetqua.Text = "";
-            page = page4;
+            page = likedpage;
             frame.NavigationService.Navigate(page);
-            View.Add(page4);
-            CurrentView = page4;
+            View.Add(likedpage);
+            CurrentView = likedpage;
         }
-        // Volume click
-        private void Button_Click_6(object sender, RoutedEventArgs e)
+        private void volumeBtn_Click(object sender, RoutedEventArgs e)
         {
             if (volumeSlider.Value == 0)
             {
@@ -301,8 +320,6 @@ namespace Media_Player
             CurrentView = pageKq;
         }
 
-
-
         private void txtKetqua_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtKetqua.Text != "")
@@ -352,6 +369,62 @@ namespace Media_Player
             
 
         }
+        PlayListView playingPLView;
+        PlayList curPlaylist;
+        private void openCurPLBtn_Click(object sender, RoutedEventArgs e)
+        {           
+            PlayList curPlaylist = new PlayList();
+            curPlaylist.songs = getList;
+            playingPLView = new PlayListView(getList, getListName);            
 
+            page = playingPLView;
+            frame.NavigationService.Navigate(page);
+            View.Add(playingPLView);
+            CurrentView = playingPLView;
+
+            scrollviewer.ScrollToTop();
+
+        }
+        PlayListView newPLView;
+        private void addNewPLBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                if (loginwd.isClosed)
+                    return;
+            }
+            AddPlaylistWindow wd = new AddPlaylistWindow();
+            wd.AddNewPlaylistEvent += Wd_AddNewPlaylistEvent;
+            wd.ShowDialog();
+        }
+
+        private void Wd_AddNewPlaylistEvent(string playlistName)
+        {
+            newPLView = new PlayListView();
+            newPLView.txtTitle.Text = playlistName;
+
+            page = newPLView;
+            frame.NavigationService.Navigate(page);
+            View.Add(newPLView);
+            CurrentView = newPLView;
+
+            Random rd = new Random();
+            int i = rd.Next(1, 6);
+            string PLPictureBydefault = "PLPictureBydefault" + i + ".webp";
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Insert into Playlist(Title, Picture, UserName) values(N'" + playlistName + "','" + PLPictureBydefault + "','" + userName + "')", con);
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        private void addSongToPLbtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -26,7 +26,6 @@ namespace Media_Player.UserControls
     public partial class PlayListView : UserControl
     {
         public static string Title;
-        public static List<Song> curlist;
         PlayList USUKList;
         PlayList VNList;
         PlayList ChinaList;
@@ -35,7 +34,7 @@ namespace Media_Player.UserControls
         public PlayListView()
         {
             InitializeComponent();
-            curlist= new List<Song>();
+
             imgScan.DataContext = new { prescanImage = AppDomain.CurrentDomain.BaseDirectory + "Quocgia/" + "AnhnenAuMy.jpg" };
             txtTitle.Text = Title;
             if (Title == "Nhạc Âu Mỹ")
@@ -43,38 +42,39 @@ namespace Media_Player.UserControls
                 USUKList= new PlayList();
                 InitListbyNation(ref USUKList, "Nhạc Âu Mỹ", "Âu Mỹ");
                 listSongItem.ItemsSource = USUKList.songs;
-                curlist = USUKList.songs;
             }
             else if(Title == "Nhạc Việt Nam")
             {
                 VNList = new PlayList();
                 InitListbyNation(ref VNList, "Nhạc Việt Nam", "Việt Nam");
                 listSongItem.ItemsSource = VNList.songs;
-                curlist = VNList.songs;
             }
             else if(Title == "Nhạc Hàn Quốc")
             {
                 KoreaList = new PlayList();
                 InitListbyNation(ref KoreaList, "Nhạc Hàn Quốc", "Hàn Quốc");
                 listSongItem.ItemsSource = KoreaList.songs;
-                curlist = KoreaList.songs;
             }
             else if (Title == "Nhạc Nhật Bản")
             {
                 JapanList = new PlayList();
                 InitListbyNation(ref JapanList, "Nhạc Nhật Bản", "Nhật Bản");
                 listSongItem.ItemsSource = JapanList.songs;
-                curlist = JapanList.songs;
             }
             else if (Title == "Nhạc Trung Quốc")
             {
                 ChinaList = new PlayList();
                 InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
                 listSongItem.ItemsSource = ChinaList.songs;
-                curlist = ChinaList.songs;
             }
         }
-
+        public PlayListView(List<Song> listSongs, string listName)
+        {
+            InitializeComponent();
+            listSongItem.ItemsSource = listSongs;
+            Title = listName;
+            txtTitle.Text = Title;
+        }
         void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
         {
             //Đổ các dữ liệu cơ bản của playlist
@@ -116,6 +116,10 @@ namespace Media_Player.UserControls
                             getPL = PlaylistName
                         });
                         n++;
+                    }
+                    foreach (Song song in pl.songs)
+                    {
+                        song.getList = pl.songs;
                     }
                 }
             }

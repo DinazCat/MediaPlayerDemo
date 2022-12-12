@@ -170,6 +170,7 @@ namespace Media_Player.ViewModel
         {
             thisList = GenresView.getPopL;
             thisSong = GenresView.getPopL[0];
+            MainWindow.getListName = "Nhạc Pop";            
             ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;

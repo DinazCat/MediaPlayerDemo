@@ -25,6 +25,7 @@ namespace Media_Player
     /// </summary>
     public partial class LoginWindow : Window
     {
+        public bool isClosed = false;
         public LoginWindow()
         {
             InitializeComponent();
@@ -40,12 +41,9 @@ namespace Media_Player
 
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
-        }
-        private void BtnLogin_click(object sender, RoutedEventArgs e)
-        {
-
-        }
+            isClosed = true;
+            this.Close();            
+        }       
         public Window loginwd()
         {
             return this;

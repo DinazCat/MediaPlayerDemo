@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Media_Player.ViewModel;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Media_Player.View
 {
@@ -37,6 +38,7 @@ namespace Media_Player.View
         }
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
+            loginwd.isClosed = true;
             loginwd.Close();
             this.Close();
         }
@@ -75,7 +77,7 @@ namespace Media_Player.View
                 int ID = rd.Next(100000, 999999);
                 SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
                 con.Open();
-                SqlCommand cmd = new SqlCommand("Insert into [User] values('" + ID.ToString() + "','" + Username.Text + "','" + Displayname.Text + "','" + PasswordBox1.Password + "','" + Email.Text + "')", con);
+                SqlCommand cmd = new SqlCommand("Insert into [User] values('" + ID.ToString() + "',N'" + Username.Text + "',N'" + Displayname.Text + "','" + PasswordBox1.Password + "','" + Email.Text + "')", con);
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
                 con.Close();

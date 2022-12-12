@@ -38,6 +38,9 @@ namespace Media_Player.Model
         public double Position { get => position; set => position = value; }
         public string getPL { get { return GetPl; } set { GetPl = value; } }
 
+        private List<Song> GetList;
+        public List<Song> getList { get { return GetList; } set { GetList = value; } }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string newname)
         {
