@@ -50,6 +50,7 @@ namespace Media_Player
             Phatnhac.Init();
             getList = Phatnhac.thisList;
             getSong = Phatnhac.thisSong;
+            Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
         }
         public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)
@@ -216,6 +217,7 @@ namespace Media_Player
                     return;
             }
             libpage = new LibView();
+           // LibView LV = new LibView(LibView.ListenedList);
             txtKetqua.Text = "";
             page = libpage;
             frame.NavigationService.Navigate(page);
@@ -425,6 +427,39 @@ namespace Media_Player
         private void addSongToPLbtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Heart_Click(object sender, RoutedEventArgs e)
+        {
+            if (userName == null) return;
+            string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            DataTable dt;
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+            }
+            if (getSong.isLike == false)
+            {
+                Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png"));
+                getSong.isLike = true;
+                string m = "Insert into [Liked] values(N'" + MainWindow.userName + "',N'" + getSong.songName + "','" + dt.Rows.Count + "' )";
+                Phatnhac.SqlInteract(m);
+            }    
+            else
+            {
+                Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
+                getSong.isLike = false;
+                string m = "delete from [Liked] where Songname=N'" + getSong.songName + "' and UserName = N'" + MainWindow.userName + "'";
+                Phatnhac.SqlInteract(m);
+
+                m = "Update [Liked] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
+                Phatnhac.SqlInteract(m);
+            }    
         }
     }
 }

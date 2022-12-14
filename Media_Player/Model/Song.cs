@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,14 @@ namespace Media_Player.Model
 
         private List<Song> GetList;
         public List<Song> getList { get { return GetList; } set { GetList = value; } }
+        private string linkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png";
+        public string LinkLikeIcon
+        {
+            get { return linkLikeIcon; }
+            set { linkLikeIcon = value; OnPropertyChanged("LinkLikeIcon"); }
+        }
+        private bool IsLike = false;
+        public bool isLike { get => IsLike; set => IsLike = value; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string newname)

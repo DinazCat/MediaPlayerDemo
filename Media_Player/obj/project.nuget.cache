@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5mZJf7l+sNP45sYcOpqEgNAQCfH0/FD2cY2nvJOs0n0Y6lN9atmDmrQY3zpbddJXloEtFxvB0UwaFsZon+YAkw==",
+  "dgSpecHash": "g+23STFTZG6YJbFhh+RLW8HvNCkwUcT2YfA6lOZ7WiqdAf4H/t6J7Zl1ZoDHuitZwuMm8y2Gc1ryg0i2KMe1Sw==",
   "success": true,
-  "projectFilePath": "D:\\C#\\MediaPlayer\\MediaPlayerDemo\\Media_Player\\Media_Player.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\MediaPlayerDemo\\Media_Player\\Media_Player.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\mahapps.metro.iconpacks.material\\4.11.0\\mahapps.metro.iconpacks.material.4.11.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\materialdesigncolors\\2.0.9\\materialdesigncolors.2.0.9.nupkg.sha512",

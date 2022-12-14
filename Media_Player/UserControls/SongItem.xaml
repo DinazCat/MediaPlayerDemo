@@ -68,9 +68,12 @@
             <Grid Grid.Column="2">
                 <StackPanel Orientation="Horizontal">
                     <Button Style ="{StaticResource MaterialDesignIconButton}"  
-                        Height="30" Width="30">
-                        <materialDesign:PackIcon Kind="Heart" Width="20" Height="20"
-                                             Foreground="White" />
+                        Height="20" Width="20" x:Name="LibHeart" Click="LibHeart_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Image Source="{TemplateBinding Content}"/>
+                            </ControlTemplate>
+                        </Button.Template>
                     </Button>
                     <TextBlock Text="{Binding time}"                              
                                Padding="10"    

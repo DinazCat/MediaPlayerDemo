@@ -2,6 +2,8 @@
 using Media_Player.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -47,6 +49,7 @@ namespace Media_Player.ViewModel
         public static Song thisSong { get { return _thisSong; } set { _thisSong = value; } }
         private static List<Song> _thisList;
         public static List<Song> thisList { get { return _thisList; } set { _thisList = value; } }
+        public static bool listened = false;
         public static string filename;
         public static void openmusic()
         {
@@ -118,6 +121,15 @@ namespace Media_Player.ViewModel
                 }
             }
         }
+        public static void SqlInteract(string m)
+        {
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+            con.Open();
+            SqlCommand cmd = new SqlCommand(m, con);
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }    
         public static void HamTuongTac(Song song)
         {
             if (song.Open == true)
@@ -137,7 +149,91 @@ namespace Media_Player.ViewModel
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(song.linkanh));
                 ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = song.songName;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = song.singerName;
+                if(MainWindow.userName != null)
+                {
+                    string query = "SELECT * FROM Listenrecently L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+                    SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+                    DataTable dt;
+                    using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+                    {
+                        dt = new DataTable();
+                        if (reader.HasRows)
+                        {
+                            dt.Load(reader);
+                        }
+                    }
+                    if (dt.Rows.Count != 0)
+                    {
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            if (dr["Songname"].ToString() == song.songName) listened = true;
+                        }
+                        if (listened == false)
+                        {
+                            if (dt.Rows.Count < 11)
+                            {
+                                string m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + dt.Rows.Count + "' )";
+                                SqlInteract(m);
+                            }
+                            else
+                            {
+                                string m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + dt.Rows.Count + "' )";
+                                SqlInteract(m);
+
+                                m = "delete from [Listenrecently] where STT='" + 0 + "' and UserName = '" + MainWindow.userName + "'";
+                                SqlInteract(m);
+
+                                m = "Update [Listenrecently] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
+                                SqlInteract(m);
+                            }
+                        }
+                        else
+                        {
+                            string m = "delete from [Listenrecently] where Songname =N'" + song.songName + "' and UserName = N'" + MainWindow.userName + "'";
+                            SqlInteract(m);
+
+                            m = "Update [Listenrecently] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
+                            SqlInteract(m);
+
+                            m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + dt.Rows.Count + "' )";
+                            SqlInteract(m);
+                        }
+                    }
+                    else
+                    {
+                        string m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + 0 + "' )";
+                        SqlInteract(m);
+                    }
+                    listened = false;
+
+                    query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+                    param1 = new SqlParameter("@username", MainWindow.userName);
+                    using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+                    {
+                        dt = new DataTable();
+                        if (reader.HasRows)
+                        {
+                            dt.Load(reader);
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                if (dr["Songname"].ToString() == song.songName)
+                                {
+                                    song.isLike = true;
+                                    ((MainWindow)System.Windows.Application.Current.MainWindow).Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png"));
+                                }
+
+                            }
+                        }
+                    }
+                    if (song.isLike == false)
+                    {
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
+
+                    }
+                }    
+                
             }
+        
             filename = song.savepath;
 
             if (song.Open == true)

@@ -24,16 +24,24 @@ namespace Media_Player.UserControls
     public partial class LibView : UserControl
     {
         List<PlayList> userPlaylists = new List<PlayList>();
+        public static List<Song> ListenedList = new List<Song>();
+        public static List<Song> LikedList = new List<Song>();
         public LibView()
         {
             InitializeComponent();
-
             userPlaylists = new List<PlayList>();
             InitUserList();
             DanhSachPhatlist.ItemsSource = userPlaylists;
-
+            InitListenList(ref ListenedList);
+            listListened.ItemsSource = ListenedList;
+            InitLikedList(ref LikedList);
+            listLiked.ItemsSource = LikedList;
         }
-
+        //public LibView(List<Song> NewList)
+        //{
+        //    InitializeComponent();
+        //    listListened.ItemsSource = NewList;
+        //}
         void InitUserList()
         {
             String query = "SELECT * FROM Playlist WHERE UserName=@UserName";
@@ -55,6 +63,79 @@ namespace Media_Player.UserControls
                     }
                 }
             }
+        }
+        void InitListenList(ref List<Song> pl)
+        {
+            if (MainWindow.userName == null) return;
+            pl = new List<Song>();
+           
+            string  query = "SELECT * FROM Listenrecently L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Song s = new Song();
+                        s.songName = dr["SongName"].ToString();
+                        s.singerName = dr["Artist"].ToString();
+                        s.album = dr["Album"].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = "Đã nghe gần đây";
+
+                        pl.Add(s);
+                        n++;
+                    }
+                }
+            }
+            foreach (Song s in pl)
+            {
+                s.getList = pl;
+            }
+
+        }
+
+        void InitLikedList(ref List<Song> pl)
+        {
+            if (MainWindow.userName == null) return;
+            pl = new List<Song>();
+
+            string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Song s = new Song();
+                        s.songName = dr["SongName"].ToString();
+                        s.singerName = dr["Artist"].ToString();
+                        s.album = dr["Album"].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = "Đã nghe gần đây";
+
+                        pl.Add(s);
+                        n++;
+                    }
+                }
+            }
+            foreach (Song s in pl)
+            {
+                s.getList = pl;
+            }
+
         }
 
     }
