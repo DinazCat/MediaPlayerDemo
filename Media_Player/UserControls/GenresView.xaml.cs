@@ -223,7 +223,5 @@ namespace Media_Player.UserControls
             }
 
         }
-
-
     }
 }

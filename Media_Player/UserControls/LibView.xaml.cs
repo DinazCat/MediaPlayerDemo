@@ -23,7 +23,7 @@ namespace Media_Player.UserControls
     /// </summary>
     public partial class LibView : UserControl
     {
-        List<PlayList> userPlaylists = new List<PlayList>();
+        public static List<PlayList> userPlaylists;
         public static List<Song> ListenedList = new List<Song>();
         public static List<Song> LikedList = new List<Song>();
         public LibView()
@@ -32,16 +32,15 @@ namespace Media_Player.UserControls
             userPlaylists = new List<PlayList>();
             InitUserList();
             DanhSachPhatlist.ItemsSource = userPlaylists;
+
             InitListenList(ref ListenedList);
             listListened.ItemsSource = ListenedList;
+
             InitLikedList(ref LikedList);
             listLiked.ItemsSource = LikedList;
         }
-        //public LibView(List<Song> NewList)
-        //{
-        //    InitializeComponent();
-        //    listListened.ItemsSource = NewList;
-        //}
+        private static ListView _getUserPLs;
+        public static ListView getUserPLs { get { return _getUserPLs; } set { _getUserPLs = value; } }
         void InitUserList()
         {
             String query = "SELECT * FROM Playlist WHERE UserName=@UserName";

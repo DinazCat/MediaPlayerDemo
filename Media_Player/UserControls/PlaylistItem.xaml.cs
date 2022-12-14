@@ -60,14 +60,14 @@ namespace Media_Player.UserControls
                         });
                         n++;
                     }
-                    foreach(Song song in songs)
+                    foreach (Song song in songs)
                     {
                         song.getList = songs;
                     }
                 }
             }
 
-            page = new PlayListView(songs,item.title);
+            page = new PlayListView(songs, item.title);
             p = page;
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
             MainWindow.View.Add(p);
@@ -93,12 +93,27 @@ namespace Media_Player.UserControls
         }
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            
+            PlayList playList = (sender as Button).DataContext as PlayList;
+
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Delete from Playlist where Title=N'" + playList.title + "' and Username=N'" + MainWindow.userName + "'", con);
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
+            cmd = new SqlCommand("Delete from Belong where PlaylistName=N'" + playList.title + "'", con);
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            con.Close();
+
+            int index = LibView.userPlaylists.IndexOf(playList);
+            LibView.userPlaylists.RemoveAt(index);
+            LibView.getUserPLs.Items.Refresh();
+
         }
-        
+
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
     }
 }

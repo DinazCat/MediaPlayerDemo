@@ -35,7 +35,7 @@ namespace Media_Player.UserControls
         {
             InitializeComponent();
 
-            imgScan.DataContext = new { prescanImage = AppDomain.CurrentDomain.BaseDirectory + "Quocgia/" + "AnhnenAuMy.jpg" };
+            //imgScan.DataContext = new { prescanImage = AppDomain.CurrentDomain.BaseDirectory + "Quocgia/" + "AnhnenAuMy.jpg" };
             txtTitle.Text = Title;
             if (Title == "Nhạc Âu Mỹ")
             {                
@@ -67,13 +67,6 @@ namespace Media_Player.UserControls
                 InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
                 listSongItem.ItemsSource = ChinaList.songs;
             }
-        }
-        public PlayListView(List<Song> listSongs, string listName)
-        {
-            InitializeComponent();
-            listSongItem.ItemsSource = listSongs;
-            Title = listName;
-            txtTitle.Text = Title;
         }
         void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
         {
@@ -123,7 +116,21 @@ namespace Media_Player.UserControls
                     }
                 }
             }
+        }
 
+        public static List<Song> listSongs;
+        private static ListView _userListView;
+        public static ListView userListView { get { return _userListView; } set { _userListView = value; } }
+        public PlayListView(List<Song> songs, string listName)
+        {
+            InitializeComponent();
+
+            listSongs = songs;
+            listSongItem.ItemsSource = listSongs;
+            Title = listName;
+            txtTitle.Text = Title;
+            if (MainWindow.userName != null)
+            userListView = listSongItem;
         }
     }
 }

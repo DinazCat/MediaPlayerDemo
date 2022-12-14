@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Media_Player.Model
 {
-    internal class PlayList
+    public class PlayList : INotifyPropertyChanged
     {
         private string Title;
         private string Picture;
@@ -22,5 +23,13 @@ namespace Media_Player.Model
         public string description { get { return Description; } set { Description = value; } }
         public int duration { get { return Duration; } set { Duration = value; } }
         public List<Song> songs { get { return Songs; } set { Songs = value; } }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string newname)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(newname));
+            }
+        }
     }
 }
