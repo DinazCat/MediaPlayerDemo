@@ -208,8 +208,10 @@ namespace Media_Player.UserControls
         private void songItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (MainWindow.userName == null)
-                return;
+                return;           
             selectedSong = (sender as Border).DataContext as Song;
+            if (selectedSong.getLoaiPL != "userPL")
+                deleteSongFromPL.Visibility = Visibility.Collapsed;
             userPlaylists = new List<PlayList>();
             String query = "SELECT * FROM Playlist WHERE UserName=@UserName";
 

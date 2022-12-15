@@ -56,7 +56,8 @@ namespace Media_Player.UserControls
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
                             time = dr["Duration"].ToString(),
-                            getPL = item.title
+                            getPL = item.title,
+                            getLoaiPL = "userPL"
                         });
                         n++;
                     }

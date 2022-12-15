@@ -88,7 +88,7 @@
 
         <Border.ContextMenu>
             <ContextMenu x:Name="songItemContextMenu"  Background="#000020" Foreground="White" Visibility="Hidden">
-                <MenuItem Header="Xóa khỏi playlist này" Click="deleteSongFromCurPL_Click">
+                <MenuItem x:Name="deleteSongFromPL"  Header="Xóa khỏi playlist này" Click="deleteSongFromCurPL_Click">
                     <MenuItem.Icon>
                         <materialDesign:PackIcon Kind="DeleteOutline" Height="18" Width="18" Foreground="White"/>
                     </MenuItem.Icon>

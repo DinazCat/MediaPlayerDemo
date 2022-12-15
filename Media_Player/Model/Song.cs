@@ -41,6 +41,8 @@ namespace Media_Player.Model
 
         private List<Song> GetList;
         public List<Song> getList { get { return GetList; } set { GetList = value; } }
+        private string GetLoaiPL = "";
+        public string getLoaiPL { get { return GetLoaiPL; } set { GetLoaiPL = value; } }
         private string linkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png";
         public string LinkLikeIcon
         {

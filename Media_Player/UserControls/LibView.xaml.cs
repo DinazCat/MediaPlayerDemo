@@ -32,6 +32,7 @@ namespace Media_Player.UserControls
             userPlaylists = new List<PlayList>();
             InitUserList();
             DanhSachPhatlist.ItemsSource = userPlaylists;
+            getUserPLs = DanhSachPhatlist;
 
             InitListenList(ref ListenedList);
             listListened.ItemsSource = ListenedList;
