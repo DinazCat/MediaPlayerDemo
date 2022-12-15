@@ -138,16 +138,18 @@ namespace Media_Player.UserControls
                     int n = 0;
                     foreach (DataRow dr in dt.Rows)
                     {
-                        songs.Add(new Song()
-                        {
-                            songName = dr["Name"].ToString(),
-                            singerName = dr["Artist"].ToString(),
-                            album = dr["Album"].ToString(),
-                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                            time = dr["Duration"].ToString(),
-                            getPL = playList.title
-                        });
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = playList.title;
+                        if (PlayListView.CheckLiked(s.songName) == true)
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                        songs.Add(s);
+                  
                         n++;
                     }
                     foreach (Song s in songs)
@@ -161,6 +163,7 @@ namespace Media_Player.UserControls
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
             if (MainWindow.CheckBack)
             {
                 int index = MainWindow.View.IndexOf(p);

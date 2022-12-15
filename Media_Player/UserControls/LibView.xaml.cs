@@ -123,8 +123,7 @@ namespace Media_Player.UserControls
                         s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
                         s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
                         s.time = dr["Duration"].ToString();
-                        s.getPL = "Đã nghe gần đây";
-
+                        s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
                         pl.Add(s);
                         n++;
                     }

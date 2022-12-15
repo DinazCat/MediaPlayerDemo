@@ -114,6 +114,7 @@ namespace Media_Player.UserControls
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
             if (MainWindow.CheckBack)
             {
                 int index = MainWindow.View.IndexOf(p);

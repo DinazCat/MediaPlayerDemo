@@ -170,26 +170,48 @@ namespace Media_Player
         public static List<UserControl> View = new List<UserControl>();
         public static UserControl CurrentView;
         public static bool CheckBack = false;
-        int index;
+        int index = -2;
+        public static int CountPage = -1;
         private void backViewBtn_Click(object sender, RoutedEventArgs e)
         {
             txtKetqua.Text = "";
-            index = View.IndexOf(CurrentView);
+            if (CountPage == -1)
+                for (int i = 0; i < View.Count; i++)
+                {
+                    if (View[i] == CurrentView) index = i;
+                    CountPage = View.Count;
+                }
+            else
+            {
+                for (int i = 0; i < CountPage; i++)
+                {
+                    if (View[i] == CurrentView) index = i;
+                }
+            }
             if (index > 0)
             {
                 frame.NavigationService.Navigate(View[index - 1]);
                 CurrentView = View[index - 1];
                 CheckBack = true;
+                CountPage -= 1;
             }
-            else if(index == 0) frame.NavigationService.Navigate(View[index]);
+
         }
         private void nextViewBtn_Click(object sender, RoutedEventArgs e)
         {
-            index = View.IndexOf(CurrentView);
-            if (index < View.Count - 1)
+            if (index < View.Count && index != -2)
             {
-                frame.NavigationService.Navigate(View[index + 1]);
-                CurrentView = View[index + 1];
+                if (index == 0)
+                {
+                    frame.NavigationService.Navigate(View[index + 1]);
+                }
+                else
+                    frame.NavigationService.Navigate(View[index]);
+                CurrentView = View[index];
+                index += 1;
+                CheckBack = false;
+                if (index - 1 < View.Count)
+                    CountPage += 1;
             }
         }
         HomeView homepage;
@@ -204,6 +226,8 @@ namespace Media_Player
             frame.NavigationService.Navigate(homepage);
             View.Add(homepage);
             CurrentView = homepage;
+            CheckBack = false;
+            CountPage = -1;
         }
 
         private void libraryViewBtn_Click(object sender, RoutedEventArgs e)
@@ -223,6 +247,8 @@ namespace Media_Player
             frame.NavigationService.Navigate(page);
             View.Add(libpage);
             CurrentView = libpage;
+            CheckBack = false;
+            CountPage = -1;
         }
 
         private void genresViewBtn_Click(object sender, RoutedEventArgs e)
@@ -232,6 +258,8 @@ namespace Media_Player
             frame.NavigationService.Navigate(page);
             View.Add(genrepage);
             CurrentView = genrepage;
+            CheckBack = false;
+            CountPage = -1;
         }
 
         private void chartViewBtn_Click(object sender, RoutedEventArgs e)
@@ -255,6 +283,8 @@ namespace Media_Player
             frame.NavigationService.Navigate(page);
             View.Add(likedpage);
             CurrentView = likedpage;
+            CheckBack = false;
+            CountPage = -1;
         }
         private void volumeBtn_Click(object sender, RoutedEventArgs e)
         {

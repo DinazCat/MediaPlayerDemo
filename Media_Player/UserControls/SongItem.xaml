@@ -72,7 +72,7 @@
                         Height="20" Width="20" x:Name="LibHeart" Click="LibHeart_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
-                                <Image Source="{TemplateBinding Content}"/>
+                                <Image Source="{Binding LinkLikeIcon}"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>

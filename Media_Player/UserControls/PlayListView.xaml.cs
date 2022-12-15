@@ -68,6 +68,27 @@ namespace Media_Player.UserControls
                 listSongItem.ItemsSource = ChinaList.songs;
             }
         }
+        public static bool CheckLiked(string songname)
+        {
+            if (MainWindow.userName == null) return false;
+
+            string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            DataTable dt;
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["Songname"].ToString() == songname) return true;
+            }
+            return false;
+        }
         void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
         {
             //Đổ các dữ liệu cơ bản của playlist
@@ -98,16 +119,17 @@ namespace Media_Player.UserControls
                     int n = 0;
                     foreach (DataRow dr in dt.Rows)
                     {
-                        pl.songs.Add(new Song()
-                        {
-                            songName = dr[0].ToString(),
-                            singerName = dr[1].ToString(),
-                            album = dr[2].ToString(),
-                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                            time = dr["Duration"].ToString(),
-                            getPL = PlaylistName
-                        });
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = PlaylistName;
+                        if (CheckLiked(s.songName) == true)
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                        pl.songs.Add(s);
                         n++;
                     }
                     foreach (Song song in pl.songs)
