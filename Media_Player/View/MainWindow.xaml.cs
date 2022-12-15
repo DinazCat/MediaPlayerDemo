@@ -500,7 +500,13 @@ namespace Media_Player
 
         private void Heart_Click(object sender, RoutedEventArgs e)
         {
-            if (userName == null) return;
+            if (userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                return;
+            }
             string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
             SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
             DataTable dt;
