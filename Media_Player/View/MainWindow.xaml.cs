@@ -51,6 +51,9 @@ namespace Media_Player
             getList = Phatnhac.thisList;
             getSong = Phatnhac.thisSong;
             Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
+            Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+
         }
         public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)
@@ -170,7 +173,7 @@ namespace Media_Player
         public static List<UserControl> View = new List<UserControl>();
         public static UserControl CurrentView;
         public static bool CheckBack = false;
-        int index = -2;
+        public static int index = -2;
         public static int CountPage = -1;
         private void backViewBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -190,17 +193,26 @@ namespace Media_Player
             }
             if (index > 0)
             {
+                if (index == 1)
+                    Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "cannext.png"));
                 frame.NavigationService.Navigate(View[index - 1]);
                 CurrentView = View[index - 1];
                 CheckBack = true;
                 CountPage -= 1;
             }
+           
+            //if(index == 0 && CountPage == View.Count)
+            //    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
 
         }
         private void nextViewBtn_Click(object sender, RoutedEventArgs e)
         {
             if (index < View.Count && index != -2)
             {
+                if(index == View.Count-1)
+                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
                 if (index == 0)
                 {
                     frame.NavigationService.Navigate(View[index + 1]);
@@ -223,11 +235,16 @@ namespace Media_Player
         {
             // page = page1;
             txtKetqua.Text = "";
-            frame.NavigationService.Navigate(homepage);
-            View.Add(homepage);
-            CurrentView = homepage;
-            CheckBack = false;
-            CountPage = -1;
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
+            if(CurrentView != homepage)
+            {
+                frame.NavigationService.Navigate(homepage);
+                View.Add(homepage);
+                CurrentView = homepage;
+                CheckBack = false;
+                CountPage = -1;
+            }    
+           
         }
 
         private void libraryViewBtn_Click(object sender, RoutedEventArgs e)
@@ -240,26 +257,50 @@ namespace Media_Player
                 if (loginwd.isClosed)
                     return;
             }
+            if(index == 1 && CheckBack == true)
+            {
+                View.Clear();
+                View.Add(homepage);
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
+            } 
+                
             libpage = new LibView();
-           // LibView LV = new LibView(LibView.ListenedList);
-            txtKetqua.Text = "";
-            page = libpage;
-            frame.NavigationService.Navigate(page);
-            View.Add(libpage);
-            CurrentView = libpage;
-            CheckBack = false;
-            CountPage = -1;
+            if (CurrentView != libpage)
+            {
+                // LibView LV = new LibView(LibView.ListenedList);
+                Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
+                txtKetqua.Text = "";
+                page = libpage;
+                frame.NavigationService.Navigate(page);
+                View.Add(libpage);
+                CurrentView = libpage;
+                CheckBack = false;
+                CountPage = -1;
+            }
         }
 
         private void genresViewBtn_Click(object sender, RoutedEventArgs e)
         {
-            page = genrepage;
+          
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             txtKetqua.Text = "";
-            frame.NavigationService.Navigate(page);
-            View.Add(genrepage);
-            CurrentView = genrepage;
-            CheckBack = false;
-            CountPage = -1;
+            page = genrepage;
+            if (index == 1 && CheckBack == true)
+            {
+                View.Clear();
+                View.Add(homepage);
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
+            }
+            if (CurrentView != page)
+            {
+                frame.NavigationService.Navigate(page);
+                View.Add(genrepage);
+                CurrentView = genrepage;
+                CheckBack = false;
+                CountPage = -1;
+            }
         }
 
         private void chartViewBtn_Click(object sender, RoutedEventArgs e)
@@ -278,13 +319,25 @@ namespace Media_Player
                     return;
             }
             likedpage = new LikedView();
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             txtKetqua.Text = "";
-            page = likedpage;
-            frame.NavigationService.Navigate(page);
-            View.Add(likedpage);
-            CurrentView = likedpage;
-            CheckBack = false;
-            CountPage = -1;
+            if (index == 1 && CheckBack == true)
+            {
+                View.Clear();
+                View.Add(homepage);
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
+            }
+            if (CurrentView!= likedpage)
+            {
+                page = likedpage;
+                frame.NavigationService.Navigate(page);
+                View.Add(likedpage);
+                CurrentView = likedpage;
+                CheckBack = false;
+                CountPage = -1;
+            }    
+           
         }
         private void volumeBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -407,13 +460,25 @@ namespace Media_Player
         {           
             PlayList curPlaylist = new PlayList();
             curPlaylist.songs = getList;
-            playingPLView = new PlayListView(getList, getListName);            
-
+            playingPLView = new PlayListView(getList, getListName);
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             page = playingPLView;
-            frame.NavigationService.Navigate(page);
-            View.Add(playingPLView);
-            CurrentView = playingPLView;
-
+            if (index == 1 && CheckBack == true)
+            {
+                View.Clear();
+                View.Add(homepage);
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
+            }
+            if (CurrentView != page)
+            {
+                frame.NavigationService.Navigate(page);
+                View.Add(playingPLView);
+                CurrentView = playingPLView;
+                CheckBack = false;
+                CountPage = -1;
+            }    
+           
             scrollviewer.ScrollToTop();
 
         }
@@ -521,6 +586,7 @@ namespace Media_Player
             if (getSong.isLike == false)
             {
                 Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png"));
+                getSong.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
                 getSong.isLike = true;
                 string m = "Insert into [Liked] values(N'" + MainWindow.userName + "',N'" + getSong.songName + "','" + dt.Rows.Count + "' )";
                 Phatnhac.SqlInteract(m);
@@ -528,6 +594,7 @@ namespace Media_Player
             else
             {
                 Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
+                getSong.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png";
                 getSong.isLike = false;
                 string m = "delete from [Liked] where Songname=N'" + getSong.songName + "' and UserName = N'" + MainWindow.userName + "'";
                 Phatnhac.SqlInteract(m);

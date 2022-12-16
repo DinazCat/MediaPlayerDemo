@@ -159,17 +159,25 @@ namespace Media_Player.UserControls
                 }
             }
             page = new PlayListView(songs, playList.title);
+           
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             p = page;
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+           
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                //MainWindow.View.RemoveAt(index - 1);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
             MainWindow.CountPage = -1;
-            if (MainWindow.CheckBack)
-            {
-                int index = MainWindow.View.IndexOf(p);
-                MainWindow.View.RemoveAt(index - 1);
-                MainWindow.CheckBack = false;
-            }
         }
     }
 }

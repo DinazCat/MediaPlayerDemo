@@ -191,12 +191,20 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
 
-                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="backViewBtn_Click">
-                            <materialDesign:PackIcon Kind="ArrowLeft" Width="30" Height="30" />
+                        <Button x:Name="Back" Width="20" Height="20" Click="backViewBtn_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Button.Template>
                         </Button>
-                        <Button Style="{StaticResource MaterialDesignToolButton}" Click="nextViewBtn_Click"
+                        <Button x:Name="Next" Width="20" Height="20" Click="nextViewBtn_Click"
                                 Margin="7 0 0 0">
-                            <materialDesign:PackIcon Kind="ArrowRight" Width="30" Height="30"/>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Image Source="{TemplateBinding Content}"/>
+                                </ControlTemplate>
+                            </Button.Template>
                         </Button>
                         <materialDesign:ColorZone Mode="Light" Padding="8 0"
                                                   CornerRadius="10"

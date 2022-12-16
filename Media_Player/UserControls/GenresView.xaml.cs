@@ -1,6 +1,7 @@
 ﻿using Media_Player.Model;
 using Media_Player.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -17,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Media_Player.UserControls
 {
@@ -95,32 +97,122 @@ namespace Media_Player.UserControls
             }
             
         }
+        void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
+        {
+            //Đổ các dữ liệu cơ bản của playlist
+            String query = "SELECT * FROM Playlist WHERE Title=N'@Title'";
+
+            SqlParameter param = new SqlParameter("@Title", PlaylistName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    DataRow dr = dt.Rows[0];
+                    pl.title = dr[0].ToString();
+                    pl.picture = dr[1].ToString();
+                }
+            }
+            //Đổ dữ liệu cho songs
+            pl.songs = new List<Song>();
+            query = "SELECT * FROM Song WHERE Nation=@Nation ";
+            SqlParameter param1 = new SqlParameter("@Nation", Nation);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = PlaylistName;
+                        if (PlayListView.CheckLiked(s.songName) == true)
+                        {
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+                        pl.songs.Add(s);
+                        n++;
+                    }
+                    foreach (Song song in pl.songs)
+                    {
+                        song.getList = pl.songs;
+                    }
+                }
+            }
+        }
         PlayListView page = new PlayListView();
         UserControl p;
+        PlayList USUKList;
+        PlayList VNList;
+        PlayList ChinaList;
+        PlayList KoreaList;
+        PlayList JapanList;
         private void ButtonQuocGia_Click(object sender, RoutedEventArgs e)
         {
             PlayList item = (sender as Button).DataContext as PlayList;
             PlayListView.Title = item.title;
-            if (item.haveOpened == false)
+            if (item.title == "Nhạc Âu Mỹ")
             {
-                for (int i = 0; i < QuocGiaPLs.Count; i++)
-                {
-                    QuocGiaPLs[i].haveOpened = false;
-                }
-                page = new PlayListView();
-                item.haveOpened = true;
+                USUKList = new PlayList();
+                InitListbyNation(ref USUKList, "Nhạc Âu Mỹ", "Âu Mỹ");
+                page = new PlayListView(USUKList.songs, item.title);
             }
+            else if (item.title == "Nhạc Việt Nam")
+            {
+                VNList = new PlayList();
+                InitListbyNation(ref VNList, "Nhạc Việt Nam", "Việt Nam");
+                page = new PlayListView(VNList.songs, item.title);
+
+            }
+            else if (item.title == "Nhạc Hàn Quốc")
+            {
+                KoreaList = new PlayList();
+                InitListbyNation(ref KoreaList, "Nhạc Hàn Quốc", "Hàn Quốc");
+                page = new PlayListView(KoreaList.songs, item.title);
+
+            }
+            else if (item.title == "Nhạc Nhật Bản")
+            {
+                JapanList = new PlayList();
+                InitListbyNation(ref JapanList, "Nhạc Nhật Bản", "Nhật Bản");
+                page = new PlayListView(JapanList.songs, item.title);
+
+            }
+            else if (item.title == "Nhạc Trung Quốc")
+            {
+                ChinaList = new PlayList();
+                InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
+                page = new PlayListView(ChinaList.songs, item.title);
+
+            }
+
             p = page;
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+           
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                //MainWindow.View.RemoveAt(index - 1);
+                for(int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }    
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
             MainWindow.CountPage = -1;
-            if (MainWindow.CheckBack)
-            {
-                int index = MainWindow.View.IndexOf(p);
-                MainWindow.View.RemoveAt(index - 1);
-                MainWindow.CheckBack = false;
-            }
         }
         void InitGenreList(ref PlayList pl, string PlaylistName, string genre)
         {

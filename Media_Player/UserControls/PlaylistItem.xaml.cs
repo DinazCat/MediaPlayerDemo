@@ -48,17 +48,21 @@ namespace Media_Player.UserControls
                     int n = 0;
                     foreach (DataRow dr in dt.Rows)
                     {
-                        songs.Add(new Song()
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = item.title;
+                        s.getLoaiPL = "userPL";
+                        if (PlayListView.CheckLiked(s.songName) == true)
                         {
-                            songName = dr["Name"].ToString(),
-                            singerName = dr["Artist"].ToString(),
-                            album = dr["Album"].ToString(),
-                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                            time = dr["Duration"].ToString(),
-                            getPL = item.title,
-                            getLoaiPL = "userPL"
-                        });
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+                        songs.Add(s);
                         n++;
                     }
                     foreach (Song song in songs)
@@ -71,14 +75,20 @@ namespace Media_Player.UserControls
             page = new PlayListView(songs, item.title);
             p = page;
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
-            MainWindow.View.Add(p);
-            MainWindow.CurrentView = p;
             if (MainWindow.CheckBack)
             {
-                int index = MainWindow.View.IndexOf(p);
-                MainWindow.View.RemoveAt(index - 1);
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                //MainWindow.View.RemoveAt(index - 1);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
                 MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
             }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
         }
 
         private void PlaylistItem_MouseEnter(object sender, MouseEventArgs e)
