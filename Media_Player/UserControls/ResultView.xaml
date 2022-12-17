@@ -18,33 +18,83 @@
                         <GradientStop Color="#003366" Offset="0.1"/>
                     </LinearGradientBrush>
                 </StackPanel.Background>
-                <Grid Margin="0 10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="130"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="BÀI HÁT"
-                           Padding="10 0"
-                           Foreground="White"
-                           FontSize="14"/>
-                    <TextBlock Grid.Column="1" Text="ALBUM"
-                           Foreground="White"
-                           FontSize="14"/>
-                    <TextBlock Grid.Column="2" 
-                               Text="THỜI LƯỢNG"
-                               HorizontalAlignment="Right"
-                               Padding="10 0"
-                               Foreground="White"
-                               FontSize="14"/>
-                </Grid>
-                <ListView x:Name="ListKetQua">
+
+                <TextBlock x:Name="Nghesi" Foreground="White" FontSize="20" Margin="5"/>
+                <ListView x:Name="ListArtistResult">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="6 4">
+                                <Grid Height="190"  Width="190" DockPanel.Dock="Top">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.6"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Border CornerRadius="100" Padding="3">
+                                        <Button Height="190" Background="Transparent" BorderBrush="Transparent" Click="ArtistOpen_Click"/>
+                                        <Border.Background>
+                                            <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                                <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <TextBlock x:Name="Baihat" Foreground="White" FontSize="20" Margin="5 10 5 5"/>
+                <ListView x:Name="ListSongResult" HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <local:SongItem/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <TextBlock x:Name="PlaylistAlbum" Foreground="White" FontSize="20" Margin="5"/>
+                <ListView x:Name="ListPLResult">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="4">
+                                <Grid Height="180" Width="230" DockPanel.Dock="Top">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Opacity" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.6"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Border CornerRadius="15">
+                                        <Button Height="180" Background="Transparent" BorderBrush="Transparent" Click="PlaylistOpen_Click"/>
+                                        <Border.Background>
+                                            <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                                <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
             </StackPanel>
         </DockPanel>
     </Grid>

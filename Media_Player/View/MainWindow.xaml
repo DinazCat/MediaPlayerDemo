@@ -223,13 +223,33 @@
                                 <Button x:Name="BtnFind" Style="{StaticResource MaterialDesignToolButton}" Margin="0,0,0,-2" Grid.RowSpan="2" Click="BtnFind_Click">
                                     <materialDesign:PackIcon Kind="Search"  Width="20" Height="20" Opacity=".56" />
                                 </Button>
-                                <TextBox Grid.Column="1" Margin="8,0,0,0" x:Name="txtKetqua"
+                                <TextBox Grid.Column="1" Margin="8,0,0,0" x:Name="txbTimKiem"
                                          materialDesign:HintAssist.Hint="Tìm kiếm bài hát, nghệ sĩ,..."
                                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
-                                         BorderThickness="0"
-                                         TextChanged="txtKetqua_TextChanged"
-                                         MinWidth="350"
-                                         VerticalAlignment="Center" Grid.Row="1" />
+                                         BorderThickness="0"  MinWidth="350" VerticalAlignment="Center" Grid.Row="1" 
+                                         TextChanged="txtbFind_TextChanged"                                                                                
+                                         KeyDown="txtbFind_KeyEnterDown" GotFocus="txtbFind_GotFocus" LostFocus="txtbFind_LostFocus" />
+                                <Popup Name="FindPopup" PopupAnimation="Fade" Width="390" AllowsTransparency="True">
+                                    <Grid Background="#000015">
+                                        <ListView x:Name="listSearchSong" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid MouseDown="searchItem_MouseDown">
+                                                        <TextBlock Text="                                                       "/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Border CornerRadius="50" Height="40" Width="40">
+                                                                <Border.Background>
+                                                                    <ImageBrush x:Name="Picture" ImageSource="{Binding linkanh}"  Stretch="Fill"/>
+                                                                </Border.Background>
+                                                            </Border>
+                                                            <TextBlock Text="{Binding songName}" Padding="5 5 0 0" Foreground="White" FontSize="13"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </Grid>
+                                </Popup>
                             </Grid>
                         </materialDesign:ColorZone>
                     </StackPanel>

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Media_Player.UserControls" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Name="songItem"
-             Width="1300">
+             >
     <Border x:Name ="border" CornerRadius="5" MouseEnter="songitem_MouseEnter" MouseLeave="songitem_MouseLeave" MouseDown="songItem_MouseDown" ScrollViewer.VerticalScrollBarVisibility="Disabled">
         <!--<Border.Style>
             <Style TargetType="Border">
