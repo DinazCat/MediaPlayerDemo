@@ -16,5 +16,5 @@ D:\C#\MediaPlayer1\MediaPlayerDemo\Media_Player\App.xaml
 201552577164
 Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\PlaylistItem.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;
 
-True
+False
 

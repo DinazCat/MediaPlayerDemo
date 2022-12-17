@@ -83,15 +83,15 @@ namespace Media_Player.UserControls
 
             string[] tendaidien = new string[5] { 
                 "Nhạc Việt Nam", "Nhạc Âu Mỹ", "Nhạc Hàn Quốc", "Nhạc Trung Quốc", "Nhạc Nhật Bản"
-            };            
+            };
+            string[] linkAnh= new string[5] {
+                "NhacViet.jpg", "NhacAuMy.jpg", "NhacHan.jpg", "NhacHoa.jpg", "NhacNhat.jpg"
+            };
             for (int k = 0; k < 5; k++)
             {
-
-                string linkAnh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/Nuoc" + k + ".jpg";
-
                 QuocGiaPLs.Add(new PlayList()
                 {
-                    picture = linkAnh,                    
+                    picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + linkAnh[k],                    
                     title = tendaidien[k]
                 });
             }

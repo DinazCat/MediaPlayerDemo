@@ -134,7 +134,7 @@ namespace Media_Player.UserControls
         }
         void CreateListArtistResult()
         {
-            string query = "SELECT * FROM Song S JOIN Artist A ON A.Name=S.Artist";
+            string query = "SELECT DISTINCT S.Name, S.Artist, A.Picture FROM Song S JOIN Artist A ON A.Name=S.Artist";
             using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text))
             {
                 DataTable dt = new DataTable();
@@ -145,11 +145,20 @@ namespace Media_Player.UserControls
                     {
                         if (dr[0].ToString().ToUpper().Contains(keyword.ToUpper()) || dr[1].ToString().ToUpper().Contains(keyword.ToUpper()))
                         {
-                            listArtists.Add(new PlayList()
+                            bool checkExist = false;
+                            foreach (PlayList playList in listArtists)
+                                if (playList.title == dr[1].ToString())
+                                {
+                                    checkExist = true; break;
+                                }
+                            if (!checkExist)
                             {
-                                title = dr[1].ToString(),
-                                picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Picture"].ToString()
-                            });
+                                listArtists.Add(new PlayList()
+                                {
+                                    title = dr[1].ToString(),
+                                    picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Picture"].ToString()
+                                });
+                            }
                         }
                     }
                 }
