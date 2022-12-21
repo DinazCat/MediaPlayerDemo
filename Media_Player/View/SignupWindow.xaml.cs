@@ -60,16 +60,18 @@ namespace Media_Player.View
         {
             if (Email.Text == "" || Username.Text == "" || Displayname.Text == "" || PasswordBox1.Password == "" || PasswordBox2.Password == "")
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
+                txblError.Text = "Vui lòng nhập đầy đủ thông tin!";
                 Email.Focus();
             }
             else if (PasswordBox1.Password != PasswordBox2.Password)
             {
-                MessageBox.Show("Mật khẩu không trùng nhau!");
+                txblError.Text = "Mật khẩu không trùng nhau!";
+                PasswordBox1.Focus();
             }
             else if (!Regex.IsMatch(Email.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
             {
-                MessageBox.Show("Email không hợp lê!");
+                txblError.Text = "Email không hợp lệ!";
+                Email.Focus();
             }
             else
             {
@@ -81,7 +83,7 @@ namespace Media_Player.View
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
                 con.Close();
-                MessageBox.Show("Đăng ký thành công!");
+                txblError.Text = "Đăng ký thành công!";
                 loginwd.Show();
                 this.Close();
             }

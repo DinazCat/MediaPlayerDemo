@@ -7,68 +7,70 @@
              mc:Ignorable="d" 
              d:DesignWidth="800"
              x:Name="playListView">
-    <Grid>
-        <StackPanel>
-            <StackPanel.Background>
+    <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4" >
+        <Grid>
+            <Grid.Background>
                 <LinearGradientBrush EndPoint="0 1">
                     <GradientStop Color="#000015" Offset="0.6"/>
                     <GradientStop Color="#003366" Offset="0.1"/>
                 </LinearGradientBrush>
-            </StackPanel.Background>
-            <Grid DockPanel.Dock="Top">
-                <Image Height="300" Stretch="Fill" Name="imgScan" Source="/Images/discplayer.jpg"/>
-                <TextBlock x:Name="txtTitle" Text="{Binding title}"  Margin="15 180 0 50"  Foreground="White" FontSize="50" FontWeight="Heavy"/>
-                <TextBlock Text="{Binding description}" VerticalAlignment="Bottom" Margin="15"  Foreground="White" FontSize="15"/>
-            </Grid>
-            <StackPanel Orientation="Horizontal" Height="70">
-                <Button x:Name="BtnPlayList" Margin="10 0">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Canvas>
-                                <Image x:Name="play" Source="{Binding Linkicon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Canvas>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button x:Name="BtnLike">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Canvas>
-                                <Image x:Name="like" Source="{Binding LinkHeartIc}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Canvas>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
+            </Grid.Background>
+            <Image Height="350" Stretch="Fill" Source="/Images/universe.png" VerticalAlignment="Top"/>
+            <StackPanel>
+                <Grid DockPanel.Dock="Top">
+                    <TextBlock x:Name="txtTitle" Text="{Binding title}"  Margin="15 180 0 50"  Foreground="White" FontSize="50" FontWeight="Heavy"/>
+                    <TextBlock Text="{Binding description}" VerticalAlignment="Bottom" Margin="15"  Foreground="White" FontSize="15"/>
+                </Grid>
+                <StackPanel Orientation="Horizontal" Height="70">
+                    <Button x:Name="BtnPlayList" Margin="10 0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Canvas>
+                                    <Image x:Name="play" Source="{Binding Linkicon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Canvas>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="BtnLike">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Canvas>
+                                    <Image x:Name="like" Source="{Binding LinkHeartIc}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Canvas>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
 
-            <!--List bài hát-->
-            <Grid Margin="0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.3*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="130"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="BÀI HÁT"
+                <!--List bài hát-->
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="130"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="BÀI HÁT"
                            Padding="10 0"
                            Foreground="White"
-                           FontSize="14"/>
-                <TextBlock Grid.Column="1" Text="ALBUM"
+                           FontSize="16"/>
+                    <TextBlock Grid.Column="1" Text="ALBUM"
                            Foreground="White"
-                           FontSize="14"/>
-                <TextBlock Grid.Column="2" 
+                           FontSize="16"/>
+                    <TextBlock Grid.Column="2" 
                                Text="THỜI LƯỢNG"
                                HorizontalAlignment="Right"
                                Padding="10 0"
                                Foreground="White"
-                               FontSize="14"/>
-            </Grid>
-            <ListView x:Name="listSongItem" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:SongItem/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-    </Grid>
+                               FontSize="16"/>
+                </Grid>
+                <ListView x:Name="listSongItem" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <local:SongItem/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

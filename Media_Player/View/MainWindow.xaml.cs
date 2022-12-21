@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +64,21 @@ namespace Media_Player
             getSong.Position += 1;
             oldPosition = getSong.Position;
             timelineSlider.Value = getSong.Position;
+            if (isSleepTimerRun && remainTime != 0)
+            {
+                remainTime--;
+                remainTimetxbl.Text = "Thời gian còn lại: " + remainTime / 3600 + ":" + remainTime % 3600 / 60 + ":" + remainTime % 3600 % 60;
+            }                
+            else if(isSleepTimerRun)
+            {               
+                getSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
+                BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+                isSleepTimerRun = false;
+                remainTimetxbl.Text = "";
+                sleeptimerMenuItem.Foreground = sleeptimerIcon.Foreground = new SolidColorBrush(Colors.White);
+                Phatnhac.mediaPlayer.Pause();
+                Timer.Stop();
+            }
         }
 
         public static DispatcherTimer Timer;
@@ -73,6 +89,8 @@ namespace Media_Player
         private static string _getListName;
         public static string getListName { get { return _getListName; } set { _getListName = value; } }
         private static string _userName;
+        private static List<Song> _curList;
+        public static List<Song> curList { get { return _curList; } set { _curList = value; } }
         public static string userName { get { return _userName; } set { _userName = value; }}
         private void Backsongbtn_Click(object sender, RoutedEventArgs e)
         {
@@ -230,8 +248,9 @@ namespace Media_Player
         HomeView homepage;
         LibView libpage;
         GenresView genrepage = new GenresView();
-        LikedView likedpage;
-        UserControl page;
+        public static LikedView likedpage;
+        UserControl page;        
+
         private void mainViewBtn_Click(object sender, RoutedEventArgs e)
         {
             // page = page1;
@@ -244,8 +263,7 @@ namespace Media_Player
                 CurrentView = homepage;
                 CheckBack = false;
                 CountPage = -1;
-            }    
-           
+            }           
         }
 
         private void libraryViewBtn_Click(object sender, RoutedEventArgs e)
@@ -255,7 +273,9 @@ namespace Media_Player
             {
                 LoginWindow loginwd = new LoginWindow();
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                this.Opacity = 0.3;
                 loginwd.ShowDialog();
+                this.Opacity = 1;
                 if (loginwd.isClosed)
                     return;
             }
@@ -277,7 +297,7 @@ namespace Media_Player
                 CurrentView = libpage;
                 CheckBack = false;
                 CountPage = -1;
-            }
+            }            
         }
 
         private void genresViewBtn_Click(object sender, RoutedEventArgs e)
@@ -302,18 +322,15 @@ namespace Media_Player
             }
         }
 
-        private void chartViewBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void likedViewBtn_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.userName == null)
             {
                 LoginWindow loginwd = new LoginWindow();
+                this.Opacity = 0.3;
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
                 loginwd.ShowDialog();
+                this.Opacity = 1;
                 if (loginwd.isClosed)
                     return;
             }
@@ -334,8 +351,8 @@ namespace Media_Player
                 CurrentView = likedpage;
                 CheckBack = false;
                 CountPage = -1;
-            }    
-           
+            }
+
         }
         private void volumeBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -495,10 +512,7 @@ namespace Media_Player
                 CurrentView = playingPLView;
                 CheckBack = false;
                 CountPage = -1;
-            }    
-           
-            scrollviewer.ScrollToTop();
-
+            }            
         }
         PlayListView newPLView;
         private void addNewPLBtn_Click(object sender, RoutedEventArgs e)
@@ -507,13 +521,17 @@ namespace Media_Player
             {
                 LoginWindow loginwd = new LoginWindow();
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                this.Opacity = 0.3;
                 loginwd.ShowDialog();
+                this.Opacity = 1;
                 if (loginwd.isClosed)
                     return;
             }
             AddPlaylistWindow wd = new AddPlaylistWindow();
+            this.Opacity = 0.3;
             wd.AddNewPlaylistEvent += Wd_AddNewPlaylistEvent;
             wd.ShowDialog();
+            this.Opacity = 1;
         }
 
         private void Wd_AddNewPlaylistEvent(string playlistName)
@@ -542,8 +560,10 @@ namespace Media_Player
             if (MainWindow.userName == null)
             {
                 LoginWindow loginwd = new LoginWindow();
+                this.Opacity = 0.3;
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
                 loginwd.ShowDialog();
+                this.Opacity = 1;
                 return;
             }
 
@@ -586,8 +606,10 @@ namespace Media_Player
             if (userName == null)
             {
                 LoginWindow loginwd = new LoginWindow();
+                this.Opacity = 0.3;
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
                 loginwd.ShowDialog();
+                this.Opacity = 1;
                 return;
             }
             string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
@@ -620,6 +642,95 @@ namespace Media_Player
                 m = "Update [Liked] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
                 Phatnhac.SqlInteract(m);
             }    
+        }
+
+        private void otherOptionsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            otherOptionsMenu.IsOpen = true;
+        }
+
+        private void timerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isSleepTimerRun)
+            {
+                SleepTimer sleepTimer = new SleepTimer();
+                sleepTimer.SetSleepTimerEvent += SleepTimer_SetSleepTimerEvent;
+                this.Opacity = 0.3;
+                sleepTimer.ShowDialog();
+                this.Opacity = 1;
+                if (isSleepTimerRun)
+                    sleeptimerMenuItem.Foreground = sleeptimerIcon.Foreground = new SolidColorBrush(Colors.CadetBlue);
+            }
+            else
+            {
+                ConfirmationDialog confirmationDialog = new ConfirmationDialog("XÓA HẸN GIỜ","Bạn có chắc chắn muốn xóa hẹn giờ?");
+                confirmationDialog.DialogResultEvent += ConfirmationDialog_DialogResultEvent;
+                this.Opacity = 0.3;
+                confirmationDialog.ShowDialog();
+                this.Opacity = 1;
+            }
+        }
+        
+        int remainTime = -1;
+        bool isSleepTimerRun = false;
+        private void SleepTimer_SetSleepTimerEvent(int totalseconds)
+        {
+            remainTime = totalseconds;
+            isSleepTimerRun= true;
+        }
+        private void ConfirmationDialog_DialogResultEvent(string result)
+        {
+            if (result == "Yes")
+            {
+                sleeptimerMenuItem.Foreground = sleeptimerIcon.Foreground = new SolidColorBrush(Colors.White);
+                isSleepTimerRun = false;
+                remainTimetxbl.Text = "";
+            }
+        }
+
+
+        private void autoPlayToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            Phatnhac.isAutoplay = true;
+        }
+
+        private void autoPlayToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Phatnhac.isAutoplay = false;
+        }
+
+        private void speed_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (MenuItem item in speedMenuItem.Items)
+                if (item.IsChecked && item != (sender as MenuItem)) item.IsChecked = false;
+            float speed = float.Parse((sender as MenuItem).Header.ToString()) / 10;
+            Phatnhac.mediaPlayer.SpeedRatio = speed;
+        }
+        
+
+        private void MainWindow_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (CurrentView == homepage)
+            {
+                mainView.Opacity = 1;
+                libView.Opacity = genresView.Opacity = likedView.Opacity = 0.7;
+            }
+            else if (CurrentView == libpage)
+            {
+                libView.Opacity = 1;
+                mainView.Opacity = genresView.Opacity = likedView.Opacity = 0.7;
+            }
+            else if (CurrentView == genrepage)
+            {
+                genresView.Opacity = 1;
+                mainView.Opacity = libView.Opacity = likedView.Opacity = 0.7;
+            }
+            else if (CurrentView == likedpage)
+            {
+                likedView.Opacity = 1;
+                mainView.Opacity = libView.Opacity = genresView.Opacity = 0.7;
+            }
+            else likedView.Opacity = mainView.Opacity = libView.Opacity = genresView.Opacity = 0.7;
         }
     }
 }

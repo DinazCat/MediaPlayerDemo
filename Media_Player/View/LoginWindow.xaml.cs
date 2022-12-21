@@ -53,5 +53,9 @@ namespace Media_Player
             SignupWindow signupwd = new SignupWindow(this);
             signupwd.ShowDialog();
         }
+        public TextBlock txbl()
+        {
+            return txblError;
+        }
     }
 }

@@ -43,8 +43,10 @@ namespace Media_Player.ViewModel
         }
         private static bool _shuffle = false;
         private static bool _repeat = false;
+        private static bool _autoplay = true;
         public static bool isshuffle { get { return _shuffle; } set { _shuffle = value; } }
         public static bool isrepeat { get { return _repeat; } set { _repeat = value; } }
+        public static bool isAutoplay { get { return _autoplay; } set { _autoplay = value; } }
         private static Song _thisSong;
         public static Song thisSong { get { return _thisSong; } set { _thisSong = value; } }
         private static List<Song> _thisList;
@@ -79,8 +81,8 @@ namespace Media_Player.ViewModel
         }
         private static void MediaPlayer_MediaEnded(object? sender, EventArgs e)
         {
-            //thisSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
-            //((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+            thisSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
+            ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
 
             if (isrepeat)
             {
@@ -109,7 +111,7 @@ namespace Media_Player.ViewModel
                 MainWindow.getSong = thisList[index];
                 HamTuongTac(thisList[index]);
             }
-            else
+            else if(isAutoplay) 
             {
                 thisSong.Open = true;
                 int curindex = thisList.IndexOf(thisSong);
@@ -119,7 +121,7 @@ namespace Media_Player.ViewModel
                     MainWindow.getSong = thisList[curindex];
                     HamTuongTac(thisList[curindex]);
                 }
-            }
+            }            
         }
         public static void SqlInteract(string m)
         {

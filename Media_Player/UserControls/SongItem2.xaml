@@ -42,6 +42,7 @@
                 </StackPanel>
             </Grid>
         </DockPanel>
+        
     </Border>
 
 </UserControl>

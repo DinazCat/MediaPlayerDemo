@@ -11,8 +11,10 @@
     <None Remove="earphonesIcon.png" />
     <None Remove="Images\discplayer.jpg" />
     <None Remove="Images\earphonesIcon.png" />
+    <None Remove="Images\HeartIcon.png" />
     <None Remove="Images\loginbackground.png" />
     <None Remove="Images\loginIcon.png" />
+    <None Remove="Images\universe.png" />
     <None Remove="View\earphonesIcon.png" />
   </ItemGroup>
 
@@ -26,8 +28,10 @@
   <ItemGroup>
     <Resource Include="Images\discplayer.jpg" />
     <Resource Include="Images\earphonesIcon.png" />
+    <Resource Include="Images\HeartIcon.png" />
     <Resource Include="Images\loginbackground.png" />
     <Resource Include="Images\loginIcon.png" />
+    <Resource Include="Images\universe.png" />
   </ItemGroup>
 
 </Project>

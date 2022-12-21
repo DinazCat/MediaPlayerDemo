@@ -48,10 +48,11 @@
                                FontWeight="Bold"
                                FontFamily="Sitka Text">
                     </TextBlock>
+                    <TextBlock x:Name="txblError"  Foreground="Red" Margin="0 2 0 1" HorizontalAlignment="Center" FontWeight="Medium"/>
                 </StackPanel>
                 <StackPanel Width="250" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Account" Width="25" Height="25" Margin="0 18 10 0"/>
-                    <TextBox x:Name="UserName"
+                    <TextBox x:Name="UserName" BorderBrush="White"
                              Text="{Binding UserName}"
                              materialDesign:HintAssist.Hint="Tên đăng nhập"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -61,11 +62,11 @@
                 </StackPanel>
                 <StackPanel Width="250" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Lock" Width="25" Height="25" Margin="0 15 10 0"/>
-                    <PasswordBox x:Name="PasswordBox"
+                    <PasswordBox x:Name="PasswordBox" BorderBrush="White"
                                  materialDesign:HintAssist.Hint="Mật khẩu"
                                  materialDesign:HintAssist.Foreground="White"
                                  materialDesign:TextFieldAssist.UnderlineBrush="White"
-                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" 
+                                 Style="{StaticResource MaterialDesignFloatingHintRevealPasswordBox}" 
                                  Width="215" FontSize="14">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PasswordChanged">

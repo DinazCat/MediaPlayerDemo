@@ -37,12 +37,15 @@ namespace Media_Player.UserControls
         PlayList InstrumentalList;
         PlayList AcousticList;
         PlayList HipHopList;
+        PlayList EmotionalList;
+        PlayList ConcentrationList;
+        PlayList RelaxingList;
         public GenresView()
         {
             InitializeComponent();
             
             PopList = new PlayList();
-            InitListPop(ref PopList, "Nhạc Pop");
+            InitGenreList(ref PopList, "Nhạc Pop", "Pop");
             listPop.ItemsSource = PopList.songs;
             getPopL = PopList.songs;
 
@@ -77,6 +80,18 @@ namespace Media_Player.UserControls
             HipHopList = new PlayList();
             InitGenreList(ref HipHopList, "Nhạc Hip Hop", "Hip Hop");
             listHipHop.ItemsSource = HipHopList.songs;
+
+            EmotionalList = new PlayList();
+            InitList(ref EmotionalList, "Nhạc Tâm Trạng");
+            listTamTrang.ItemsSource = EmotionalList.songs;
+
+            ConcentrationList = new PlayList();
+            InitList(ref ConcentrationList, "Nhạc Tập Trung");
+            listTapTrung.ItemsSource = ConcentrationList.songs;
+
+            RelaxingList = new PlayList();
+            InitList(ref RelaxingList, "Nhạc Thư Giãn");
+            listThuGian.ItemsSource = RelaxingList.songs;
 
             QuocGiaPLs = new List<PlayList>();
             ListQuocGia.ItemsSource = QuocGiaPLs;
@@ -233,8 +248,8 @@ namespace Media_Player.UserControls
             }
             //Đổ dữ liệu cho songs
             pl.songs = new List<Song>();
-            query = "SELECT * FROM Song WHERE Genre=@Genre1";
-            SqlParameter param1 = new SqlParameter("@Genre1", genre);
+            query = "SELECT * FROM Song WHERE Genre LIKE @Genre1";
+            SqlParameter param1 = new SqlParameter("@Genre1", "%" + genre);
             using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
             {
                 DataTable dt = new DataTable();
@@ -264,7 +279,7 @@ namespace Media_Player.UserControls
             }
         }
         public static List<Song> getPopL;
-        void InitListPop(ref PlayList pl, string PlaylistName)
+        void InitList(ref PlayList pl, string PlaylistName)
         {
             //Đổ các dữ liệu cơ bản của playlist
             String query = "SELECT * FROM Playlist WHERE Title=@Title";
@@ -283,29 +298,27 @@ namespace Media_Player.UserControls
             }
             //Đổ dữ liệu cho songs
             pl.songs = new List<Song>();
-            query = "SELECT * FROM Song WHERE Genre=@Genre1 or Genre=@Genre2 or Genre=@Genre3";
-            SqlParameter param1 = new SqlParameter("@Genre1", "Pop");
-            SqlParameter param2 = new SqlParameter("@Genre2", "KPop");
-            SqlParameter param3 = new SqlParameter("@Genre3", "VPop");
-            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1, param2, param3))
+            query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Belong B JOIN Song S ON S.Name=B.SongName WHERE PlaylistName=@PlaylistName";
+            SqlParameter param1 = new SqlParameter("@PlaylistName", PlaylistName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
             {
                 DataTable dt = new DataTable();
                 if (reader.HasRows)
                 {
                     dt.Load(reader);
                     int n = 0;
-                    foreach(DataRow dr in dt.Rows)
+                    foreach (DataRow dr in dt.Rows)
                     {
                         pl.songs.Add(new Song()
                         {
-                            songName = dr[0].ToString(),
-                            singerName = dr[1].ToString(),
-                            album = dr[2].ToString(),
+                            songName = dr["Name"].ToString(),
+                            singerName = dr["Artist"].ToString(),
+                            album = dr["Album"].ToString(),
                             linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
                             savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
                             time = dr["Duration"].ToString(),
                             getPL = PlaylistName
-                        }) ;
+                        });
                         n++;
                     }
                     foreach (Song s in pl.songs)
@@ -313,8 +326,8 @@ namespace Media_Player.UserControls
                         s.getList = pl.songs;
                     }
                 }
-            }
 
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Media_Player.View;
 
 namespace Media_Player.UserControls
 {
@@ -93,38 +94,43 @@ namespace Media_Player.UserControls
 
         private void PlaylistItem_MouseEnter(object sender, MouseEventArgs e)
         {
-            this.BtnPlay.Visibility = Visibility.Visible;
             this.BtnDelete.Visibility = Visibility.Visible;
         }
 
         private void PlaylistItem_MouseLeave(object sender, MouseEventArgs e)
         {
-            this.BtnPlay.Visibility = Visibility.Hidden;
             this.BtnDelete.Visibility = Visibility.Hidden;
         }
+        PlayList selectedPlayList;
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            PlayList playList = (sender as Button).DataContext as PlayList;
+            selectedPlayList = (sender as Button).DataContext as PlayList;
 
-            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
-            con.Open();
-            SqlCommand cmd = new SqlCommand("Delete from Playlist where Title=N'" + playList.title + "' and Username=N'" + MainWindow.userName + "'", con);
-            cmd.CommandType = CommandType.Text;
-            cmd.ExecuteNonQuery();
-            cmd = new SqlCommand("Delete from Belong where PlaylistName=N'" + playList.title + "'", con);
-            cmd.CommandType = CommandType.Text;
-            cmd.ExecuteReader();
-            con.Close();
-
-            int index = LibView.userPlaylists.IndexOf(playList);
-            LibView.userPlaylists.RemoveAt(index);
-            LibView.getUserPLs.Items.Refresh();
-
+            ConfirmationDialog confirmationDialog = new ConfirmationDialog("XÓA PLAYLIST", "Playlist của bạn sẽ bị xóa khỏi thư viện. Bạn có chắc muốn xóa?");
+            confirmationDialog.DialogResultEvent += ConfirmationDialog_DialogResultEvent;
+            this.Opacity = 0.3;
+            confirmationDialog.ShowDialog();
+            this.Opacity = 1;
         }
 
-        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        private void ConfirmationDialog_DialogResultEvent(string result)
         {
+            if (result == "Yes")
+            {
+                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand("Delete from Playlist where Title=N'" + selectedPlayList.title + "' and Username=N'" + MainWindow.userName + "'", con);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("Delete from Belong where PlaylistName=N'" + selectedPlayList.title + "'", con);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteReader();
+                con.Close();
 
+                int index = LibView.userPlaylists.IndexOf(selectedPlayList);
+                LibView.userPlaylists.RemoveAt(index);
+                LibView.getUserPLs.Items.Refresh();
+            }
         }
     }
 }

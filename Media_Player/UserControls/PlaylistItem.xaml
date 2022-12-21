@@ -28,7 +28,7 @@
                         Style ="{StaticResource MaterialDesignIconButton}" Click="BtnDelete_Click">
                     <materialDesign:PackIcon Kind="TrashCanOutline" Foreground="White" Height="35" Width="35"/>
                 </Button>
-                <Button x:Name="BtnPlay" Height="50" Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click" Visibility="Hidden" Content="{Binding getPL}">
+                <!--<Button x:Name="BtnPlay" Height="50" Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Click="BtnPlay_Click" Visibility="Hidden" Content="{Binding getPL}">
                     <Button.Template>
                         <ControlTemplate>
                             <Canvas>
@@ -36,7 +36,7 @@
                             </Canvas>
                         </ControlTemplate>
                     </Button.Template>
-                </Button>
+                </Button>-->
             </Grid>
             <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
         </DockPanel>

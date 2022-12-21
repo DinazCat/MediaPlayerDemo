@@ -17,8 +17,8 @@
         Title=""
         Name="mainWindow"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        WindowStartupLocation="CenterScreen" Height="700" Width="1100"
-        DataContext="{StaticResource MainVM}">
+        WindowStartupLocation="CenterScreen" Height="750" Width="1180"
+        DataContext="{StaticResource MainVM}" PreviewMouseMove="MainWindow_MouseMove">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
@@ -28,7 +28,7 @@
     <!--WindowStyle="None"-->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="220" />
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -39,7 +39,7 @@
 
         <!--Logo-->
         <StackPanel Orientation="Horizontal">
-            <Image Source="/Images/earphonesIcon.png" Height="40" Width="40" RenderTransformOrigin="0.5,0.5">
+            <Image Source="/Images/earphonesIcon.png" Height="40" Width="40" RenderTransformOrigin="0.5,0.5" Margin="3">
                 <Image.RenderTransform>
                     <TransformGroup>
                         <RotateTransform Angle="-19.069"/>
@@ -61,16 +61,16 @@
         <!--Menu-->
 
         <Grid Grid.Row="1">
-            <StackPanel>
+            <StackPanel x:Name="Menu">
                 <!--Home-->
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" x:Name="mainView">
                     <Grid>
                         <materialDesign:PackIcon Kind="Home" Width="30" Height="30"  Margin="8 5 0 5"
                                                     ForceCursor="True" Foreground="White"/>
                     </Grid>
 
                     <Button  Style="{StaticResource MaterialDesignOutlinedButton}"
-                             Click="mainViewBtn_Click"
+                             Click="mainViewBtn_Click" 
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                              materialDesign:ButtonProgressAssist.IsIndeterminate="True"
@@ -82,7 +82,7 @@
 
                 </StackPanel>
                 <!--Library-->
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal"  x:Name="libView">
                     <Grid>
                         <materialDesign:PackIcon Kind="Bookshelf" Width="30" Height="30" Margin="8 5 0 5"
                                                  ForceCursor="True" Foreground="White"/>
@@ -100,13 +100,13 @@
                              Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
                 <!--Genres-->
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" x:Name="genresView">
                     <Grid>
                         <materialDesign:PackIcon Kind="ShapeOutline" Width="30" Height="30" Margin="8 5 0 5"
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Click="genresViewBtn_Click"                   
+                    <Button  Click="genresViewBtn_Click"               
                              Style="{StaticResource MaterialDesignOutlinedButton}"                             
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -117,28 +117,11 @@
                              BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
                              Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
-                <!--Charts-->
-                <StackPanel Orientation="Horizontal">
-                    <Grid>
-                        <materialDesign:PackIcon Kind="ChartAreaspline" Width="30" Height="30" Margin="8 5 0 5"
-                                                 ForceCursor="True" Foreground="White"/>
-                    </Grid>
 
-                    <Button  Click="chartViewBtn_Click"                    
-                             Style="{StaticResource MaterialDesignOutlinedButton}"
-                             materialDesign:ButtonProgressAssist.Value="-1"
-                             materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                             materialDesign:ButtonProgressAssist.IsIndeterminate="True"
-                             Content="Bảng xếp hạng"
-                             Margin="2 5 "
-                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" 
-                             BorderBrush="{x:Null}" HorizontalContentAlignment="Left"
-                             Foreground="White" FontSize="17" Width="170"/>
-                </StackPanel>
 
                 <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="10 10"/>
                 <!--Add playlist-->
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Opacity="0.7">
                     <Grid>
                         <materialDesign:PackIcon Kind="PlusBox" Width="30" Height="30" Margin="8 5 0 5"
                                                  ForceCursor="True" Foreground="White"/>
@@ -156,13 +139,13 @@
                              Foreground="White" FontSize="17" Width="170"/>
                 </StackPanel>
                 <!--Liked-->
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" x:Name="likedView" >
                     <Grid>
                         <materialDesign:PackIcon Kind="Heart" Width="30" Height="30" Margin="8 5 0 5"
                                                  ForceCursor="True" Foreground="White"/>
                     </Grid>
 
-                    <Button  Click="likedViewBtn_Click"                    
+                    <Button  Click="likedViewBtn_Click"                   
                              Style="{StaticResource MaterialDesignOutlinedButton}"
                              materialDesign:ButtonProgressAssist.Value="-1"
                              materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
@@ -199,7 +182,7 @@
                             </Button.Template>
                         </Button>
                         <Button x:Name="Next" Width="20" Height="20" Click="nextViewBtn_Click"
-                                Margin="7 0 0 0">
+                                Margin="10 0 0 0">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Image Source="{TemplateBinding Content}"/>
@@ -253,17 +236,17 @@
                             </Grid>
                         </materialDesign:ColorZone>
                     </StackPanel>
+                    <TextBlock x:Name="remainTimetxbl" Foreground="White" HorizontalAlignment="Right" Margin="20 5" />
                 </DockPanel>
             </materialDesign:ColorZone>
         </Grid>
 
         <!--Main View-->
-        <ScrollViewer x:Name="scrollviewer"  Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4" >
-            <Grid >
-                <ContentControl Content="{Binding SelectedViewModel}"/>
-                <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
-            </Grid>
-        </ScrollViewer>
+        
+        <Grid Grid.Row="1" Grid.Column="1">
+            <ContentControl Content="{Binding SelectedViewModel}"/>
+            <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
+        </Grid>
 
         <!--Thanh phát nhạc-->
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
@@ -331,6 +314,42 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
+
+                <Button Style ="{StaticResource MaterialDesignIconButton}"  
+                        Height="30" Width="30" Click="otherOptionsBtn_Click" >
+                    <materialDesign:PackIcon Kind="DotsHorizontal" Height="25" Width="25" Foreground="White"/>
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name ="otherOptionsMenu" Background="#000020" Foreground="White">
+                            <MenuItem>
+                                <MenuItem.Template>
+                                    <ControlTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ToggleButton Style="{StaticResource MaterialDesignSwitchLightToggleButton}" IsChecked="True"  Margin="14 3" Height="20" Checked="autoPlayToggle_Checked" Unchecked="autoPlayToggle_Unchecked" />
+                                            <TextBlock Text="Tự động phát"/>
+                                        </StackPanel>
+                                    </ControlTemplate>
+                                </MenuItem.Template>
+                            </MenuItem>
+                            <MenuItem  x:Name="sleeptimerMenuItem" Header="Hẹn giờ" Click="timerBtn_Click">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon x:Name="sleeptimerIcon"  Kind="Alarm" Height="18" Width="18" Foreground="White"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="speedMenuItem"  Header="Tốc độ phát" Background="#000020">
+                                <MenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="PlaySpeed" Height="18" Width="18" Foreground="White"/>
+                                </MenuItem.Icon>
+                                <MenuItem Header="0.6" IsCheckable="True" Checked="speed_Checked" FontSize="14"/>
+                                <MenuItem Header="0.8" IsCheckable="True" Checked="speed_Checked" FontSize="14"/>
+                                <MenuItem Header="1.0" IsCheckable="True" IsChecked="True" Checked="speed_Checked" FontSize="14"/>
+                                <MenuItem Header="1.2" IsCheckable="True" Checked="speed_Checked" FontSize="14"/>
+                                <MenuItem Header="1.5" IsCheckable="True" Checked="speed_Checked" FontSize="14"/>
+                                <MenuItem Header="1.8" IsCheckable="True" Checked="speed_Checked" FontSize="14"/>
+                                <MenuItem Header="2.0" IsCheckable="True" Checked="speed_Checked" FontSize="14"/>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
             </StackPanel>
 
             <!--Middle Section-->
@@ -366,7 +385,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock x:Name="txblPosition" Text="00:00" Foreground="White" Margin="0 4 5 0" Width="35"/>
-                    <Slider  Width="400"
+                    <Slider  Width="450"
                             Name="timelineSlider"   
                             ValueChanged="timelineSlider_ValueChanged"
                             Foreground="#FFF5F2F9" Maximum="1010" />

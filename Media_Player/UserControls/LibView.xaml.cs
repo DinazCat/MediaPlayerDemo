@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
 
 namespace Media_Player.UserControls
 {
@@ -24,8 +26,8 @@ namespace Media_Player.UserControls
     public partial class LibView : UserControl
     {
         public static List<PlayList> userPlaylists;
-        public static List<Song> ListenedList = new List<Song>();
-        public static List<Song> LikedList = new List<Song>();
+        List<Song> ListenedList = new List<Song>();
+        List<Song> LikedList = new List<Song>();
         public LibView()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace Media_Player.UserControls
             DanhSachPhatlist.ItemsSource = userPlaylists;
             getUserPLs = DanhSachPhatlist;
 
-            InitListenList(ref ListenedList);
+            InitListenedList(ref ListenedList);
             listListened.ItemsSource = ListenedList;
 
             InitLikedList(ref LikedList);
@@ -64,7 +66,7 @@ namespace Media_Player.UserControls
                 }
             }
         }
-        void InitListenList(ref List<Song> pl)
+        void InitListenedList(ref List<Song> pl)
         {
             if (MainWindow.userName == null) return;
             pl = new List<Song>();
@@ -88,7 +90,6 @@ namespace Media_Player.UserControls
                         s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
                         s.time = dr["Duration"].ToString();
                         s.getPL = "Đã nghe gần đây";
-
                         pl.Add(s);
                         n++;
                     }
@@ -117,6 +118,7 @@ namespace Media_Player.UserControls
                     int n = 0;
                     foreach (DataRow dr in dt.Rows)
                     {
+                        if (n > 5) break;
                         Song s = new Song();
                         s.songName = dr["SongName"].ToString();
                         s.singerName = dr["Artist"].ToString();
@@ -138,6 +140,27 @@ namespace Media_Player.UserControls
             }
 
         }
+        UserControl p;
 
+        private void viewAllLikedSongBtn_click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.likedpage = new LikedView();
+            p = MainWindow.likedpage;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;            
+
+        }
     }
 }

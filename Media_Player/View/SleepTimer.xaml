@@ -1,0 +1,97 @@
+﻿
+<Window x:Class="Media_Player.View.SleepTimer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Media_Player.View"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="SleepTimer" Height="320" Width="450"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Border CornerRadius="25">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0 1">
+                <GradientStop Color="#000015" Offset="1"/>
+                <GradientStop Color="#003366" Offset="0.1"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <StackPanel>
+            <TextBlock Text="Hẹn giờ dừng phát nhạc"
+                   FontSize="25" Margin="30"
+                   Foreground="White" TextAlignment="Center" FontFamily="Sitka Text" FontWeight="Heavy"/>
+            <StackPanel Orientation="Horizontal" Height="90">
+                <TextBox x:Name="hourtxb" Foreground="White" BorderBrush="White" Margin="20 0"  Width="100" FontWeight="Medium" HorizontalContentAlignment="Center"
+                          materialDesign:HintAssist.Hint="Giờ"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.30"
+                          Text="00"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="45" Background="#003366" />
+                <TextBlock Text=":" Foreground="White" FontSize="70"/>
+                <TextBox x:Name="minutetxb" Foreground="White" BorderBrush="White" Margin="20 0"  Width="100" FontWeight="Medium" HorizontalContentAlignment="Center"
+                          materialDesign:HintAssist.Hint="Phút"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.3"
+                          Text="00"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="45" Background="#003366" />
+                <TextBlock Text=":" Foreground="White" FontSize="70"/>
+                <TextBox x:Name="secondtxb" Foreground="White" BorderBrush="White" Margin="20 0"  Width="100" FontWeight="Medium" HorizontalContentAlignment="Center"
+                          materialDesign:HintAssist.Hint="Giây"
+                          materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
+                          materialDesign:HintAssist.FloatingScale="0.30"
+                          Text="00"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          FontSize="45" Background="#003366" />
+            </StackPanel>
+            <TextBlock x:Name="errortxbl" Foreground="#CCCCCC" FontSize="11" HorizontalAlignment="Center" Margin="0 3 0 0"/>
+            <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"  Click="saveBtn_Click"
+                    Height="35" Width="200" BorderBrush="White" Content="Lưu" Margin="0 20"
+                    materialDesign:ButtonAssist.CornerRadius="15">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#0222" Offset="1"/>
+                        <GradientStop Color="#003366" Offset="0"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Button Click="cancelBtn_Click" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Center" Content="HỦY" BorderThickness="0,0,0,0" FontSize="14" FontWeight="Medium">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#CCCCCC"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                                                <TextBlock TextDecorations="Underline">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </TextBlock>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+    </Border>
+</Window>

@@ -61,7 +61,8 @@ namespace Media_Player.ViewModel
                     else
                     {
                         IsLogin = false;
-                        MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                        (p as LoginWindow).txblError.Text = "Sai tài khoản hoặc mật khẩu!";
+                        //MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
                     }
 
                 }

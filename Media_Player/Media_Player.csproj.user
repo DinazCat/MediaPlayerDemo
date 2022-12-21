@@ -14,7 +14,13 @@
     <Compile Update="UserControls\SongItem2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\ConfirmationDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\SignupWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\SleepTimer.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -31,7 +37,13 @@
     <Page Update="UserControls\SongItem2.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\ConfirmationDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\SignupWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SleepTimer.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
