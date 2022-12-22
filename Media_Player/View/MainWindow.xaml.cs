@@ -88,9 +88,8 @@ namespace Media_Player
         public static Song getSong { get { return _getSong; } set { _getSong = value; } }
         private static string _getListName;
         public static string getListName { get { return _getListName; } set { _getListName = value; } }
+
         private static string _userName;
-        private static List<Song> _curList;
-        public static List<Song> curList { get { return _curList; } set { _curList = value; } }
         public static string userName { get { return _userName; } set { _userName = value; }}
         private void Backsongbtn_Click(object sender, RoutedEventArgs e)
         {
@@ -111,12 +110,23 @@ namespace Media_Player
             {
                 getSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
                 BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+                if (PlayListView.thisPlayList != null)
+                {
+                    if (PlayListView.thisPlayList.songs == getList)
+                        PlayListView.thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLplay.png";
+                }
+                MainWindow.Timer.Stop();
                 Timer.Stop();
             }
             else
             {
                 getSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png";
                 BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png"));
+                     if (PlayListView.thisPlayList != null)
+                {
+                    if (PlayListView.thisPlayList.songs == getList)
+                        PlayListView.thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLpause.png";
+                }
                 Timer.Start();
             }
         }
@@ -493,9 +503,7 @@ namespace Media_Player
         PlayList curPlaylist;
         private void openCurPLBtn_Click(object sender, RoutedEventArgs e)
         {           
-            PlayList curPlaylist = new PlayList();
-            curPlaylist.songs = getList;
-            playingPLView = new PlayListView(getList, getListName);
+            playingPLView = new PlayListView(getList, "Danh Sách Đang Phát");
             Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             page = playingPLView;
             if (index == 1 && CheckBack == true)

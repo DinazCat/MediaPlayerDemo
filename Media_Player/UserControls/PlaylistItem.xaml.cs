@@ -35,7 +35,6 @@ namespace Media_Player.UserControls
         private void PlaylistOpen_Click(object sender, RoutedEventArgs e)
         {
             PlayList item = (sender as Button).DataContext as PlayList;
-            PlayListView.Title = item.title;
 
             songs = new List<Song>();
             string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Belong B JOIN Song S ON S.Name=B.SongName WHERE PlaylistName=@PlaylistName";

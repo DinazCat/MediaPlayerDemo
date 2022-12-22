@@ -57,7 +57,6 @@ namespace Media_Player.UserControls
         private void artistBtn_click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-            PlayListView.Title = song.singerName;
 
             songs = new List<Song>();
             string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
@@ -118,7 +117,6 @@ namespace Media_Player.UserControls
         private void albumBtn_click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-            PlayListView.Title = song.album;
 
             songs = new List<Song>();
             string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Album=@Album";
@@ -222,32 +220,34 @@ namespace Media_Player.UserControls
         List<PlayList> userPlaylists;
         Song selectedSong;
         private void songItem_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (MainWindow.userName == null)
-                return;           
+        {  
             selectedSong = (sender as Border).DataContext as Song;
             if (selectedSong.getLoaiPL != "userPL")
                 deleteSongFromPL.Visibility = Visibility.Collapsed;
-            userPlaylists = new List<PlayList>();
-            String query = "SELECT * FROM Playlist WHERE UserName=@UserName";
+            if (MainWindow.userName != null)
+            {                
+                userPlaylists = new List<PlayList>();
+                String query = "SELECT * FROM Playlist WHERE UserName=@UserName";
 
-            SqlParameter param = new SqlParameter("@UserName", MainWindow.userName);
-            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
-            {
-                DataTable dt = new DataTable();
-                if (reader.HasRows)
+                SqlParameter param = new SqlParameter("@UserName", MainWindow.userName);
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
                 {
-                    dt.Load(reader);
-                    foreach (DataRow dr in dt.Rows)
+                    DataTable dt = new DataTable();
+                    if (reader.HasRows)
                     {
-                        userPlaylists.Add(new PlayList()
+                        dt.Load(reader);
+                        foreach (DataRow dr in dt.Rows)
                         {
-                            title = dr[0].ToString()
-                        });
+                            userPlaylists.Add(new PlayList()
+                            {
+                                title = dr[0].ToString()
+                            });
+                        }
                     }
                 }
+                userPlaylistMenuItem.ItemsSource = userPlaylists;
             }
-            userPlaylistMenuItem.ItemsSource = userPlaylists;
+            else userPlaylistMenuItem.Visibility= Visibility.Collapsed;
             songItemContextMenu.Visibility = Visibility.Visible;
             songItemContextMenu.IsOpen = true;
         }
@@ -280,6 +280,18 @@ namespace Media_Player.UserControls
             int index = PlayListView.listSongs.IndexOf(selectedSong);
             PlayListView.listSongs.RemoveAt(index);
             PlayListView.userListView.Items.Refresh();
+        }
+
+        private void addSongToPlayingList_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.getList.Add(selectedSong);
+            Phatnhac.thisList = MainWindow.getList;
+        }
+
+        private void addSongToPlayNext_Click(object sender, RoutedEventArgs e)
+        {            
+            MainWindow.getList.Insert(MainWindow.getList.IndexOf(MainWindow.getSong) + 1,selectedSong);
+            Phatnhac.thisList = MainWindow.getList;
         }
     }
 }

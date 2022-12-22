@@ -46,8 +46,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Pop" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listPop" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Pop" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallPop"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listPop" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -61,8 +70,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="EDM" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listEDM" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="EDM" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallEDM"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listEDM" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -76,8 +94,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Nhạc cổ điển" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listCoDien" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Cổ điển" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallClassic"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listCoDien" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -91,8 +118,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Nhạc phim" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listOST" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Nhạc phim" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallOST"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listOST" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -106,8 +142,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="RnB" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listRnB" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="RnB" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallRnB"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listRnB" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -121,8 +166,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Jazz" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listJazz" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Jazz" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallJazz"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listJazz" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -137,10 +191,17 @@
                 </ListView>
 
 
-                <!--<TextBlock Text="Nhạc thiếu nhi" Foreground="White" FontSize="20" Margin="10"/>-->
-
-                <TextBlock Text="Nhạc không lời" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listKhongLoi" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Nhạc không lời" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallInstrumental"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listKhongLoi" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -154,8 +215,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Acoustic" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listAcoustic" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Acoustic" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallAcoustic"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listAcoustic" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -169,8 +239,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Hip Hop" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listHipHop" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Hip-Hop" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallHiphop"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listHipHop" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -184,8 +263,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Tâm trạng" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listTamTrang" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Tâm trạng" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallEmotional"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listTamTrang" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -199,8 +287,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Tập trung" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listTapTrung" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Tập trung" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallConcentration"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listTapTrung" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -214,8 +311,17 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Thư giãn" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listThuGian" Background="#252525" 
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Thư giãn" Foreground="White" FontSize="20" Margin="5"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllListBtn_click" Name="viewallRelaxing"
+                        Content="Hiện tất cả"  FontSize="14" FontWeight="Regular"/>
+                </Grid>
+                <ListView x:Name="listThuGian" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -228,7 +334,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </StackPanel>
         </Grid>
     </ScrollViewer>

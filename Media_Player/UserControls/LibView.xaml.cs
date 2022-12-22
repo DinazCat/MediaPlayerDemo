@@ -28,6 +28,9 @@ namespace Media_Player.UserControls
         public static List<PlayList> userPlaylists;
         List<Song> ListenedList = new List<Song>();
         List<Song> LikedList = new List<Song>();
+        List<PlayList> likedPlaylists;
+        List<PlayList> likedArtists;
+        List<PlayList> likedAlbums;
         public LibView()
         {
             InitializeComponent();
@@ -41,6 +44,18 @@ namespace Media_Player.UserControls
 
             InitLikedList(ref LikedList);
             listLiked.ItemsSource = LikedList;
+
+            likedPlaylists = new List<PlayList>();
+            InitLikedPlaylistsList();
+            DanhSachPhatDaThichlist.ItemsSource = likedPlaylists;
+
+            likedArtists= new List<PlayList>();
+            InitLikedArtistsList();
+            ArtistsList.ItemsSource = likedArtists;
+
+            likedAlbums = new List<PlayList>();
+            InitLikedAlbumsList();
+            Albumslist.ItemsSource = likedAlbums;
         }
         private static ListView _getUserPLs;
         public static ListView getUserPLs { get { return _getUserPLs; } set { _getUserPLs = value; } }
@@ -140,8 +155,76 @@ namespace Media_Player.UserControls
             }
 
         }
-        UserControl p;
 
+        void InitLikedArtistsList()
+        {
+            String query = "SELECT * FROM  Artist A JOIN LikedPL L ON A.Name=L.PlaylistName WHERE L.UserName=@UserName";
+
+            SqlParameter param = new SqlParameter("@UserName", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        likedArtists.Add(new PlayList()
+                        {
+                            title = dr[0].ToString(),
+                            picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr[1].ToString()
+                        });
+                    }
+                }
+            }
+        }
+        void InitLikedPlaylistsList()
+        {
+            String query = "SELECT * FROM  Playlist P JOIN LikedPL L ON P.Title=L.PlaylistName WHERE L.UserName=@UserName";
+
+            SqlParameter param = new SqlParameter("@UserName", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        likedPlaylists.Add(new PlayList()
+                        {
+                            title = dr[0].ToString(),
+                            picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr[1].ToString()
+                        });
+                    }
+                }
+            }
+        }
+
+        void InitLikedAlbumsList()
+        {
+            String query = "SELECT * FROM  Album A JOIN LikedPL L ON A.Title=L.PlaylistName WHERE L.UserName=@UserName";
+
+            SqlParameter param = new SqlParameter("@UserName", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        likedAlbums.Add(new PlayList()
+                        {
+                            title = dr[0].ToString(),
+                            picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr[2].ToString(),
+                            description = "Nghệ sĩ: " + dr[1] + ", Năm phát hành: " + dr[3]
+                        });
+                    }
+                }
+            }
+        }
+        UserControl p, page;
         private void viewAllLikedSongBtn_click(object sender, RoutedEventArgs e)
         {
             MainWindow.likedpage = new LikedView();
@@ -161,6 +244,207 @@ namespace Media_Player.UserControls
             MainWindow.CurrentView = p;
             MainWindow.CountPage = -1;            
 
+        }
+
+        private void ArtistOpen_Click(object sender, RoutedEventArgs e)
+        {
+            PlayList playList = (sender as Button).DataContext as PlayList;
+            playList.songs= new List<Song>();
+            string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
+            SqlParameter param1 = new SqlParameter("@Artist", playList.title);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        if (PlayListView.CheckLiked(s.songName) == true)
+                        {
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+
+                        playList.songs.Add(s);
+                        n++;
+                    }
+                    foreach (Song s in playList.songs)
+                    {
+                        s.getList = playList.songs;
+                    }
+                }
+            }
+
+            page = new PlayListView(playList);            
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
+        }
+
+        private void LikedPlaylistOpen_Click(object sender, RoutedEventArgs e)
+        {
+            PlayList playList = (sender as Button).DataContext as PlayList;
+
+            playList.songs = new List<Song>();
+            switch (playList.title)
+            {
+                case "Nhạc Pop":
+                    playList.songs = GenresView.PopList.songs;
+                    break;
+                case "Nhạc Hàn Quốc":
+                    playList.songs = GenresView.KoreaList.songs;
+                    break;
+                case "Nhạc Âu Mỹ":
+                    playList.songs = GenresView.USUKList.songs;
+                    break;
+                case "Nhạc Trung Quốc":
+                    playList.songs = GenresView.ChinaList.songs;
+                    break;
+                case "Nhạc Việt Nam":
+                    playList.songs = GenresView.VNList.songs;
+                    break;
+                case "Nhạc Nhật Bản":
+                    playList.songs = GenresView.JapanList.songs;
+                    break;
+                case "Nhạc EDM":
+                    playList.songs = GenresView.EDMList.songs;
+                    break;
+                case "Nhạc Cổ Điển":
+                    playList.songs = GenresView.ClassicList.songs;
+                    break;
+                case "Nhạc Phim":
+                    playList.songs = GenresView.OSTList.songs;
+                    break;
+                case "Nhạc R&B":
+                    playList.songs = GenresView.RnBList.songs;
+                    break;
+                case "Nhạc Jazz":
+                    playList.songs = GenresView.JazzList.songs;
+                    break;
+                case "Nhạc Không Lời":
+                    playList.songs = GenresView.InstrumentalList.songs;
+                    break;
+                case "Nhạc Acoustic":
+                    playList.songs = GenresView.AcousticList.songs;
+                    break;
+                case "Nhạc Hip Hop":
+                    playList.songs = GenresView.HipHopList.songs;
+                    break;
+                case "Nhạc Tâm Trạng":
+                    playList.songs = GenresView.EmotionalList.songs;
+                    break;
+                case "Nhạc Thư Giãn":
+                    playList.songs = GenresView.RelaxingList.songs;
+                    break;
+                case "Nhạc Tập Trung":
+                    playList.songs = GenresView.ConcentrationList.songs;
+                    break;
+                case "Có Thể Bạn Sẽ Thích":
+                    playList.songs = HomeView.MaybeulikeList.songs;
+                    break;
+                case "Phổ Biến":
+                    playList.songs = HomeView.PopularList.songs;
+                    break;
+                case "Mới Phát Hành":
+                    playList.songs = HomeView.NewReleasesList.songs;
+                    break;
+            }
+            page = new PlayListView(playList);
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
+        }
+
+        private void AlbumOpen_Click(object sender, RoutedEventArgs e)
+        {
+            PlayList playList = (sender as Button).DataContext as PlayList;
+            playList.songs = new List<Song>();
+            string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Album=@Album";
+            SqlParameter param1 = new SqlParameter("@Album", playList.title);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        if (PlayListView.CheckLiked(s.songName) == true)
+                        {
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+
+                        playList.songs.Add(s);
+                        n++;
+                    }
+                    foreach (Song s in playList.songs)
+                    {
+                        s.getList = playList.songs;
+                    }
+                }
+            }
+
+            page = new PlayListView(playList);
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
         }
     }
 }

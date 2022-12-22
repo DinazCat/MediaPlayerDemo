@@ -60,7 +60,6 @@ namespace Media_Player.UserControls
         private void artistBtn_click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-            PlayListView.Title = song.singerName;
 
             songs = new List<Song>();
             string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
@@ -116,5 +115,81 @@ namespace Media_Player.UserControls
             MainWindow.CurrentView = p;
             MainWindow.CountPage = -1;
         }
+        List<PlayList> userPlaylists;
+        Song selectedSong;
+        private void songItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            selectedSong = (sender as Border).DataContext as Song;
+            if (selectedSong.getLoaiPL != "userPL")
+                deleteSongFromPL.Visibility = Visibility.Collapsed;
+            if (MainWindow.userName != null)
+            {
+                userPlaylists = new List<PlayList>();
+                String query = "SELECT * FROM Playlist WHERE UserName=@UserName";
+
+                SqlParameter param = new SqlParameter("@UserName", MainWindow.userName);
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param))
+                {
+                    DataTable dt = new DataTable();
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            userPlaylists.Add(new PlayList()
+                            {
+                                title = dr[0].ToString()
+                            });
+                        }
+                    }
+                }
+                userPlaylistMenuItem.ItemsSource = userPlaylists;
+            }
+            else userPlaylistMenuItem.Visibility = Visibility.Collapsed;
+            songItemContextMenu.Visibility = Visibility.Visible;
+            songItemContextMenu.IsOpen = true;
+        }
+
+        private void playlist_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (MainWindow.userName == null)
+                return;
+            PlayList playList = (sender as StackPanel).DataContext as PlayList;
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Insert into Belong values(N'" + playList.title + "', N'" + selectedSong.songName + "')", con);
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+
+        private void deleteSongFromCurPL_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.userName == null)
+                return;
+
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Delete from Belong where SongName=N'" + selectedSong.songName + "' and PlaylistName=N'" + selectedSong.getPL + "'", con);
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();
+            con.Close();
+
+            int index = PlayListView.listSongs.IndexOf(selectedSong);
+            PlayListView.listSongs.RemoveAt(index);
+            PlayListView.userListView.Items.Refresh();
+        }
+        private void addSongToPlayingList_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.getList.Add(selectedSong);
+            Phatnhac.thisList = MainWindow.getList;
+        }
+
+        private void addSongToPlayNext_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.getList.Insert(MainWindow.getList.IndexOf(MainWindow.getSong) + 1, selectedSong);
+            Phatnhac.thisList = MainWindow.getList;
+        }
+
     }
 }

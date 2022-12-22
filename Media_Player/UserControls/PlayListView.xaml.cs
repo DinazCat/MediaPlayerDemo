@@ -25,19 +25,11 @@ namespace Media_Player.UserControls
     /// </summary>
     public partial class PlayListView : UserControl
     {
-        public static string Title;
-        PlayList USUKList;
-        PlayList VNList;
-        PlayList ChinaList;
-        PlayList KoreaList;
-        PlayList JapanList;
+        public static PlayList thisPlayList;
         public PlayListView()
         {
-            InitializeComponent();
-
-            //imgScan.DataContext = new { prescanImage = AppDomain.CurrentDomain.BaseDirectory + "Quocgia/" + "AnhnenAuMy.jpg" };
-            txtTitle.Text = Title;
-            
+            InitializeComponent(); 
+           
         }
         public static bool CheckLiked(string songname)
         {
@@ -68,7 +60,22 @@ namespace Media_Player.UserControls
         public PlayListView(List<Song> songs, string listName)
         {
             InitializeComponent();
-            for(int i = 0; i < songs.Count; i++)
+
+            bool isPLLiked = IsLiked(listName);
+            thisPlayList = new PlayList()
+            {
+                title = listName,
+                description = "Số bài hát: " + songs.Count,
+                isLiked = isPLLiked,
+                LinkLikeIcon = isPLLiked ? AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLfilledHeart.png" : AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLheart.png",
+                songs = songs
+            };
+            if(listName=="Danh Sách Đang Phát" || songs[0].getLoaiPL == "userPL")
+                thisPlayList.LinkLikeIcon = "";
+            if (IsPlaying()) thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLpause.png";
+            this.DataContext = thisPlayList;
+
+            for (int i = 0; i < songs.Count; i++)
             {
                 if (CheckLiked(songs[i].songName))
                 {
@@ -76,12 +83,115 @@ namespace Media_Player.UserControls
                     songs[i].isLike = true;
                 }    
             }    
+
             listSongs = songs;
             listSongItem.ItemsSource = listSongs;
-            Title = listName;
-            txtTitle.Text = Title;
+
             if (MainWindow.userName != null)
-            userListView = listSongItem;
+                userListView = listSongItem;
+        }
+        public PlayListView(PlayList playList)
+        {
+            InitializeComponent();
+            
+            
+            thisPlayList = playList;
+            bool isPLLiked = IsLiked(playList.title);                        
+            playList.isLiked = isPLLiked;
+            playList.LinkLikeIcon = isPLLiked ? AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLfilledHeart.png" : AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLheart.png";
+            if(playList.description == null) playList.description = "Số bài hát: " + playList.songs.Count;
+            if(IsPlaying()) playList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLpause.png";
+
+            this.DataContext = playList;
+            for (int i = 0; i < playList.songs.Count; i++)
+            {
+                if (CheckLiked(playList.songs[i].songName))
+                {
+                    playList.songs[i].LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                    playList.songs[i].isLike = true;
+                }
+            }
+            listSongs = playList.songs;
+            listSongItem.ItemsSource = listSongs;
+
+            if (MainWindow.userName != null)
+                userListView = listSongItem;
+        }
+
+        private void BtnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsPlaying())
+            {
+                MainWindow.getListName = thisPlayList.title;
+                MainWindow.getList = Phatnhac.thisList = thisPlayList.songs;
+                Phatnhac.HamTuongTac(thisPlayList.songs[0]);
+                Phatnhac.occupying = Phatnhac.thisList;
+                thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLpause.png";
+            }
+            else
+            {
+                MainWindow.getListName = thisPlayList.title;
+                MainWindow.getList = Phatnhac.thisList = thisPlayList.songs;
+                foreach (Song song in thisPlayList.songs)
+                {
+                    if (song.Linkicon == AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png")
+                    {
+                        Phatnhac.HamTuongTac(song);                        
+                        break;
+                    }
+                }
+                Phatnhac.occupying = Phatnhac.thisList;
+                thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLplay.png";
+            }
+        }
+
+        private void BtnLove_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                return;
+            }
+            if (!thisPlayList.isLiked)
+            {
+                string query = "Insert into LikedPL(UserName,PlaylistName) values(N'" + MainWindow.userName + "',N'" + thisPlayList.title + "' )";
+                Phatnhac.SqlInteract(query);
+                thisPlayList.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLfilledHeart.png";
+            }
+            else
+            {
+                string query = "Delete from LikedPL where UserName=N'" + MainWindow.userName + "' and PlaylistName=N'" + thisPlayList.title + "'";
+                Phatnhac.SqlInteract(query);
+                thisPlayList.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLheart.png";
+            }
+            thisPlayList.isLiked = !thisPlayList.isLiked;
+        }
+        bool IsLiked(string listName)
+        {
+            if (MainWindow.userName == null)
+                return false;
+            string query = "SELECT * FROM LikedPL WHERE UserName = @username AND PlaylistName=@PlaylistName";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            SqlParameter param2 = new SqlParameter("@PlaylistName", listName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1, param2))
+            {
+                if (reader.HasRows)
+                    return true;
+            }
+            return false;
+        }
+        bool IsPlaying()
+        {
+            foreach (Song song in thisPlayList.songs)
+            {
+                if (song.Linkicon == AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

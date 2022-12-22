@@ -30,6 +30,7 @@ namespace Media_Player.UserControls
             LikedList = new List<Song>();
             InitLikedList(ref LikedList);
             listLiked.ItemsSource = LikedList;
+            txtDescription.Text = "Số bài hát: " + LikedList.Count;
         }
         void InitLikedList(ref List<Song> pl)
         {

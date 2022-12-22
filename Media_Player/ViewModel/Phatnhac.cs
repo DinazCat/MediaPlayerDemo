@@ -51,6 +51,7 @@ namespace Media_Player.ViewModel
         public static Song thisSong { get { return _thisSong; } set { _thisSong = value; } }
         private static List<Song> _thisList;
         public static List<Song> thisList { get { return _thisList; } set { _thisList = value; } }
+
         public static bool listened = false;
         public static string filename;
         public static void openmusic()
@@ -250,12 +251,23 @@ namespace Media_Player.ViewModel
             {
                 song.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
                 ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+                if (PlayListView.thisPlayList != null)
+                {
+                    if (PlayListView.thisPlayList.songs == thisList)
+                        PlayListView.thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLplay.png";
+                }
                 MainWindow.Timer.Stop();
             }
             else
             {
                 song.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png";
                 ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png"));
+                ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png"));
+                if (PlayListView.thisPlayList != null)
+                {
+                    if (PlayListView.thisPlayList.songs == thisList)
+                        PlayListView.thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLpause.png";
+                }
                 MainWindow.Timer.Start();
             }
 

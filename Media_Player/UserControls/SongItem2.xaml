@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Media_Player.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
-    <Border  Width="170" CornerRadius="10" MouseEnter="songpnl_mouseEnter" MouseLeave="songpnl_mouseLeave" >
+    <Border  Width="170" CornerRadius="10" MouseEnter="songpnl_mouseEnter" MouseLeave="songpnl_mouseLeave" MouseDown="songItem_MouseDown" >
         <Border.Style>
             <Style TargetType="Border">
                 <Setter Property="Background" Value="Transparent"/>
@@ -42,7 +43,42 @@
                 </StackPanel>
             </Grid>
         </DockPanel>
-        
+
+        <Border.ContextMenu>
+            <ContextMenu x:Name="songItemContextMenu"  Background="#000020" Foreground="White" Visibility="Hidden">
+                <MenuItem x:Name="deleteSongFromPL"  Header="Xóa khỏi playlist này" Click="deleteSongFromCurPL_Click">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="DeleteOutline" Height="18" Width="18" Foreground="White"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="userPlaylistMenuItem" Header="Thêm vào playlist" Background="#000020" Foreground="White" >
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="PlusCircle" Height="17" Width="17" Foreground="White"/>
+                    </MenuItem.Icon>
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" MouseDown="playlist_MouseDown">
+                                <materialDesign:PackIcon Kind="PlaylistMusic" Foreground="White" Width="20" Height="20"/>
+                                <Grid>
+                                    <TextBlock Text="                                " FontSize="14" Margin="15 0"/>
+                                    <TextBlock Text="{Binding title}" Foreground="White" FontSize="14" Margin="15 0"/>
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
+                <MenuItem x:Name="addSongToPlayingList"  Header="Thêm vào danh sách phát" Click="addSongToPlayingList_Click">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="PlaylistPlus" Height="19" Width="18" Foreground="White"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="addSongToPlayNext"  Header="Phát tiếp theo" Click="addSongToPlayNext_Click">
+                    <MenuItem.Icon>
+                        <materialDesign:PackIcon Kind="ChevronRight" Height="19" Width="19" Foreground="White"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Border.ContextMenu>
     </Border>
 
 </UserControl>

@@ -28,18 +28,18 @@ namespace Media_Player.UserControls
     public partial class GenresView : UserControl
     {
         List<PlayList> QuocGiaPLs;
-        PlayList PopList;
-        PlayList EDMList;
-        PlayList ClassicList;
-        PlayList OSTList;
-        PlayList RnBList;
-        PlayList JazzList;
-        PlayList InstrumentalList;
-        PlayList AcousticList;
-        PlayList HipHopList;
-        PlayList EmotionalList;
-        PlayList ConcentrationList;
-        PlayList RelaxingList;
+        public static PlayList PopList;
+        public static PlayList EDMList;
+        public static PlayList ClassicList;
+        public static PlayList OSTList;
+        public static PlayList RnBList;
+        public static PlayList JazzList;
+        public static PlayList InstrumentalList;
+        public static PlayList AcousticList;
+        public static PlayList HipHopList;
+        public static PlayList EmotionalList;
+        public static PlayList ConcentrationList;
+        public static PlayList RelaxingList;
         public GenresView()
         {
             InitializeComponent();
@@ -110,7 +110,16 @@ namespace Media_Player.UserControls
                     title = tendaidien[k]
                 });
             }
-            
+            USUKList = new PlayList();
+            InitListbyNation(ref USUKList, "Nhạc Âu Mỹ", "Âu Mỹ");
+            KoreaList = new PlayList();
+            InitListbyNation(ref KoreaList, "Nhạc Hàn Quốc", "Hàn Quốc");
+            VNList = new PlayList();
+            InitListbyNation(ref VNList, "Nhạc Việt Nam", "Việt Nam");
+            JapanList = new PlayList();
+            InitListbyNation(ref JapanList, "Nhạc Nhật Bản", "Nhật Bản");
+            ChinaList = new PlayList();
+            InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
         }
         void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
         {
@@ -167,49 +176,24 @@ namespace Media_Player.UserControls
         }
         PlayListView page = new PlayListView();
         UserControl p;
-        PlayList USUKList;
-        PlayList VNList;
-        PlayList ChinaList;
-        PlayList KoreaList;
-        PlayList JapanList;
+        public static PlayList USUKList;
+        public static PlayList VNList;
+        public static PlayList ChinaList;
+        public static PlayList KoreaList;
+        public static PlayList JapanList;
         private void ButtonQuocGia_Click(object sender, RoutedEventArgs e)
         {
             PlayList item = (sender as Button).DataContext as PlayList;
-            PlayListView.Title = item.title;
-            if (item.title == "Nhạc Âu Mỹ")
-            {
-                USUKList = new PlayList();
-                InitListbyNation(ref USUKList, "Nhạc Âu Mỹ", "Âu Mỹ");
+            if (item.title == "Nhạc Âu Mỹ")  
                 page = new PlayListView(USUKList.songs, item.title);
-            }
             else if (item.title == "Nhạc Việt Nam")
-            {
-                VNList = new PlayList();
-                InitListbyNation(ref VNList, "Nhạc Việt Nam", "Việt Nam");
                 page = new PlayListView(VNList.songs, item.title);
-
-            }
             else if (item.title == "Nhạc Hàn Quốc")
-            {
-                KoreaList = new PlayList();
-                InitListbyNation(ref KoreaList, "Nhạc Hàn Quốc", "Hàn Quốc");
                 page = new PlayListView(KoreaList.songs, item.title);
-
-            }
             else if (item.title == "Nhạc Nhật Bản")
-            {
-                JapanList = new PlayList();
-                InitListbyNation(ref JapanList, "Nhạc Nhật Bản", "Nhật Bản");
                 page = new PlayListView(JapanList.songs, item.title);
-
-            }
             else if (item.title == "Nhạc Trung Quốc")
-            {
-                ChinaList = new PlayList();
-                InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
                 page = new PlayListView(ChinaList.songs, item.title);
-
-            }
 
             p = page;
             ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
@@ -328,6 +312,66 @@ namespace Media_Player.UserControls
                 }
 
             }
+        }
+
+        private void viewAllListBtn_click(object sender, RoutedEventArgs e)
+        {
+            string s = (sender as Button).Name;
+            switch (s)
+            {
+                case "viewallPop":
+                    page = new PlayListView(PopList.songs, "Nhạc Pop");
+                    break;
+                case "viewallEDM":
+                    page = new PlayListView(EDMList.songs, "Nhạc EDM");
+                    break;
+                case "viewallOST":
+                    page = new PlayListView(OSTList.songs, "Nhạc Phim");
+                    break;
+                case "viewallClassic":
+                    page = new PlayListView(ClassicList.songs, "Nhạc Cổ Điển");
+                    break;
+                case "viewallRnB":
+                    page = new PlayListView(RnBList.songs, "Nhạc R&B");
+                    break;
+                case "viewallJazz":
+                    page = new PlayListView(JazzList.songs, "Nhạc Jazz");
+                    break;
+                case "viewallInstrumental":
+                    page = new PlayListView(InstrumentalList.songs, "Nhạc Không Lời");
+                    break;
+                case "viewallAcoustic":
+                    page = new PlayListView(AcousticList.songs, "Nhạc Acoustic");
+                    break;
+                case "viewallHiphop":
+                    page = new PlayListView(HipHopList.songs, "Nhạc Hip Hop");
+                    break;
+                case "viewallConcentration":
+                    page = new PlayListView(ConcentrationList.songs, "Nhạc Tập Trung");
+                    break;
+                case "viewallRelaxing":
+                    page = new PlayListView(RelaxingList.songs, "Nhạc Thư Giãn");
+                    break;
+                case "viewallEmotional":
+                    page = new PlayListView(EmotionalList.songs, "Nhạc Tâm Trạng");
+                    break;
+            }
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
         }
     }
 }

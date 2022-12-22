@@ -29,9 +29,9 @@ namespace Media_Player.UserControls
     /// </summary>
     public partial class HomeView : UserControl
     {
-        PlayList MaybeulikeList;
-        PlayList PopularList;
-        PlayList NewReleasesList;
+        public static PlayList MaybeulikeList;
+        public static PlayList PopularList;
+        public static PlayList NewReleasesList;
         List<PlayList> artistPLs;
         public HomeView()
         {
@@ -168,6 +168,39 @@ namespace Media_Player.UserControls
             {
                 int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
                 //MainWindow.View.RemoveAt(index - 1);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
+        }
+
+        private void viewAllListBtn_click(object sender, RoutedEventArgs e)
+        {
+            string s = (sender as Button).Name;
+            switch (s) 
+            {
+                case "viewallMaybeulikeL":
+                    page = new PlayListView(MaybeulikeList.songs, "Có Thể Bạn Sẽ Thích");
+                    break;
+                case "viewallPopularL":
+                    page = new PlayListView(PopularList.songs, "Phổ Biến");
+                    break;
+                case "viewallNewReleasesL":
+                    page = new PlayListView(NewReleasesList.songs, "Mới Phát Hành");
+                    break;
+            }
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
                 for (int i = index + 1; i < MainWindow.View.Count; i++)
                 {
                     MainWindow.View.RemoveAt(i);

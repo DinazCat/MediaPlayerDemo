@@ -19,7 +19,7 @@
             <StackPanel>
                 <Grid DockPanel.Dock="Top">
                     <TextBlock x:Name="txtTitle" Text="Bài Hát Đã Thích"  Margin="15 180 0 50"  Foreground="White" FontSize="50" FontWeight="Heavy"/>
-                    <TextBlock x:Name="txtDescription"  VerticalAlignment="Bottom" Margin="15"  Foreground="White" FontSize="15"/>
+                    <TextBlock x:Name="txtDescription" VerticalAlignment="Bottom" Margin="20"  Foreground="White" FontSize="17"/>
                 </Grid>
                 <Border BorderThickness="0 1 0 0" BorderBrush="White"/>
                 <Grid Margin="0 10">
