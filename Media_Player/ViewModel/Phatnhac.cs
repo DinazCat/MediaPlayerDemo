@@ -287,5 +287,9 @@ namespace Media_Player.ViewModel
             filename = thisSong.savepath;
             openmusic();
         }
+        public static void Init(String userName)
+        {
+
+        }
     }
 }
