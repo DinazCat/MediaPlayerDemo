@@ -348,3 +348,7 @@ D:\C#\MediaPlayer1\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\Sl
 D:\C#\MediaPlayer1\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.baml
 D:\C#\MediaPlayer1\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ConfirmationDialog.g.cs
 D:\C#\MediaPlayer1\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ConfirmationDialog.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ConfirmationDialog.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ConfirmationDialog.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.baml
