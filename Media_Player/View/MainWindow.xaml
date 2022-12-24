@@ -249,7 +249,7 @@
         </Grid>
 
         <!--Thanh phát nhạc-->
-        <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" x:Name="ThanhPN">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*"/>
@@ -395,6 +395,14 @@
 
             <!--Right Section-->
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="Mv"
+                        Height="20" Width="20" Margin="10 0" Click="Mv_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Image Source="{TemplateBinding Content}"/>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
                 <Button Click="volumeBtn_Click" x:Name="Volume"
                         Height="20" Width="20" Margin="10 0">
                     <Button.Template>
