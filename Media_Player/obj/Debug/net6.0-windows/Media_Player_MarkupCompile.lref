@@ -1,4 +1,4 @@
-﻿C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+﻿
 FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\App.xaml;;
 FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\Resources\MainResource.xaml;;
 FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\UserControls\GenresView.xaml;;
@@ -16,4 +16,5 @@ FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\View\LoginWindow.xaml;;
 FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\View\MainWindow.xaml;;
 FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\View\SignupWindow.xaml;;
 FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\View\SleepTimer.xaml;;
+FC:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\UserControls\MvView.xaml;;
 

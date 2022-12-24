@@ -132,7 +132,8 @@ namespace Media_Player.ViewModel
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
             con.Close();
-        }    
+        }
+        public static int stt = 0;
         public static void HamTuongTac(Song song)
         {
             if (song.Open == true)
@@ -152,11 +153,26 @@ namespace Media_Player.ViewModel
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(song.linkanh));
                 ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = song.songName;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = song.singerName;
-                if(MainWindow.userName != null)
+                string query = "SELECT * FROM MV where SongName = @SongName";
+                SqlParameter param1 = new SqlParameter("@SongName", song.songName);
+                DataTable dt;
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
                 {
-                    string query = "SELECT * FROM Listenrecently L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
-                    SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
-                    DataTable dt;
+                    dt = new DataTable();
+                    if (reader.HasRows)
+                    {
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "MV.png"));
+                    }
+                    else
+                    {
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "NotMv.png"));
+                    }
+                }
+                if (MainWindow.userName != null)
+                {
+                    query = "SELECT * FROM Listenrecently L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+                    param1 = new SqlParameter("@username", MainWindow.userName);
+
                     using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
                     {
                         dt = new DataTable();
@@ -173,7 +189,7 @@ namespace Media_Player.ViewModel
                         }
                         if (listened == false)
                         {
-                            if (dt.Rows.Count < 11)
+                            if (dt.Rows.Count < 9)
                             {
                                 string m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + dt.Rows.Count + "' )";
                                 SqlInteract(m);
@@ -186,20 +202,35 @@ namespace Media_Player.ViewModel
                                 m = "delete from [Listenrecently] where STT='" + 0 + "' and UserName = '" + MainWindow.userName + "'";
                                 SqlInteract(m);
 
-                                m = "Update [Listenrecently] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
+                                m = "Update [Listenrecently] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'and STT > '" + 0 + "'";
                                 SqlInteract(m);
                             }
                         }
                         else
                         {
-                            string m = "delete from [Listenrecently] where Songname =N'" + song.songName + "' and UserName = N'" + MainWindow.userName + "'";
+                            int newstt = dt.Rows.Count - 1;
+                            query = "SELECT STT FROM Listenrecently WHERE UserName = @username and Songname = @Name";
+                            param1 = new SqlParameter("@Name", song.songName);
+                            SqlParameter param2 = new SqlParameter("@username", MainWindow.userName);
+                            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param2, param1))
+                            {
+                                DataTable dt1 = new DataTable();
+                                if (reader.HasRows)
+                                {
+                                    dt1.Load(reader);
+                                }
+                                foreach (DataRow dr in dt1.Rows)
+                                {
+                                    stt = int.Parse(dr[0].ToString());
+                                }
+                            }
+                            string m = "Update [Listenrecently] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'and STT > '" + stt + "'";
+                            SqlInteract(m);
+                            m = "delete from [Listenrecently] where Songname =N'" + song.songName + "' and UserName = N'" + MainWindow.userName + "'";
+                            SqlInteract(m);
+                            m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + newstt + "' )";
                             SqlInteract(m);
 
-                            m = "Update [Listenrecently] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
-                            SqlInteract(m);
-
-                            m = "Insert into [Listenrecently] values(N'" + MainWindow.userName + "',N'" + song.songName + "','" + dt.Rows.Count + "' )";
-                            SqlInteract(m);
                         }
                     }
                     else

@@ -108,10 +108,15 @@ namespace Media_Player.UserControls
                 }
                 MainWindow.CheckBack = false;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+               
             }
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
+            MainWindow.CheckBack = false;
+            MainWindow.checkBackContent = false;
             MainWindow.CountPage = -1;
+            MainWindow.index = -2;
         }
 
         private void albumBtn_click(object sender, RoutedEventArgs e)
@@ -168,11 +173,15 @@ namespace Media_Player.UserControls
                 MainWindow.CheckBack = false;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
             }
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
+            MainWindow.CheckBack = false;
+            MainWindow.checkBackContent = false;
             MainWindow.CountPage = -1;
+            MainWindow.index = -2;
         }
-
+        int stt;
         private void LibHeart_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.userName == null)
@@ -209,10 +218,26 @@ namespace Media_Player.UserControls
                 if (song.songName == MainWindow.getSong.songName)
                     ((MainWindow)System.Windows.Application.Current.MainWindow).Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
                 song.isLike = false;
-                string m = "delete from [Liked] where Songname=N'" + song.songName + "' and UserName ='" + MainWindow.userName + "'";
+                query = "SELECT STT FROM Liked  WHERE UserName = @username and Songname = @Name";
+                param1 = new SqlParameter("@Name", song.songName);
+                SqlParameter param2 = new SqlParameter("@username", MainWindow.userName);
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param2, param1))
+                {
+                    dt = new DataTable();
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                    }
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        stt = int.Parse(dr[0].ToString());
+                    }
+                }
+                string m = "Update [Liked] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'and STT > '" + stt + "'";
                 Phatnhac.SqlInteract(m);
-                m = "Update [Liked] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
+                m = "delete from [Liked] where Songname=N'" + song.songName + "' and UserName ='" + MainWindow.userName + "'";
                 Phatnhac.SqlInteract(m);
+
 
             }
         }

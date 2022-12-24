@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\App.xaml
-161782833405
+17-1521605748
 
-3396588699
+341272221426
 201-1119673955
-Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\PlaylistItem.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\ConfirmationDialog.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;View\SleepTimer.xaml;
+Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\MvView.xaml;UserControls\PlaylistItem.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\ConfirmationDialog.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;View\SleepTimer.xaml;
 
-False
+True
 

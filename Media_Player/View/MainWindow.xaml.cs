@@ -54,7 +54,7 @@ namespace Media_Player
             Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
             Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
             Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
-
+            Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "NotMv.png"));
         }
         public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)
@@ -68,9 +68,9 @@ namespace Media_Player
             {
                 remainTime--;
                 remainTimetxbl.Text = "Thời gian còn lại: " + remainTime / 3600 + ":" + remainTime % 3600 / 60 + ":" + remainTime % 3600 % 60;
-            }                
-            else if(isSleepTimerRun)
-            {               
+            }
+            else if (isSleepTimerRun)
+            {
                 getSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
                 BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
                 isSleepTimerRun = false;
@@ -203,57 +203,74 @@ namespace Media_Player
         public static bool CheckBack = false;
         public static int index = -2;
         public static int CountPage = -1;
+        public static bool checkBackContent = false;
         private void backViewBtn_Click(object sender, RoutedEventArgs e)
         {
-            txbTimKiem.Text = "";
-            if (CountPage == -1)
-                for (int i = 0; i < View.Count; i++)
-                {
-                    if (View[i] == CurrentView) index = i;
-                    CountPage = View.Count;
-                }
-            else
+            if (checkBackContent == false)
             {
-                for (int i = 0; i < CountPage; i++)
+                txbTimKiem.Text = "";
+                if (CountPage == -1)
+                    for (int i = 0; i < View.Count; i++)
+                    {
+                        if (View[i] == CurrentView) index = i;
+                        CountPage = View.Count;
+                    }
+                else
                 {
-                    if (View[i] == CurrentView) index = i;
+                    for (int i = 0; i < CountPage; i++)
+                    {
+                        if (View[i] == CurrentView) index = i;
+                    }
                 }
-            }
-            if (index > 0)
-            {
-                if (index == 1)
-                    Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
-                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "cannext.png"));
-                frame.NavigationService.Navigate(View[index - 1]);
-                CurrentView = View[index - 1];
-                CheckBack = true;
-                CountPage -= 1;
-            }
-           
-            //if(index == 0 && CountPage == View.Count)
-            //    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                if (index > 0)
+                {
+                    if (index == 1)
+                    {
+                        Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
+                        checkBackContent = true;
+                    }    
+                       
+                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "cannext.png"));
+                    frame.NavigationService.Navigate(View[index - 1]);
+                    if (CurrentView == mvView && CurrentView != null)
+                    {
+                        ThanhPN.Visibility = Visibility.Visible;
+                        View.Remove(CurrentView);
+                        media.Stop();
+                        MvView.Timer.Stop();
+                        Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                    }
+                    CurrentView = View[index - 1];
+                    CheckBack = true;
+                    CountPage -= 1;
+                }
+            }    
 
         }
         private void nextViewBtn_Click(object sender, RoutedEventArgs e)
         {
-            txbTimKiem.Text = "";
-            if (index < View.Count && index != -2)
-            {
-                if(index == View.Count-1)
-                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
-                Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
-                if (index == 0)
+           
+                txbTimKiem.Text = "";
+                if (index < View.Count && index != -2)
                 {
-                    frame.NavigationService.Navigate(View[index + 1]);
+                    if (index == View.Count - 1)
+                        Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                    Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
+                    if (index == 0)
+                    {
+                        frame.NavigationService.Navigate(View[index + 1]);
+                    }
+                    else
+                        frame.NavigationService.Navigate(View[index]);
+                    CurrentView = View[index];
+                    index += 1;
+                    CheckBack = false;
+                    checkBackContent = false;
+                    if (index - 1 < View.Count)
+                        CountPage += 1;
                 }
-                else
-                    frame.NavigationService.Navigate(View[index]);
-                CurrentView = View[index];
-                index += 1;
-                CheckBack = false;
-                if (index - 1 < View.Count)
-                    CountPage += 1;
-            }
+                 
+           
         }
         HomeView homepage;
         LibView libpage;
@@ -265,14 +282,23 @@ namespace Media_Player
         {
             // page = page1;
             txbTimKiem.Text = "";
-            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
+           // Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
             if(CurrentView != homepage)
             {
+                if (CurrentView == mvView && CurrentView != null)
+                {
+                    ThanhPN.Visibility = Visibility.Visible;
+                    View.Remove(CurrentView);
+                    media.Stop();
+                }
                 frame.NavigationService.Navigate(homepage);
                 View.Add(homepage);
                 CurrentView = homepage;
                 CheckBack = false;
+                checkBackContent = false;
                 CountPage = -1;
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
             }           
         }
 
@@ -300,13 +326,22 @@ namespace Media_Player
             libpage = new LibView();
             if (CurrentView != libpage)
             {
+                if (CurrentView == mvView && CurrentView != null)
+                {
+                    ThanhPN.Visibility = Visibility.Visible;
+                    View.Remove(CurrentView);
+                    media.Stop();
+                }
                 Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
                 page = libpage;
                 frame.NavigationService.Navigate(page);
                 View.Add(libpage);
                 CurrentView = libpage;
                 CheckBack = false;
+                checkBackContent = false;
                 CountPage = -1;
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
             }            
         }
 
@@ -324,11 +359,20 @@ namespace Media_Player
             }
             if (CurrentView != page)
             {
+                if (CurrentView == mvView && CurrentView != null)
+                {
+                    ThanhPN.Visibility = Visibility.Visible;
+                    View.Remove(CurrentView);
+                    media.Stop();
+                }
                 frame.NavigationService.Navigate(page);
                 View.Add(genrepage);
                 CurrentView = genrepage;
                 CheckBack = false;
+                checkBackContent = false;
                 CountPage = -1;
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
             }
         }
 
@@ -355,12 +399,21 @@ namespace Media_Player
             }
             if (CurrentView!= likedpage)
             {
+                if (CurrentView == mvView && CurrentView != null)
+                {
+                    ThanhPN.Visibility = Visibility.Visible;
+                    View.Remove(CurrentView);
+                    media.Stop();
+                }
                 page = likedpage;
                 frame.NavigationService.Navigate(page);
                 View.Add(likedpage);
                 CurrentView = likedpage;
                 CheckBack = false;
+                checkBackContent = false;
                 CountPage = -1;
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
             }
 
         }
@@ -385,9 +438,31 @@ namespace Media_Player
             if (txbTimKiem.Text != "")
             {
                 pageKq = new ResultView(txbTimKiem.Text);
-                frame.NavigationService.Navigate(pageKq);
-                View.Add(pageKq);
-                CurrentView = pageKq;
+                Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
+                if (index == 1 && CheckBack == true)
+                {
+                    View.Clear();
+                    View.Add(homepage);
+                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                    index = -2;
+                }
+                if (CurrentView != pageKq)
+                {
+                    if (CurrentView == mvView && CurrentView != null)
+                    {
+                        ThanhPN.Visibility = Visibility.Visible;
+                        View.Remove(CurrentView);
+                        media.Stop();
+                    }
+                    frame.NavigationService.Navigate(pageKq);
+                    View.Add(pageKq);
+                    CurrentView = pageKq;
+                    CheckBack = false;
+                    checkBackContent = false;
+                    CountPage = -1;
+                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                    index = -2;
+                }
             }
         }
         private void txtbFind_KeyEnterDown(object sender, KeyEventArgs e)
@@ -494,9 +569,32 @@ namespace Media_Player
         {
             Song song = (sender as Grid).DataContext as Song;
             pageKq = new ResultView(song.songName);
-            frame.NavigationService.Navigate(pageKq);
-            View.Add(pageKq);
-            CurrentView = pageKq;
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
+            if (index == 1 && CheckBack == true)
+            {
+                View.Clear();
+                View.Add(homepage);
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
+            }
+            if (CurrentView != pageKq)
+            {
+                if (CurrentView == mvView && CurrentView != null)
+                {
+                    ThanhPN.Visibility = Visibility.Visible;
+                    View.Remove(CurrentView);
+                    media.Stop();
+                }
+                frame.NavigationService.Navigate(pageKq);
+                View.Add(pageKq);
+                CurrentView = pageKq;
+                CheckBack = false;
+                checkBackContent = false;
+                CountPage = -1;
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
+            }
+
 
         }
         PlayListView playingPLView;
@@ -519,7 +617,10 @@ namespace Media_Player
                 View.Add(playingPLView);
                 CurrentView = playingPLView;
                 CheckBack = false;
+                checkBackContent = false;
                 CountPage = -1;
+                Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                index = -2;
             }            
         }
         PlayListView newPLView;
@@ -551,6 +652,11 @@ namespace Media_Player
             frame.NavigationService.Navigate(page);
             View.Add(newPLView);
             CurrentView = newPLView;
+            CheckBack = false;
+            checkBackContent = false;
+            CountPage = -1;
+            Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            index = -2;
 
             Random rd = new Random();
             int i = rd.Next(1, 6);
@@ -608,16 +714,14 @@ namespace Media_Player
             cmd.ExecuteNonQuery();
             con.Close();
         }
-
+        int stt;
         private void Heart_Click(object sender, RoutedEventArgs e)
         {
             if (userName == null)
             {
                 LoginWindow loginwd = new LoginWindow();
-                this.Opacity = 0.3;
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
                 loginwd.ShowDialog();
-                this.Opacity = 1;
                 return;
             }
             string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
@@ -638,18 +742,35 @@ namespace Media_Player
                 getSong.isLike = true;
                 string m = "Insert into [Liked] values(N'" + MainWindow.userName + "',N'" + getSong.songName + "','" + dt.Rows.Count + "' )";
                 Phatnhac.SqlInteract(m);
-            }    
+            }
             else
             {
                 Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
                 getSong.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png";
                 getSong.isLike = false;
-                string m = "delete from [Liked] where Songname=N'" + getSong.songName + "' and UserName = N'" + MainWindow.userName + "'";
+
+                query = "SELECT STT FROM Liked  WHERE UserName = @username and Songname = @Name";
+                param1 = new SqlParameter("@Name", getSong.songName);
+                SqlParameter param2 = new SqlParameter("@username", MainWindow.userName);
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param2, param1))
+                {
+                    dt = new DataTable();
+                    if (reader.HasRows)
+                    {
+                        dt.Load(reader);
+                    }
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        stt = int.Parse(dr[0].ToString());
+                    }
+                }
+                string m = "Update [Liked] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "' and STT > '" + stt + "'";
+                Phatnhac.SqlInteract(m);
+                m = "delete from [Liked] where Songname=N'" + getSong.songName + "' and UserName = N'" + MainWindow.userName + "'";
                 Phatnhac.SqlInteract(m);
 
-                m = "Update [Liked] Set STT = STT - 1 where UserName = '" + MainWindow.userName + "'";
-                Phatnhac.SqlInteract(m);
-            }    
+
+            }
         }
 
         private void otherOptionsBtn_Click(object sender, RoutedEventArgs e)
@@ -739,6 +860,57 @@ namespace Media_Player
                 mainView.Opacity = libView.Opacity = genresView.Opacity = 0.7;
             }
             else likedView.Opacity = mainView.Opacity = libView.Opacity = genresView.Opacity = 0.7;
+        }
+        MvView mvView;
+        public static MediaElement media;
+        public static string VidName;
+
+        private void Mv_Click(object sender, RoutedEventArgs e)
+        {
+
+            string query = "SELECT * FROM MV Where SongName = @SongName";
+            SqlParameter param1 = new SqlParameter("@SongName", getSong.songName);
+            DataTable dt;
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        VidName = AppDomain.CurrentDomain.BaseDirectory + "MV\\" + dr[1].ToString();
+                    }
+
+                }
+            }
+            if (dt.Rows.Count > 0)
+            {
+                Phatnhac.isplaying = true;
+                getSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
+                BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+                Timer.Stop();
+                ThanhPN.Visibility = Visibility.Collapsed;
+                mvView = new MvView();
+                page = mvView;
+                Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
+                if (index == 1 && CheckBack == true)
+                {
+                    View.Clear();
+                    View.Add(homepage);
+                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                    index = -2;
+                }
+                if (CurrentView != page)
+                {
+                    frame.NavigationService.Navigate(mvView);
+                    View.Add(mvView);
+                    CurrentView = mvView;
+                    CheckBack = false;
+                    CountPage = -1;
+                }
+            }
+
         }
     }
 }

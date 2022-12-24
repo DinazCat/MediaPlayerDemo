@@ -73,16 +73,20 @@ namespace Media_Player.UserControls
                     {
                         if (dr[0].ToString().ToUpper().Contains(keyword.ToUpper()) || dr[1].ToString().ToUpper().Contains(keyword.ToUpper()) || dr["Album"].ToString().ToUpper().Contains(keyword.ToUpper()))
                         {
-                            listSongs.Add(new Song()
+                            Song s = new Song();
+                            s.songName = dr[0].ToString();
+                            s.singerName = dr[1].ToString();
+                            s.album = dr[2].ToString();
+                            s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                            s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                            s.time = dr["Duration"].ToString();
+                            s.getList = listSongs;
+                            if (PlayListView.CheckLiked(s.songName) == true)
                             {
-                                songName = dr[0].ToString(),
-                                singerName = dr[1].ToString(),
-                                album = dr["Album"].ToString(),
-                                linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                                savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                                time = dr["Duration"].ToString(),
-                                getList = listSongs
-                            });
+                                s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                                s.isLike = true;
+                            }
+                            listSongs.Add(s);
                         }
                     }
                 }
@@ -181,16 +185,21 @@ namespace Media_Player.UserControls
                     dt.Load(reader);
                     foreach (DataRow dr in dt.Rows)
                     {
-                        songs.Add(new Song()
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = playList.title;
+                        if (PlayListView.CheckLiked(s.songName) == true)
                         {
-                            songName = dr["Name"].ToString(),
-                            singerName = dr["Artist"].ToString(),
-                            album = dr["Album"].ToString(),
-                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                            time = dr["Duration"].ToString(),
-                            getPL = playList.title
-                        });
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+                        songs.Add(s);
+                        
                     }
                     foreach (Song s in songs)
                     {
@@ -207,16 +216,20 @@ namespace Media_Player.UserControls
                     dt.Load(reader);
                     foreach (DataRow dr in dt.Rows)
                     {
-                        songs.Add(new Song()
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = playList.title;
+                        if (PlayListView.CheckLiked(s.songName) == true)
                         {
-                            songName = dr["Name"].ToString(),
-                            singerName = dr["Artist"].ToString(),
-                            album = dr["Album"].ToString(),
-                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                            time = dr["Duration"].ToString(),
-                            getPL = playList.title
-                        });
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+                        songs.Add(s);
                     }
                     foreach (Song s in songs)
                     {
@@ -301,10 +314,15 @@ namespace Media_Player.UserControls
                 }
                 MainWindow.CheckBack = false;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                
             }
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
+            MainWindow.CheckBack = false;
+            MainWindow.checkBackContent = false;
             MainWindow.CountPage = -1;
+            MainWindow.index = -2;
         }
 
         private void ArtistOpen_Click(object sender, RoutedEventArgs e)
@@ -322,16 +340,20 @@ namespace Media_Player.UserControls
                     int n = 0;
                     foreach (DataRow dr in dt.Rows)
                     {
-                        songs.Add(new Song()
+                        Song s = new Song();
+                        s.songName = dr[0].ToString();
+                        s.singerName = dr[1].ToString();
+                        s.album = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                        s.time = dr["Duration"].ToString();
+                        s.getPL = playList.title;
+                        if (PlayListView.CheckLiked(s.songName) == true)
                         {
-                            songName = dr["Name"].ToString(),
-                            singerName = dr["Artist"].ToString(),
-                            album = dr["Album"].ToString(),
-                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
-                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
-                            time = dr["Duration"].ToString(),
-                            getPL = playList.title
-                        });
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
+                        songs.Add(s);
                         n++;
                     }
                     foreach (Song s in songs)
@@ -354,9 +376,13 @@ namespace Media_Player.UserControls
                 MainWindow.CheckBack = false;
                 ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
             }
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
+            MainWindow.CheckBack = false;
+            MainWindow.checkBackContent = false;
             MainWindow.CountPage = -1;
+            MainWindow.index = -2;
         }
     }
 }
