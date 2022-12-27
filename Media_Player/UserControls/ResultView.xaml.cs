@@ -384,5 +384,9 @@ namespace Media_Player.UserControls
             MainWindow.CountPage = -1;
             MainWindow.index = -2;
         }
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + e.Delta);
+        }
     }
 }

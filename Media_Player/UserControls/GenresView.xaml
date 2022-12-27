@@ -6,12 +6,41 @@
              xmlns:local="clr-namespace:Media_Player.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4" >
+    <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" x:Name="scrollViewer" >
         <Grid>
             <StackPanel  Background="#000020">
                 <TextBlock Text="Podcast" Foreground="White" FontSize="20" Margin="10"/>
-                <StackPanel Orientation="Horizontal" Height="250">
-                </StackPanel>
+                <ListView x:Name="ListPodcast" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="4">
+                                <Grid Height="170"  Width="270" DockPanel.Dock="Top">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.6"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+                                    <Border CornerRadius="10" Padding="3">
+                                        <Button x:Name="Podcast" Height="180" Background="Transparent" BorderBrush="Transparent" Click="Podcast_Click"/>
+                                        <Border.Background>
+                                            <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Grid>
+                                <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
                 <TextBlock Text="Quốc gia" Foreground="White" FontSize="20" Margin="5"/>
                 <ListView x:Name="ListQuocGia" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">

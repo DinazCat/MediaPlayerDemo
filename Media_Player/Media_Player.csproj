@@ -26,6 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="taglib-sharp">
+      <HintPath>D:\hocwpf\taglib-sharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\discplayer.jpg" />
     <Resource Include="Images\earphonesIcon.png" />
     <Resource Include="Images\HeartIcon.png" />

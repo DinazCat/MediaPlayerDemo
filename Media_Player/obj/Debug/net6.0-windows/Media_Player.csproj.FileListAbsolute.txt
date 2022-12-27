@@ -354,3 +354,4 @@ C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Vie
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.baml
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\MvView.g.cs
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\MvView.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\taglib-sharp.dll

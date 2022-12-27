@@ -28,6 +28,7 @@ namespace Media_Player.UserControls
     public partial class GenresView : UserControl
     {
         List<PlayList> QuocGiaPLs;
+        List<PlayList> PodCastPLs;
         public static PlayList PopList;
         public static PlayList EDMList;
         public static PlayList ClassicList;
@@ -40,6 +41,9 @@ namespace Media_Player.UserControls
         public static PlayList EmotionalList;
         public static PlayList ConcentrationList;
         public static PlayList RelaxingList;
+        public static PlayList BBCList;
+        public static PlayList HieuNguyenList;
+        public static PlayList DCNNTKList;
         public GenresView()
         {
             InitializeComponent();
@@ -110,6 +114,23 @@ namespace Media_Player.UserControls
                     title = tendaidien[k]
                 });
             }
+
+            PodCastPLs = new List<PlayList>();
+            ListPodcast.ItemsSource = PodCastPLs;
+            string[] tendaidien2 = new string[3] {
+                "BBC Learning English", "Hiếu Nguyễn","Đắp chăn nằm nghe Tun kể"
+            };
+            string[] linkAnh2 = new string[3] {
+                "BBC.jpg", "HieuNguyen.jpg", "TunPham.jpg"
+            };
+            for (int k = 0; k < 3; k++)
+            {
+                PodCastPLs.Add(new PlayList()
+                {
+                    picture = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + linkAnh2[k],
+                    title = tendaidien2[k]
+                });
+            }
             USUKList = new PlayList();
             InitListbyNation(ref USUKList, "Nhạc Âu Mỹ", "Âu Mỹ");
             KoreaList = new PlayList();
@@ -120,6 +141,13 @@ namespace Media_Player.UserControls
             InitListbyNation(ref JapanList, "Nhạc Nhật Bản", "Nhật Bản");
             ChinaList = new PlayList();
             InitListbyNation(ref ChinaList, "Nhạc Hoa", "Trung Quốc");
+            BBCList = new PlayList();
+            InitList(ref BBCList, "BBC Learning English");
+            HieuNguyenList = new PlayList();
+            InitList(ref HieuNguyenList, "Hiếu Nguyễn");
+            DCNNTKList = new PlayList();
+            InitList(ref DCNNTKList, "Đắp chăn nằm nghe Tun Kể");
+
         }
         void InitListbyNation(ref PlayList pl, string PlaylistName, string Nation)
         {
@@ -372,6 +400,51 @@ namespace Media_Player.UserControls
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
             MainWindow.CountPage = -1;
+        }
+
+        private void Podcast_Click(object sender, RoutedEventArgs e)
+        {
+            PlayList item = (sender as Button).DataContext as PlayList;
+            if (item.title == "BBC Learning English")
+            {
+                BBCList.description = "Số Podcast: " + BBCList.songs.Count; ;
+                page = new PlayListView(BBCList);
+            }    
+                
+            else if (item.title == "Hiếu Nguyễn")
+            {
+                HieuNguyenList.description = "Số Podcast: " + HieuNguyenList.songs.Count; 
+                page = new PlayListView(HieuNguyenList);
+            }    
+                
+            else if (item.title == "Đắp chăn nằm nghe Tun kể")
+            {
+                DCNNTKList.description = "Số Podcast: " + DCNNTKList.songs.Count; ;
+                page = new PlayListView(DCNNTKList);
+            }    
+                
+            p = page;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
+
+            if (MainWindow.CheckBack)
+            {
+                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
+                //MainWindow.View.RemoveAt(index - 1);
+                for (int i = index + 1; i < MainWindow.View.Count; i++)
+                {
+                    MainWindow.View.RemoveAt(i);
+                }
+                MainWindow.CheckBack = false;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+            }
+            MainWindow.View.Add(p);
+            MainWindow.CurrentView = p;
+            MainWindow.CountPage = -1;
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + e.Delta);
         }
     }
 }

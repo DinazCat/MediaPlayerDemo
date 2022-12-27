@@ -28,6 +28,7 @@ namespace Media_Player.UserControls
         public static List<PlayList> userPlaylists;
         List<Song> ListenedList = new List<Song>();
         List<Song> LikedList = new List<Song>();
+        List<Song> UpLoadList = new List<Song>();
         List<PlayList> likedPlaylists;
         List<PlayList> likedArtists;
         List<PlayList> likedAlbums;
@@ -44,6 +45,9 @@ namespace Media_Player.UserControls
 
             InitLikedList(ref LikedList);
             listLiked.ItemsSource = LikedList;
+
+            InitLoadList(ref UpLoadList);
+            listUpLoad.ItemsSource = UpLoadList;
 
             likedPlaylists = new List<PlayList>();
             InitLikedPlaylistsList();
@@ -144,6 +148,46 @@ namespace Media_Player.UserControls
                         s.getPL = "Đã thích";
                         s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
                         s.isLike = true;
+                        pl.Add(s);
+                        n++;
+                    }
+                }
+            }
+            foreach (Song s in pl)
+            {
+                s.getList = pl;
+            }
+
+        }
+
+        void InitLoadList(ref List<Song> pl)
+        {
+            if (MainWindow.userName == null) return;
+            pl = new List<Song>();
+
+            string query = "SELECT * FROM UserSongs WHERE UserName = @username";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        Song s = new Song();
+                        s.songName = dr[1].ToString();
+                        s.singerName = dr[2].ToString();
+                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/Default.jpeg";
+                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "UserSongs/" + dr[4].ToString();
+                        s.time = dr[3].ToString();
+                        s.getPL = "Đã tải lên";
+                        if (PlayListView.CheckLiked(s.songName) == true)
+                        {
+                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            s.isLike = true;
+                        }
                         pl.Add(s);
                         n++;
                     }
@@ -445,6 +489,10 @@ namespace Media_Player.UserControls
             MainWindow.View.Add(p);
             MainWindow.CurrentView = p;
             MainWindow.CountPage = -1;
+        }
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + e.Delta);
         }
     }
 }
