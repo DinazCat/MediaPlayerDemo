@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ using Media_Player.UserControls;
 using Media_Player.View;
 using Media_Player.ViewModel;
 using static Media_Player.MainWindow;
+using Path = System.IO.Path;
 
 namespace Media_Player
 {
@@ -911,6 +913,93 @@ namespace Media_Player
                 }
             }
 
+        }
+        public static string LinkUpLoad;
+        public static bool CheckExist(string songname)
+        {
+            if (MainWindow.userName == null) return false;
+
+            string query = "SELECT * FROM UserSongs WHERE UserName = @username";
+            SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
+            DataTable dt;
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["SongName"].ToString() == songname) return true;
+            }
+            return false;
+        }
+        public static bool CheckExist2(string songname)
+        {
+            if (MainWindow.userName == null) return false;
+
+            string query = "SELECT * FROM Song";
+            DataTable dt;
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text))
+            {
+                dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                }
+            }
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (dr["Name"].ToString() == songname) return true;
+            }
+            return false;
+        }
+        private void BtnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            if (userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                return;
+            }
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".mp3";
+            dlg.Filter = "mp3 Files (*.mp3)|*.mp3";
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                LinkUpLoad= dlg.FileName;
+                TagLib.File tagFile = TagLib.File.Create(dlg.FileName);
+                string artist = tagFile.Tag.Artists[0];
+                string title = tagFile.Tag.Title;
+                string duration = tagFile.Properties.Duration.ToString();
+                string SavePath = userName+Path.GetFileName(dlg.FileName);
+                string WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"UserSongs\" + SavePath;
+                if(CheckExist(title))
+                {
+                    MessageBox.Show("Bài hát này đã được tải lên");
+                }
+                else
+                {
+                    string m = "Insert into [UserSongs] values(N'" + MainWindow.userName + "',N'" + title + "',N'" + artist + "',N'" + duration + "',N'" + SavePath + "' )";
+                    Phatnhac.SqlInteract(m);
+                    File.Copy(dlg.FileName, WriteFile);
+                    if (CheckExist2(title) == false)
+                    {
+                         m = "Insert into [Song] values(N'" + title + "',N'" + artist + "','"+null+"',N'" + duration + "',N'"+"Default.jpeg"+"',N'" + SavePath + "','"+null+"','"+null+"')";
+                        Phatnhac.SqlInteract(m);
+                        WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"Songs\" + SavePath;
+                        File.Copy(dlg.FileName, WriteFile);
+                    }    
+                   
+                }
+               
+            }
         }
     }
 }

@@ -165,13 +165,20 @@
         <Grid Grid.Column="1" Background="#000020">
             <materialDesign:ColorZone Mode="Custom" Padding="15">
                 <DockPanel>
-                    <ComboBox BorderThickness="0" DockPanel.Dock="Right"
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button x:Name="BtnLoad" Style="{StaticResource MaterialDesignToolButton}"  Margin="0,0,20,0" Click="BtnLoad_Click">
+                            <materialDesign:PackIcon Kind="TrayArrowUp"  Width="20" Height="20" Opacity=".56" Foreground="White"/>
+                        </Button>
+                        <ComboBox BorderThickness="0" DockPanel.Dock="Right"
                               materialDesign:ColorZoneAssist.Mode="Standard"
                               materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
                               BorderBrush="{DynamicResource MaterialDesignPaper}">
-                        <ComboBoxItem Content="Hồ sơ" />
-                        <ComboBoxItem Content="Đăng xuất" />
-                    </ComboBox>
+                            <ComboBoxItem Content="Hồ sơ" />
+                            <ComboBoxItem Content="Đăng xuất" />
+                        </ComboBox>
+                        
+                    </StackPanel>
+                    
                     <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
 
                         <Button x:Name="Back" Width="20" Height="20" Click="backViewBtn_Click">
@@ -242,10 +249,15 @@
         </Grid>
 
         <!--Main View-->
-        
+
         <Grid Grid.Row="1" Grid.Column="1">
-            <ContentControl Content="{Binding SelectedViewModel}"/>
-            <Frame x:Name="frame"  NavigationUIVisibility="Hidden"></Frame>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="351*"/>
+                <ColumnDefinition Width="581*"/>
+                <ColumnDefinition Width="28*"/>
+            </Grid.ColumnDefinitions>
+            <ContentControl Content="{Binding SelectedViewModel}" Grid.ColumnSpan="3"/>
+            <Frame x:Name="frame"  NavigationUIVisibility="Hidden" Grid.ColumnSpan="3"></Frame>
         </Grid>
 
         <!--Thanh phát nhạc-->

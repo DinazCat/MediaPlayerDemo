@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignWidth="800"
              x:Name="playListView">
-    <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4" >
+    <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4"  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" x:Name="scrollViewer">
         <Grid>
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0 1">

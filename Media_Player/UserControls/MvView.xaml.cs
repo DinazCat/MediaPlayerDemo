@@ -165,6 +165,7 @@ namespace Media_Player.UserControls
         {
             timelineSlider.Value += 5;
         }
+       
     }
 }
 
