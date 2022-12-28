@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -722,8 +723,10 @@ namespace Media_Player
             if (userName == null)
             {
                 LoginWindow loginwd = new LoginWindow();
+                this.Opacity = 0.3;
                 loginwd.SkipBtn.Visibility = Visibility.Collapsed;
                 loginwd.ShowDialog();
+                this.Opacity = 1;
                 return;
             }
             string query = "SELECT * FROM Liked L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
@@ -958,48 +961,165 @@ namespace Media_Player
         }
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            if (userName == null)
-            {
-                LoginWindow loginwd = new LoginWindow();
-                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
-                loginwd.ShowDialog();
-                return;
-            }
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.DefaultExt = ".mp3";
-            dlg.Filter = "mp3 Files (*.mp3)|*.mp3";
+            //if (userName == null)
+            //{
+            //    LoginWindow loginwd = new LoginWindow();
+            //    this.Opacity = 0.3;
+            //    loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+            //    loginwd.ShowDialog();
+            //    this.Opacity = 1;
+            //    return;
+            //}
+            //Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            //dlg.DefaultExt = ".mp3";
+            //dlg.Filter = "mp3 Files (*.mp3)|*.mp3";
 
-            Nullable<bool> result = dlg.ShowDialog();
+            //Nullable<bool> result = dlg.ShowDialog();
 
-            if (result == true)
+            //if (result == true)
+            //{
+            //    LinkUpLoad= dlg.FileName;
+            //    TagLib.File tagFile = TagLib.File.Create(dlg.FileName);
+            //    string artist = tagFile.Tag.Artists[0];
+            //    string title = tagFile.Tag.Title;
+            //    string duration = tagFile.Properties.Duration.ToString();
+            //    string SavePath = userName+Path.GetFileName(dlg.FileName);
+            //    string WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"UserSongs\" + SavePath;
+            //    if(CheckExist(title))
+            //    {
+            //        CustomMessageBox messageBox = new CustomMessageBox("Bài hát đã được tải lên!");
+            //        messageBox.ShowDialog();
+            //    }
+            //    else
+            //    {
+            //        string m = "Insert into [UserSongs] values(N'" + MainWindow.userName + "',N'" + title + "',N'" + artist + "',N'" + duration + "',N'" + SavePath + "' )";
+            //        Phatnhac.SqlInteract(m);
+            //        File.Copy(dlg.FileName, WriteFile);
+            //        if (CheckExist2(title) == false)
+            //        {
+            //             m = "Insert into [Song] values(N'" + title + "',N'" + artist + "','"+null+"',N'" + duration + "',N'"+"Default.jpeg"+"',N'" + SavePath + "','"+null+"','"+null+"')";
+            //            Phatnhac.SqlInteract(m);
+            //            WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"Songs\" + SavePath;
+            //            File.Copy(dlg.FileName, WriteFile);
+            //        }    
+
+            //    }
+
+            //}
+        }
+
+        private void Mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MainWindow.userName != null)
             {
-                LinkUpLoad= dlg.FileName;
-                TagLib.File tagFile = TagLib.File.Create(dlg.FileName);
-                string artist = tagFile.Tag.Artists[0];
-                string title = tagFile.Tag.Title;
-                string duration = tagFile.Properties.Duration.ToString();
-                string SavePath = userName+Path.GetFileName(dlg.FileName);
-                string WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"UserSongs\" + SavePath;
-                if(CheckExist(title))
+                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True;MultipleActiveResultSets=true");
+                con.Open();
+                int n = 0;
+                foreach (Song song in getList)
                 {
-                    MessageBox.Show("Bài hát này đã được tải lên");
-                }
-                else
-                {
-                    string m = "Insert into [UserSongs] values(N'" + MainWindow.userName + "',N'" + title + "',N'" + artist + "',N'" + duration + "',N'" + SavePath + "' )";
-                    Phatnhac.SqlInteract(m);
-                    File.Copy(dlg.FileName, WriteFile);
-                    if (CheckExist2(title) == false)
+                    int isplaying = 0;
+                    if (song == getSong)
+                        isplaying = 1;
+                    using (SqlCommand cmd = new SqlCommand("Insert into UserPlayingList values(N'" + song.songName + "', '" + isplaying + "', N'" + MainWindow.userName + "', '" + n + "')", con))
                     {
-                         m = "Insert into [Song] values(N'" + title + "',N'" + artist + "','"+null+"',N'" + duration + "',N'"+"Default.jpeg"+"',N'" + SavePath + "','"+null+"','"+null+"')";
-                        Phatnhac.SqlInteract(m);
-                        WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"Songs\" + SavePath;
-                        File.Copy(dlg.FileName, WriteFile);
-                    }    
-                   
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteReader();
+                    }
+                    n++;
                 }
-               
+                con.Close();
             }
         }
+
+        private void userMenudown_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                userMenu.Visibility = Visibility.Hidden;
+                return;
+            }            
+        }
+        private void userMenudown_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.userName != null)
+            {
+                logIn.Visibility = Visibility.Collapsed;
+                userProfile.Visibility = Visibility.Visible;
+                logOut.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                userProfile.Visibility = Visibility.Collapsed;
+                logOut.Visibility = Visibility.Collapsed;
+                logIn.Visibility = Visibility.Visible;
+            }
+            userMenu.IsOpen = true;
+            userMenu.Visibility = Visibility.Visible;
+        }
+        private void userProfile_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmationDialog confirmationDialog = new ConfirmationDialog("ĐĂNG XUẤT", "Bạn có chắc chắn muốn đăng xuất?");
+            confirmationDialog.DialogResultEvent += ConfirmationDialog_DialogResultEvent1;
+            this.Opacity = 0.3;
+            confirmationDialog.ShowDialog();
+            this.Opacity = 1;            
+        }
+
+        private void ConfirmationDialog_DialogResultEvent1(string result)
+        {
+            if(result == "Yes")
+            {
+                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True;MultipleActiveResultSets=true");
+                con.Open();
+                int n = 0;
+                foreach (Song song in getList)
+                {
+                    int isplaying = 0;
+                    if (song == getSong)
+                        isplaying = 1;
+                    using (SqlCommand cmd = new SqlCommand("Insert into UserPlayingList values(N'" + song.songName + "', '" + isplaying + "', N'" + MainWindow.userName + "', '" + n + "')", con))
+                    {
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteReader();
+                    }
+                    n++;
+                }
+                con.Close();
+                MainWindow.userName = null;
+                if (CurrentView != homepage && CurrentView!=genrepage && CurrentView != mvView)
+                {
+                    if (CurrentView == mvView && CurrentView != null)
+                    {
+                        ThanhPN.Visibility = Visibility.Visible;
+                        View.Remove(CurrentView);
+                        media.Stop();
+                    }
+                    frame.NavigationService.Navigate(homepage);
+                    View.Add(homepage);
+                    CurrentView = homepage;
+                    CheckBack = false;
+                    checkBackContent = false;
+                    CountPage = -1;
+                    Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+                    index = -2;
+                }
+            }
+        }
+
+        private void loginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginwd = new LoginWindow();
+            this.Opacity = 0.3;
+            loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+            loginwd.ShowDialog();
+            this.Opacity = 1;
+            return;
+        }
+
     }
 }

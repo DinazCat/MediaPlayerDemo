@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Collections;
 
 namespace Media_Player.ViewModel
 {
@@ -309,8 +310,8 @@ namespace Media_Player.ViewModel
         private static bool isInit = false;
         public static void Init()
         {
-            thisList = GenresView.getPopL;
-            thisSong = GenresView.getPopL[0];
+            thisList = GenresView.PopList.songs;
+            thisSong = GenresView.PopList.songs[0];
             MainWindow.getListName = "Nhạc Pop";            
             ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
@@ -320,7 +321,52 @@ namespace Media_Player.ViewModel
         }
         public static void Init(String userName)
         {
+            List<Song> userPlayedList = new List<Song>();
+            string query = "SELECT S.*,Playing FROM UserPlayingList U JOIN Song S ON S.Name=U.SongName WHERE UserName=@UserName ORDER BY STT";
+            SqlParameter param1 = new SqlParameter("@UserName", MainWindow.userName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    dt.Load(reader);
+                    int n = 0;
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        userPlayedList.Add(new Song()
+                        {
+                            songName = dr[0].ToString(),
+                            singerName = dr[1].ToString(),
+                            album = dr[2].ToString(),
+                            linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString(),
+                            savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString(),
+                            time = dr["Duration"].ToString(),
+                        });
+                        if (int.Parse(dr["Playing"].ToString()) == 1)
+                            thisSong = MainWindow.getSong = userPlayedList[n];
+                        n++;
+                    }
+                    foreach (Song s in userPlayedList)
+                    {
+                        s.getList = userPlayedList;
+                    }
+                }
+                else return;
+            }
+            thisList = MainWindow.getList = userPlayedList;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
+            ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;
+            filename = thisSong.savepath;
+            isInit = false;
+            openmusic();
 
+            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True;MultipleActiveResultSets=true");
+            con.Open();
+            SqlCommand cmd = new SqlCommand("Delete from UserPlayingList where UserName=N'"  + MainWindow.userName + "'", con);                
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteReader();               
+            con.Close();
         }
     }
 }

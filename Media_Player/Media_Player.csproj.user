@@ -20,6 +20,9 @@
     <Compile Update="View\ConfirmationDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\CustomMessageBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\SignupWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -44,6 +47,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ConfirmationDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\CustomMessageBox.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\SignupWindow.xaml">

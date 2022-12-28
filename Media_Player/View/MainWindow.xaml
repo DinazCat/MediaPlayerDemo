@@ -18,7 +18,7 @@
         Name="mainWindow"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen" Height="750" Width="1180"
-        DataContext="{StaticResource MainVM}" PreviewMouseMove="MainWindow_MouseMove">
+        DataContext="{StaticResource MainVM}" PreviewMouseMove="MainWindow_MouseMove" Closing="Mainwindow_Closing">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
@@ -167,18 +167,34 @@
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                         <Button x:Name="BtnLoad" Style="{StaticResource MaterialDesignToolButton}"  Margin="0,0,20,0" Click="BtnLoad_Click">
-                            <materialDesign:PackIcon Kind="TrayArrowUp"  Width="20" Height="20" Opacity=".56" Foreground="White"/>
+                            <materialDesign:PackIcon Kind="TrayArrowUp"  Width="20" Height="20" Foreground="White"/>
                         </Button>
-                        <ComboBox BorderThickness="0" DockPanel.Dock="Right"
-                              materialDesign:ColorZoneAssist.Mode="Standard"
-                              materialDesign:TextFieldAssist.UnderlineBrush="{DynamicResource MaterialDesignPaper}"
-                              BorderBrush="{DynamicResource MaterialDesignPaper}">
-                            <ComboBoxItem Content="Hồ sơ" />
-                            <ComboBoxItem Content="Đăng xuất" />
-                        </ComboBox>
-                        
+                        <Button Style ="{StaticResource MaterialDesignIconButton}"  
+                        Height="30" Width="30" MouseDown="userMenudown_MouseDown" Click="userMenudown_Click">
+                            <materialDesign:PackIcon Kind="MenuDown" Height="30" Width="30" Foreground="White"/>
+                            <Button.ContextMenu>
+                                <ContextMenu x:Name ="userMenu" Background="#000020" Foreground="White">
+                                    <MenuItem x:Name="userProfile" Header="Hồ sơ" Click="userProfile_Click">
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="AccountCircleOutline" Height="18" Width="18" Foreground="White"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem  x:Name="logOut" Header="Đăng xuất" Click="logoutBtn_Click">
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="Logout" Height="18" Width="18" Foreground="White"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem  x:Name="logIn" Header="Đăng nhập" Click="loginBtn_Click">
+                                        <MenuItem.Icon>
+                                            <materialDesign:PackIcon Kind="Login" Height="18" Width="18" Foreground="White"/>
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+
                     </StackPanel>
-                    
+
                     <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
 
                         <Button x:Name="Back" Width="20" Height="20" Click="backViewBtn_Click">

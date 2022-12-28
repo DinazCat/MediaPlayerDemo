@@ -51,7 +51,6 @@ namespace Media_Player.UserControls
             PopList = new PlayList();
             InitGenreList(ref PopList, "Nhạc Pop", "Pop");
             listPop.ItemsSource = PopList.songs;
-            getPopL = PopList.songs;
 
             EDMList = new PlayList();
             InitGenreList(ref EDMList, "Nhạc EDM", "EDM");
@@ -290,7 +289,6 @@ namespace Media_Player.UserControls
                 }
             }
         }
-        public static List<Song> getPopL;
         void InitList(ref PlayList pl, string PlaylistName)
         {
             //Đổ các dữ liệu cơ bản của playlist

@@ -492,7 +492,7 @@ namespace Media_Player.UserControls
         }
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + e.Delta);
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
         }
     }
 }

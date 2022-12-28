@@ -83,7 +83,8 @@ namespace Media_Player.View
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
                 con.Close();
-                txblError.Text = "Đăng ký thành công!";
+                CustomMessageBox messageBox = new CustomMessageBox("Đăng ký thành công!");
+                messageBox.ShowDialog();
                 loginwd.Show();
                 this.Close();
             }
