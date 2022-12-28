@@ -34,7 +34,7 @@ namespace Media_Player.UserControls
         {
             Song song = (sender as Button).DataContext as Song;          
 
-            MainWindow.getListName = BtnPlay.Content.ToString();
+            MainWindow.getListName = song.getPL;
             MainWindow.getList = song.getList;
             Phatnhac.thisList = song.getList;
             Phatnhac.HamTuongTac(song);
@@ -103,7 +103,6 @@ namespace Media_Player.UserControls
             if (MainWindow.CheckBack)
             {
                 int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
-                //MainWindow.View.RemoveAt(index - 1);
                 for (int i = index + 1; i < MainWindow.View.Count; i++)
                 {
                     MainWindow.View.RemoveAt(i);
@@ -149,6 +148,7 @@ namespace Media_Player.UserControls
                     }
                 }
                 userPlaylistMenuItem.ItemsSource = userPlaylists;
+                userPlaylistMenuItem.Visibility = Visibility.Visible;
             }
             else userPlaylistMenuItem.Visibility = Visibility.Collapsed;
             songItemContextMenu.Visibility = Visibility.Visible;

@@ -56,13 +56,13 @@ namespace Media_Player.ViewModel
                     {
                         IsLogin = true;
                         MainWindow.userName = UserName;
+                        Phatnhac.Init(UserName);
                         p.Close();
                     }
                     else
                     {
                         IsLogin = false;
                         (p as LoginWindow).txblError.Text = "Sai tài khoản hoặc mật khẩu!";
-                        //MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
                     }
 
                 }

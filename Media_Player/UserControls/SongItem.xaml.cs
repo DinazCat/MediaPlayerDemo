@@ -271,6 +271,7 @@ namespace Media_Player.UserControls
                     }
                 }
                 userPlaylistMenuItem.ItemsSource = userPlaylists;
+                userPlaylistMenuItem.Visibility = Visibility.Visible;
             }
             else userPlaylistMenuItem.Visibility= Visibility.Collapsed;
             songItemContextMenu.Visibility = Visibility.Visible;
