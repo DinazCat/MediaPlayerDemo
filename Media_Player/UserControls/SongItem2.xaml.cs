@@ -99,25 +99,7 @@ namespace Media_Player.UserControls
 
             page = new PlayListView(songs, song.singerName);
             p = page;
-            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
-            if (MainWindow.CheckBack)
-            {
-                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
-                for (int i = index + 1; i < MainWindow.View.Count; i++)
-                {
-                    MainWindow.View.RemoveAt(i);
-                }
-                MainWindow.CheckBack = false;
-                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
-              
-            }
-            ((MainWindow)System.Windows.Application.Current.MainWindow).Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
-            MainWindow.View.Add(p);
-            MainWindow.CurrentView = p;
-            MainWindow.CheckBack = false;
-            MainWindow.checkBackContent = false;
-            MainWindow.CountPage = -1;
-            MainWindow.index = -2;
+            MainWindow.nvgPlayListView(p);
         }
         List<PlayList> userPlaylists;
         Song selectedSong;

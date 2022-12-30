@@ -29,6 +29,9 @@
     <Reference Include="taglib-sharp">
       <HintPath>D:\hocwpf\taglib-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="xNet">
+      <HintPath>D:\hocwpf\xNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

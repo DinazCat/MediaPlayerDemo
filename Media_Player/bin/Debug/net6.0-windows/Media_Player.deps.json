@@ -11,7 +11,8 @@
           "MahApps.Metro.IconPacks.Material": "4.11.0",
           "MaterialDesignThemes": "4.6.1",
           "System.Data.SqlClient": "4.8.5",
-          "System.Windows.Interactivity.WPF": "2.0.20525"
+          "System.Windows.Interactivity.WPF": "2.0.20525",
+          "xNet": "3.3.3.0"
         },
         "runtime": {
           "Media_Player.dll": {}
@@ -134,6 +135,14 @@
             "fileVersion": "2.0.20525.0"
           }
         }
+      },
+      "xNet/3.3.3.0": {
+        "runtime": {
+          "xNet.dll": {
+            "assemblyVersion": "3.3.3.0",
+            "fileVersion": "3.3.3.0"
+          }
+        }
       }
     }
   },
@@ -233,6 +242,11 @@
       "sha512": "sha512-0r+Le4E7hCm4zToUvBzjSUyTcuU3rFeoPa7JyTdWIzR/F7wH6+O/pWkjHIG40hIA0z1wvRdZayvoizA4wcK1dg==",
       "path": "system.windows.interactivity.wpf/2.0.20525",
       "hashPath": "system.windows.interactivity.wpf.2.0.20525.nupkg.sha512"
+    },
+    "xNet/3.3.3.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

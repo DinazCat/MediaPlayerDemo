@@ -354,7 +354,6 @@ C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Vie
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.baml
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\MvView.g.cs
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\MvView.baml
-C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\taglib-sharp.dll
 D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Media_Player.csproj.AssemblyReference.cache
 D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\GenresView.g.cs
 D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\HomeView.g.cs
@@ -424,3 +423,6 @@ D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\Media_Player.genrunt
 D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\ref\Media_Player.dll
 D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.g.cs
 D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\xNet.dll
