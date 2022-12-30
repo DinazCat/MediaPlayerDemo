@@ -223,22 +223,7 @@ namespace Media_Player.UserControls
                 page = new PlayListView(ChinaList.songs, item.title);
 
             p = page;
-            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
-           
-            if (MainWindow.CheckBack)
-            {
-                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
-                //MainWindow.View.RemoveAt(index - 1);
-                for(int i = index + 1; i < MainWindow.View.Count; i++)
-                {
-                    MainWindow.View.RemoveAt(i);
-                }    
-                MainWindow.CheckBack = false;
-                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
-            }
-            MainWindow.View.Add(p);
-            MainWindow.CurrentView = p;
-            MainWindow.CountPage = -1;
+            MainWindow.nvgPlayListView(p);
         }
         void InitGenreList(ref PlayList pl, string PlaylistName, string genre)
         {
@@ -383,21 +368,7 @@ namespace Media_Player.UserControls
                     break;
             }
             p = page;
-            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
-
-            if (MainWindow.CheckBack)
-            {
-                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
-                for (int i = index + 1; i < MainWindow.View.Count; i++)
-                {
-                    MainWindow.View.RemoveAt(i);
-                }
-                MainWindow.CheckBack = false;
-                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
-            }
-            MainWindow.View.Add(p);
-            MainWindow.CurrentView = p;
-            MainWindow.CountPage = -1;
+            MainWindow.nvgPlayListView(p);
         }
 
         private void Podcast_Click(object sender, RoutedEventArgs e)
@@ -419,25 +390,10 @@ namespace Media_Player.UserControls
             {
                 DCNNTKList.description = "Số Podcast: " + DCNNTKList.songs.Count; ;
                 page = new PlayListView(DCNNTKList);
-            }    
-                
-            p = page;
-            ((MainWindow)System.Windows.Application.Current.MainWindow).frame.NavigationService.Navigate(p);
-
-            if (MainWindow.CheckBack)
-            {
-                int index = MainWindow.View.IndexOf(MainWindow.CurrentView);
-                //MainWindow.View.RemoveAt(index - 1);
-                for (int i = index + 1; i < MainWindow.View.Count; i++)
-                {
-                    MainWindow.View.RemoveAt(i);
-                }
-                MainWindow.CheckBack = false;
-                ((MainWindow)System.Windows.Application.Current.MainWindow).Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
             }
-            MainWindow.View.Add(p);
-            MainWindow.CurrentView = p;
-            MainWindow.CountPage = -1;
+
+            p = page;
+            MainWindow.nvgPlayListView(p);
         }
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
