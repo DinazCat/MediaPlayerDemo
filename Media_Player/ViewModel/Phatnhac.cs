@@ -316,9 +316,25 @@ namespace Media_Player.ViewModel
             ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;
+            string query = "SELECT * FROM MV where SongName = @SongName";
+            SqlParameter param1 = new SqlParameter("@SongName", thisSong.songName);
+            DataTable dt;
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            {
+                dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "MV.png"));
+                }
+                else
+                {
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "NotMv.png"));
+                }
+            }
             filename = thisSong.savepath;
             openmusic();
         }
+
         public static void Init(String userName)
         {
             List<Song> userPlayedList = new List<Song>();
@@ -353,13 +369,36 @@ namespace Media_Player.ViewModel
                 }
                 else return;
             }
+            for (int i = 0; i < thisList.Count; i++)
+            {
+                if (thisList[i].Open == false) thisList[i].Open = true;
+                thisList[i].Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
+            }
             thisList = MainWindow.getList = userPlayedList;
             ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source = new BitmapImage(new Uri(thisSong.linkanh));
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content = thisSong.songName;
             ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content = thisSong.singerName;
+            ((MainWindow)System.Windows.Application.Current.MainWindow).BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
+            string query1 = "SELECT * FROM MV where SongName = @SongName";
+            SqlParameter param = new SqlParameter("@SongName", thisSong.songName);
+            using (SqlDataReader reader = DataProvider.ExecuteReader(query1, CommandType.Text, param))
+            {
+                DataTable dt = new DataTable();
+                if (reader.HasRows)
+                {
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "MV.png"));
+                }
+                else
+                {
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "NotMv.png"));
+                }
+            }
             filename = thisSong.savepath;
             isInit = false;
             openmusic();
+            MainWindow.Timer.Stop();
+            ((MainWindow)System.Windows.Application.Current.MainWindow).txblPosition.Text = "00:00";
+            ((MainWindow)System.Windows.Application.Current.MainWindow).timelineSlider.Value= 0;
 
             SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True;MultipleActiveResultSets=true");
             con.Open();

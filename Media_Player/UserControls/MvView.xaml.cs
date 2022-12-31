@@ -29,8 +29,8 @@ namespace Media_Player.UserControls
             TimeLBtn.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "clock.png"));
             TimeRBtn.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "clock1.png"));
             Anh.Source = ((MainWindow)System.Windows.Application.Current.MainWindow).Anh.Source;
-            TenBH.Content = ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content;
-            TenTG.Content = ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content;
+            TenBH.Text = ((MainWindow)System.Windows.Application.Current.MainWindow).TenBH.Content.ToString();
+            TenTG.Text = ((MainWindow)System.Windows.Application.Current.MainWindow).TenTG.Content.ToString();
             BtnPlay.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "pause.png"));
 
             myMediaElement.Source = new Uri(MainWindow.VidName);

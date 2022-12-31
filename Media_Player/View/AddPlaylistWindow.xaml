@@ -27,13 +27,13 @@
                                          Foreground="White"/>
             </Button>
 
-            <TextBlock Text="Tạo playlist mới"
-                   FontSize="25"
+            <TextBlock Text="TẠO PLAYLIST MỚI"
+                   FontSize="28"
                    Foreground="White" TextAlignment="Center" FontFamily="Sitka Text" FontWeight="Heavy"/>
             <materialDesign:ColorZone Mode="Light" 
                                       Padding="8 0"
-                                      Width="250"
-                                      Height="30"
+                                      Width="270"
+                                      Height="35"
                                       CornerRadius="15"
                                       Panel.ZIndex="1"
                                       Margin="0 20 0 30"
@@ -42,10 +42,10 @@
                          materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
                          BorderThickness="0"
                          VerticalAlignment="Center" 
-                         FontSize="14"/>
+                         FontSize="15"/>
             </materialDesign:ColorZone>
             <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Click="addPLBtn_Click"
-                    Height="35" Width="150" BorderBrush="White" Content="Tạo mới"
+                    Height="35" Width="270" BorderBrush="White" Content="Tạo mới" FontSize="15"
                     materialDesign:ButtonAssist.CornerRadius="15"                    
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                 <Button.Background>

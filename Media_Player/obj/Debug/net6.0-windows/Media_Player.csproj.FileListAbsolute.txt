@@ -426,3 +426,22 @@ D:\C#\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBo
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.g.cs
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.baml
 C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\xNet.dll
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\MvView.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\PlaylistItem.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\ResultView.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ConfirmationDialog.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SendCode.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\MvView.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\PlaylistItem.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\ResultView.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ConfirmationDialog.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\CustomMessageBox.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SendCode.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SleepTimer.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\MailKit.dll
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\MimeKit.dll
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ChangePassword.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ChangePassword.baml

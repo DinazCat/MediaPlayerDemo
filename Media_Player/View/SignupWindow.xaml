@@ -49,7 +49,7 @@
                                                  Foreground="White"/>
                         </Button>
                     </StackPanel>
-                    <TextBlock Text="Đăng ký" 
+                    <TextBlock Text="Đăng Ký" 
                                TextAlignment="Center"
                                FontSize="40"
                                FontWeight="Bold"

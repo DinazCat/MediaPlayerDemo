@@ -57,5 +57,13 @@ namespace Media_Player
         {
             return txblError;
         }
+
+        private void ForgetPass_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            SendCode sendCode = new SendCode();
+            sendCode.ShowDialog();
+            this.ShowDialog();
+        }
     }
 }

@@ -17,10 +17,16 @@
     <Compile Update="UserControls\SongItem2.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\ChangePassword.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\ConfirmationDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\CustomMessageBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\SendCode.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\SignupWindow.xaml.cs">
@@ -46,10 +52,16 @@
     <Page Update="UserControls\SongItem2.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\ChangePassword.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\ConfirmationDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\CustomMessageBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SendCode.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\SignupWindow.xaml">
