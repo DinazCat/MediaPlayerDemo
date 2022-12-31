@@ -4,16 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Media_Player.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d">
     <Grid Background="#000020">
         <Grid.RowDefinitions>
-            <RowDefinition Height="550"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="70"/>
         </Grid.RowDefinitions>
 
         <!--<MediaElement Name="myMediaElement" MediaOpened="myMediaElement_MediaOpened" MediaEnded="myMediaElement_MediaEnded" Height="550" Width="800" Loaded="myMediaElement_Loaded" />-->
-        <Viewbox x:Name="MyViewBox" StretchDirection="Both" Stretch="Uniform">
+        <Viewbox x:Name="MyViewBox" StretchDirection="Both" Stretch="Fill">
             <MediaElement Name="myMediaElement" MediaOpened="myMediaElement_MediaOpened" MediaEnded="myMediaElement_MediaEnded" Margin="10"  />
         </Viewbox>
         <Grid Grid.Row="1">
@@ -23,32 +22,22 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
-                <Image x:Name="Anh"  Stretch="Fill"
-                           Height="60" Width="60" 
-                           Margin="10 10 5 10"/>
-
+                <Image x:Name="Anh"  Stretch="Fill" Margin="5"
+                           Height="60" Width="60"/>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="45"/>
+                        <RowDefinition Height="40"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Button Style="{StaticResource letterButton}"                            
-                            x:Name="TenBH"
-                            Foreground="White"
-                            FontSize="13.5"
-                            Margin="5 5 5 0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom">
-                    </Button>
-                    <Button Grid.Row="1"
-                            Style="{StaticResource letterButton}"
-                            x:Name="TenTG"
+
+                    <TextBlock x:Name="TenBH" Foreground="White"
+                            FontSize="15" Margin="5 10 5 0"/>
+                    <TextBlock Grid.Row="1" x:Name="TenTG"
                             Margin="5 0"
-                            HorizontalAlignment="Left"
                             VerticalAlignment="Top" 
                             Foreground="#FF8D8D8D"
-                            FontSize="12">
-                    </Button>
+                            FontSize="13">
+                    </TextBlock>
                 </Grid>
             </StackPanel>
 
@@ -59,7 +48,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="TimeLBtn" Grid.Row="1" Height="30" Width="30" Click="TimeLBtn_Click">
+                    <Button x:Name="TimeLBtn" Grid.Row="1" Height="23" Width="23" Click="TimeLBtn_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Image Source="{TemplateBinding Content}"/>
@@ -67,14 +56,14 @@
                         </Button.Template>
                     </Button>
 
-                    <Button x:Name="BtnPlay" Grid.Row="1" Height="30" Width="30" Click="BtnPlay_Click">
+                    <Button x:Name="BtnPlay" Grid.Row="1" Height="30" Width="30" Click="BtnPlay_Click" Margin="15 0">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Image Source="{TemplateBinding Content}"/>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button x:Name="TimeRBtn" Grid.Row="1" Height="30" Width="30" Click="TimeRBtn_Click">
+                    <Button x:Name="TimeRBtn" Grid.Row="1" Height="23" Width="23" Click="TimeRBtn_Click">
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Image Source="{TemplateBinding Content}"/>
@@ -85,7 +74,7 @@
                 </StackPanel>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock x:Name="txblPosition" Text="00:00" Foreground="White" Margin="0 4 5 0" Width="35"/>
-                    <Slider  Width="350"
+                    <Slider  Width="400" MaxWidth="450"
                             Name="timelineSlider"   
                              ValueChanged="timelineSlider_ValueChanged"
                             Foreground="#FFF5F2F9" Maximum="1010" />
@@ -104,16 +93,13 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <Slider  VerticalAlignment="Center" 
+                <Slider  VerticalAlignment="Center" Margin="0 0 10 0"
                          x:Name="volumeSlider"
                          ValueChanged="volumeSlider_ValueChanged"
                          Minimum="0" Maximum="2" Value="1.5" 
                          Width="100" Foreground="#FFF5F2F9" />
-                <Border BorderBrush="#FF9A9393" BorderThickness="1 0" Margin="15 20 2 20"/>
 
             </StackPanel>
         </Grid>
-
-
     </Grid>
 </UserControl>

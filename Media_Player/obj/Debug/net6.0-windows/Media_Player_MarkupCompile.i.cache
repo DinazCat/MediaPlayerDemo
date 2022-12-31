@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\
 Media_Player
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\App.xaml
-18-471598873
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\App.xaml
+201448686385
 
-35-365673561
-2021443616304
-Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\MvView.xaml;UserControls\PlaylistItem.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\ConfirmationDialog.xaml;View\CustomMessageBox.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SignupWindow.xaml;View\SleepTimer.xaml;
+37-142040145
+204-185958772
+Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\MvView.xaml;UserControls\PlaylistItem.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;View\AddPlaylistWindow.xaml;View\ChangePassword.xaml;View\ConfirmationDialog.xaml;View\CustomMessageBox.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SendCode.xaml;View\SignupWindow.xaml;View\SleepTimer.xaml;
 
 False
 

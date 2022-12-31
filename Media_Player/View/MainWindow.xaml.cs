@@ -23,6 +23,7 @@ using Media_Player.Model;
 using Media_Player.UserControls;
 using Media_Player.View;
 using Media_Player.ViewModel;
+using Org.BouncyCastle.Utilities;
 using static Media_Player.MainWindow;
 using Path = System.IO.Path;
 
@@ -57,7 +58,6 @@ namespace Media_Player
             Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
             Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
             Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
-            Mv.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "NotMv.png"));
         }
         public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)

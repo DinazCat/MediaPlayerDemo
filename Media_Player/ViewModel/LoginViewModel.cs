@@ -10,6 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Data.SqlClient;
 using System.Data;
 using Media_Player.Model;
+using Media_Player.View;
 
 namespace Media_Player.ViewModel
 {
@@ -46,7 +47,7 @@ namespace Media_Player.ViewModel
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
-                    String query = "SELECT COUNT(1) FROM [User] WHERE Username=@Username AND Password=@Password";
+                    String query = "SELECT COUNT(1) FROM [User] WHERE (Username=@Username OR Email=@Username) AND Password=@Password";
                     SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                     sqlCmd.CommandType = CommandType.Text;
                     sqlCmd.Parameters.AddWithValue("@Username", UserName);
@@ -58,6 +59,8 @@ namespace Media_Player.ViewModel
                         MainWindow.userName = UserName;
                         Phatnhac.Init(UserName);
                         p.Close();
+                        CustomMessageBox messageBox = new CustomMessageBox("Đăng nhập thành công!");
+                        messageBox.ShowDialog();
                     }
                     else
                     {
