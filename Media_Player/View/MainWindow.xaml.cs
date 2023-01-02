@@ -758,7 +758,8 @@ namespace Media_Player
         {
             foreach (MenuItem item in speedMenuItem.Items)
                 if (item.IsChecked && item != (sender as MenuItem)) item.IsChecked = false;
-            float speed = float.Parse((sender as MenuItem).Header.ToString()) / 10;
+            float speed = float.Parse((sender as MenuItem).Header.ToString());
+            if (speed > 2) speed /= 10;
             Phatnhac.mediaPlayer.SpeedRatio = speed;
         }
         
@@ -868,51 +869,51 @@ namespace Media_Player
         }
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            //if (userName == null)
-            //{
-            //    LoginWindow loginwd = new LoginWindow();
-            //    this.Opacity = 0.3;
-            //    loginwd.SkipBtn.Visibility = Visibility.Collapsed;
-            //    loginwd.ShowDialog();
-            //    this.Opacity = 1;
-            //    return;
-            //}
-            //Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            //dlg.DefaultExt = ".mp3";
-            //dlg.Filter = "mp3 Files (*.mp3)|*.mp3";
+            if (userName == null)
+            {
+                LoginWindow loginwd = new LoginWindow();
+                this.Opacity = 0.3;
+                loginwd.SkipBtn.Visibility = Visibility.Collapsed;
+                loginwd.ShowDialog();
+                this.Opacity = 1;
+                return;
+            }
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".mp3";
+            dlg.Filter = "mp3 Files (*.mp3)|*.mp3";
 
-            //Nullable<bool> result = dlg.ShowDialog();
+            Nullable<bool> result = dlg.ShowDialog();
 
-            //if (result == true)
-            //{
-            //    LinkUpLoad = dlg.FileName;
-            //    TagLib.File tagFile = TagLib.File.Create(dlg.FileName);
-            //    string artist = tagFile.Tag.Artists[0];
-            //    string title = tagFile.Tag.Title;
-            //    string duration = tagFile.Properties.Duration.ToString();
-            //    string SavePath = userName + Path.GetFileName(dlg.FileName);
-            //    string WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"UserSongs\" + SavePath;
-            //    if (CheckExist(title))
-            //    {
-            //        CustomMessageBox messageBox = new CustomMessageBox("Bài hát đã được tải lên!");
-            //        messageBox.ShowDialog();
-            //    }
-            //    else
-            //    {
-            //        string m = "Insert into [UserSongs] values(N'" + MainWindow.userName + "',N'" + title + "',N'" + artist + "',N'" + duration + "',N'" + SavePath + "' )";
-            //        Phatnhac.SqlInteract(m);
-            //        File.Copy(dlg.FileName, WriteFile);
-            //        if (CheckExist2(title) == false)
-            //        {
-            //            m = "Insert into [Song] values(N'" + title + "',N'" + artist + "','" + null + "',N'" + duration + "',N'" + "Default.jpeg" + "',N'" + SavePath + "','" + null + "','" + null + "')";
-            //            Phatnhac.SqlInteract(m);
-            //            WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"Songs\" + SavePath;
-            //            File.Copy(dlg.FileName, WriteFile);
-            //        }
-
-            //    }
-
-            //}
+            if (result == true)
+            {
+                LinkUpLoad = dlg.FileName;
+                TagLib.File tagFile = TagLib.File.Create(dlg.FileName);
+                string artist = tagFile.Tag.Artists[0];
+                string title = tagFile.Tag.Title;
+                string duration = tagFile.Properties.Duration.ToString();
+                string SavePath = userName + Path.GetFileName(dlg.FileName);
+                string WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"UserSongs\" + SavePath;
+                if (CheckExist(title))
+                {
+                    CustomMessageBox messageBox = new CustomMessageBox("Bài hát đã được tải lên trước đó rồi!");
+                    messageBox.ShowDialog();
+                }
+                else
+                {
+                    string m = "Insert into [UserSongs] values(N'" + MainWindow.userName + "',N'" + title + "',N'" + artist + "',N'" + duration + "',N'" + SavePath + "' )";
+                    Phatnhac.SqlInteract(m);
+                    File.Copy(dlg.FileName, WriteFile);
+                    CustomMessageBox messageBox = new CustomMessageBox("Bài hát tải lên thành công!");
+                    messageBox.ShowDialog();
+                    if (CheckExist2(title) == false)
+                    {
+                        m = "Insert into [Song] values(N'" + title + "',N'" + artist + "','" + null + "',N'" + duration + "',N'" + "Default.jpeg" + "',N'" + SavePath + "','" + null + "','" + null + "')";
+                        Phatnhac.SqlInteract(m);
+                        WriteFile = AppDomain.CurrentDomain.BaseDirectory + @"Songs\" + SavePath;
+                        File.Copy(dlg.FileName, WriteFile);
+                    }
+                }
+            }
         }
 
         private void Mainwindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -965,7 +966,11 @@ namespace Media_Player
         }
         private void userProfile_Click(object sender, RoutedEventArgs e)
         {
-            
+            txbTimKiem.Text = "";
+            Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "canback.png"));
+            UserProfile userProfileView = new UserProfile();
+            page = userProfileView;
+            NavigatePage(page);
         }
 
         private void logoutBtn_Click(object sender, RoutedEventArgs e)

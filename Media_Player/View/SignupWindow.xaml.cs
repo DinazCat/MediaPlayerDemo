@@ -75,11 +75,31 @@ namespace Media_Player.View
             }
             else
             {
+                SqlConnection sqlCon = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+                try
+                {
+                    if (sqlCon.State == ConnectionState.Closed)
+                    {
+                        sqlCon.Open();
+                        String query = "SELECT COUNT(1) FROM [User] WHERE Username=@Username";
+                        SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                        sqlCmd.CommandType = CommandType.Text;
+                        sqlCmd.Parameters.AddWithValue("@Username", Username.Text);
+                        int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                        if (count > 0)
+                        {
+                            txblError.Text = "Tên đăng nhập này đã có người sử dụng!";
+                            return;
+                        }
+                    }
+                }
+                catch { }
+                finally { sqlCon.Close(); }
                 Random rd = new Random();
                 int ID = rd.Next(100000, 999999);
                 SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
                 con.Open();
-                SqlCommand cmd = new SqlCommand("Insert into [User] values('" + ID.ToString() + "',N'" + Username.Text + "',N'" + Displayname.Text + "','" + PasswordBox1.Password + "','" + Email.Text + "')", con);
+                SqlCommand cmd = new SqlCommand("Insert into [User] values('" + ID.ToString() + "',N'" + Username.Text + "',N'" + Displayname.Text + "','" + PasswordBox1.Password + "','" + Email.Text + "','default.png')", con);
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
                 con.Close();

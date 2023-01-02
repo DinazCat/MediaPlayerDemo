@@ -90,7 +90,7 @@ namespace Media_Player.UserControls
             if (MainWindow.userName == null) return;
             pl = new List<Song>();
            
-            string  query = "SELECT * FROM Listenrecently L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
+            string  query = "SELECT TOP 8 * FROM Listenrecently L JOIN Song S ON L.Songname = S.Name WHERE UserName = @username Order by  STT DESC";
             SqlParameter param1 = new SqlParameter("@username", MainWindow.userName);
             using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
             {

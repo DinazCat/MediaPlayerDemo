@@ -445,3 +445,6 @@ D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\MimeKit
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ChangePassword.g.cs
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ChangePassword.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\UserProfile.g.cs
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\UserProfile.baml
+D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\TagLibSharp.dll

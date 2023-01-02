@@ -18,7 +18,7 @@
         Name="mainWindow"
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen" Height="750" Width="1180"
-        DataContext="{StaticResource MainVM}" PreviewMouseMove="MainWindow_MouseMove" Closing="Mainwindow_Closing">
+        DataContext="{StaticResource MainVM}" PreviewMouseMove="MainWindow_MouseMove" Closing="Mainwindow_Closing" Icon="/Images/earphonesIcon.png">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedWindowCommand}" 
@@ -119,7 +119,7 @@
                 </StackPanel>
 
 
-                <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="10 10"/>
+                <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="10"/>
                 <!--Add playlist-->
                 <StackPanel Orientation="Horizontal" Opacity="0.7">
                     <Grid>
@@ -445,7 +445,7 @@
                          Minimum="0" Maximum="2" Value="1.5" 
                          Width="100" Foreground="#FFF5F2F9" />
                 <Border BorderBrush="#FF9A9393" BorderThickness="1 0" Margin="15 20 2 20"/>
-                <Button Style="{StaticResource MaterialDesignIconButton}"
+                <Button Style="{StaticResource MaterialDesignIconButton}" ToolTip="Danh sách đang phát"
                         Height="40" Width="40" Click="openCurPLBtn_Click">
                     <materialDesign:PackIcon Kind="PlaylistMusicOutline" Foreground="White"/>
                 </Button>
