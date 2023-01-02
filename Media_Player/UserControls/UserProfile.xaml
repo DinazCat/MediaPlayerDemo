@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="Media_Player.UserControls.UserProfile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Media_Player.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid  Background="#000020">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Grid Height="250"  Width="250" Margin="0 40 0 30">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Border CornerRadius="135" Padding="3">
+                    <Button Height="250" Background="Transparent" BorderBrush="Transparent" Click="changePicture_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="60" Width="60" Source="/Images/camera.png" Stretch="Fill" Margin="0 0 5 5"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Border.Background>
+                        <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                    </Border.Background>
+                </Border>
+            </Grid>
+            <TextBlock Text="{Binding displayName}" Foreground="White" HorizontalAlignment="Center" FontSize="30" FontFamily="Segoe Print" />
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <DockPanel Margin="30 80 30 0">
+                <TextBlock Text="Tên hiển thị" Foreground="White" FontSize="17" FontFamily="Cambria Math" Width="170" VerticalAlignment="Center"/>
+                <TextBox x:Name="DName" Text="{Binding displayName}" Foreground="#BBBBBB" FontSize="17" FontFamily="Cambria Math" IsReadOnly="True"/>
+                <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right" ToolTip="Chỉnh sửa"
+                        Height="22" Width="40" Click="editDisplayName_Click">
+                    <materialDesign:PackIcon Kind="Pencil" Foreground="White"/>
+                </Button>
+            </DockPanel>
+            <StackPanel x:Name="panelDName"  Orientation="Horizontal" Visibility="Collapsed" Margin="0 8 0 0">
+                <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Content="Đồng ý" Width="100" Margin="140 0 20 0" Click="OkDNameBtn_Click"/>
+                <Button Style="{StaticResource MaterialDesignOutlinedLightButton}" Content="Hủy" Width="70" Click="cancelDNameBtn_Click"/>
+            </StackPanel>            
+            <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="30 20"/>
+            
+            <DockPanel Margin="30 0">
+                <TextBlock Text="Tên đăng nhập" Foreground="White" FontSize="17" FontFamily="Cambria Math" Width="170" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding userName}" Foreground="#BBBBBB" FontSize="17" FontFamily="Cambria Math" IsReadOnly="True"/>
+                <TextBlock/>
+            </DockPanel>
+            <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="30 20"/>
+            
+            <DockPanel Margin="30 0">
+                <TextBlock Text="Email" Foreground="White" FontSize="17" FontFamily="Cambria Math" Width="170" VerticalAlignment="Center"/>
+                <TextBox x:Name="Email" Text="{Binding email}" Foreground="#BBBBBB" FontSize="17" FontFamily="Cambria Math" IsReadOnly="True"/>
+                <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right" ToolTip="Chỉnh sửa"
+                        Height="22" Width="40" Click="editEmail_Click">
+                    <materialDesign:PackIcon Kind="Pencil" Foreground="White"/>
+                </Button>
+            </DockPanel>
+            <StackPanel x:Name="panelEmail"  Orientation="Horizontal" Visibility="Collapsed" Margin="0 8 0 0">
+                <TextBlock x:Name="txblError" Margin="20 5 0 0" Foreground="Red"  FontWeight="Medium"/>
+                <Button Style="{StaticResource MaterialDesignRaisedLightButton}" Content="Đồng ý" Width="100" Margin="140 0 20 0" Click="OkEmailBtn_Click"/>
+                <Button Style="{StaticResource MaterialDesignOutlinedLightButton}" Content="Hủy" Width="70" Click="cancelEmailBtn_Click"/>
+            </StackPanel>
+            <Border BorderThickness="0 1 0 0" BorderBrush="Gray" Margin="30 20"/>
+            
+            <DockPanel Margin="30 0">
+                <TextBlock Text="Mật khẩu" Foreground="White" FontSize="17" FontFamily="Cambria Math" Width="170" VerticalAlignment="Center"/>
+                <TextBlock Text="(Không hiển thị)" Foreground="#BBBBBB" FontSize="17" FontFamily="Cambria Math"/>
+                <Button Style="{StaticResource MaterialDesignIconButton}" HorizontalAlignment="Right" ToolTip="Đổi mật khẩu"
+                        Height="22" Width="40" Click="editPassword_Click">
+                    <materialDesign:PackIcon Kind="Pencil" Foreground="White"/>
+                </Button>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

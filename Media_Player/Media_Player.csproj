@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="earphonesIcon.png" />
+    <None Remove="Images\camera.png" />
     <None Remove="Images\discplayer.jpg" />
     <None Remove="Images\earphonesIcon.png" />
     <None Remove="Images\HeartIcon.png" />
@@ -30,12 +31,16 @@
     <Reference Include="taglib-sharp">
       <HintPath>D:\hocwpf\taglib-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="TagLibSharp">
+      <HintPath>..\..\..\TagLibSharp.dll</HintPath>
+    </Reference>
     <Reference Include="xNet">
       <HintPath>D:\hocwpf\xNet.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\camera.png" />
     <Resource Include="Images\discplayer.jpg" />
     <Resource Include="Images\earphonesIcon.png" />
     <Resource Include="Images\HeartIcon.png" />

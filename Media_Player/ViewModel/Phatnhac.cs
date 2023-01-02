@@ -127,12 +127,16 @@ namespace Media_Player.ViewModel
         }
         public static void SqlInteract(string m)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
-            con.Open();
-            SqlCommand cmd = new SqlCommand(m, con);
-            cmd.CommandType = CommandType.Text;
-            cmd.ExecuteNonQuery();
-            con.Close();
+            try
+            {
+                SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
+                con.Open();
+                SqlCommand cmd = new SqlCommand(m, con);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); return; }
         }
         public static int stt = 0;
         public static void HamTuongTac(Song song)

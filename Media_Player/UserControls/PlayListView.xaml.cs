@@ -70,9 +70,10 @@ namespace Media_Player.UserControls
                 LinkLikeIcon = isPLLiked ? AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLfilledHeart.png" : AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLheart.png",
                 songs = songs
             };
-            if(listName=="Danh Sách Đang Phát" || songs[0].getLoaiPL == "userPL")
+            if(listName=="Danh Sách Đang Phát" || songs.Count < 1 || songs[0].getLoaiPL == "userPL")
                 thisPlayList.LinkLikeIcon = "";
             if (IsPlaying()) thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLpause.png";
+            if (songs.Count < 1) thisPlayList.Linkicon = "";
             this.DataContext = thisPlayList;
 
             for (int i = 0; i < songs.Count; i++)

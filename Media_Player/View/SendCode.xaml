@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Media_Player.View"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Height="250" Width="300"
+        Height="270" Width="320"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
