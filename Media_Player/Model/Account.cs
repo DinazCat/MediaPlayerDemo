@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Media_Player.Model
 {
-    internal class Account : INotifyPropertyChanged
+    public class Account : INotifyPropertyChanged
     {
         private string UserName;
-        private string Picture;
+        private string Picture = AppDomain.CurrentDomain.BaseDirectory + "UserPictures/default.png";
         private string Password;
         private string Email;
         private string DisplayName;

@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Data;
 using Media_Player.Model;
 using Media_Player.View;
+using System.Security.Principal;
 
 namespace Media_Player.ViewModel
 {
@@ -47,27 +48,34 @@ namespace Media_Player.ViewModel
                 if (sqlCon.State == ConnectionState.Closed)
                 {
                     sqlCon.Open();
-                    String query = "SELECT COUNT(1) FROM [User] WHERE (Username=@Username OR Email=@Username) AND Password=@Password";
-                    SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                    sqlCmd.CommandType = CommandType.Text;
-                    sqlCmd.Parameters.AddWithValue("@Username", UserName);
-                    sqlCmd.Parameters.AddWithValue("@Password", Password);
-                    int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
-                    if (count > 0)
+                    String query = "SELECT * FROM [User] WHERE (Username=@Username OR Email=@Username) AND Password=@Password";
+                    SqlParameter param1 = new SqlParameter("@UserName", UserName);
+                    SqlParameter param2 = new SqlParameter("@Password", Password);
+                    DataTable dt;
+                    using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1, param2))
                     {
-                        IsLogin = true;
-                        MainWindow.userName = UserName;
-                        Phatnhac.Init(UserName);
-                        p.Close();
-                        CustomMessageBox messageBox = new CustomMessageBox("Đăng nhập thành công!");
-                        messageBox.ShowDialog();
-                    }
-                    else
-                    {
-                        IsLogin = false;
-                        (p as LoginWindow).txblError.Text = "Sai tài khoản hoặc mật khẩu!";
-                    }
-
+                        dt = new DataTable();
+                        if (reader.HasRows)
+                        {
+                            p.Close();
+                            CustomMessageBox messageBox = new CustomMessageBox("Đăng nhập thành công!");
+                            messageBox.ShowDialog();
+                            dt.Load(reader);
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                MainWindow.thisAccount.displayName = dr[2].ToString();
+                                MainWindow.thisAccount.picture = AppDomain.CurrentDomain.BaseDirectory + "UserPictures/" + dr[5].ToString();
+                            }
+                            IsLogin = true;
+                            MainWindow.userName = UserName;
+                            Phatnhac.Init(UserName);                           
+                        }
+                        else
+                        {
+                            IsLogin = false;
+                            (p as LoginWindow).txblError.Text = "Sai tài khoản hoặc mật khẩu!";
+                        }
+                    }                  
                 }
             }
             catch { }

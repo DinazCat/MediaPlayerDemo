@@ -58,6 +58,8 @@ namespace Media_Player
             Heart.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "heart.png"));
             Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
             Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
+
+            user.DataContext = thisAccount;
         }
         public static double oldPosition;
         private void Timer_Tick(object? sender, EventArgs e)
@@ -94,6 +96,8 @@ namespace Media_Player
 
         private static string _userName;
         public static string userName { get { return _userName; } set { _userName = value; }}
+        public static Account thisAccount = new Account();
+        
         private void Backsongbtn_Click(object sender, RoutedEventArgs e)
         {
             
@@ -1007,7 +1011,7 @@ namespace Media_Player
                 {
                     frame.NavigationService.Navigate(homepage);
                     CurrentView = homepage;
-                }
+                }                
                 View.Clear();
                 View.Add(CurrentView);
                 CheckBack = false;
@@ -1016,6 +1020,8 @@ namespace Media_Player
                 Next.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "next.png"));
                 Back.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "back.png"));
                 index = -2;
+                thisAccount.picture = AppDomain.CurrentDomain.BaseDirectory + "UserPictures/default.png";
+                thisAccount.displayName = null;
             }
         }
 

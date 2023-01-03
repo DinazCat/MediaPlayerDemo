@@ -34,26 +34,29 @@ namespace Media_Player.UserControls
         public UserProfile()
         {
             InitializeComponent();
-            string query = "SELECT * FROM [User] Where UserName = @UserName";
-            SqlParameter param1 = new SqlParameter("@UserName", MainWindow.userName);
-            DataTable dt;
-            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            if (MainWindow.userName != null)
             {
-                dt = new DataTable();
-                if (reader.HasRows)
+                string query = "SELECT * FROM [User] Where UserName = @UserName";
+                SqlParameter param1 = new SqlParameter("@UserName", MainWindow.userName);
+                DataTable dt;
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
                 {
-                    dt.Load(reader);
-                    foreach (DataRow dr in dt.Rows) 
+                    dt = new DataTable();
+                    if (reader.HasRows)
                     {
-                        account = new Account()
+                        dt.Load(reader);
+                        foreach (DataRow dr in dt.Rows)
                         {
-                            userName = dr[1].ToString(),
-                            displayName = dr[2].ToString(),
-                            email = dr[4].ToString(),                            
-                            picture = AppDomain.CurrentDomain.BaseDirectory + "UserPictures/" + dr[5].ToString()
-                        };
+                            account = new Account()
+                            {
+                                userName = dr[1].ToString(),
+                                displayName = dr[2].ToString(),
+                                email = dr[4].ToString(),
+                                picture = AppDomain.CurrentDomain.BaseDirectory + "UserPictures/" + dr[5].ToString()
+                            };
+                        }
+                        this.DataContext = account;
                     }
-                    this.DataContext = account;
                 }
             }
  
@@ -72,6 +75,7 @@ namespace Media_Player.UserControls
                     File.Copy(openFileDialog.FileName, WriteFile);                    
                 }
                 account.picture = WriteFile;
+                MainWindow.thisAccount.picture = account.picture;
                 SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=MediaPlayerDB;Integrated Security=True");
                     con.Open();
                     SqlCommand cmd = new SqlCommand("Update [User] set Picture='" + MainWindow.userName + Path.GetFileName(openFileDialog.FileName) + "' where UserName=N'" + MainWindow.userName + "'", con);
@@ -80,11 +84,13 @@ namespace Media_Player.UserControls
                     con.Close();
             }
         }
+        string oldDName, oldEmail;
         private void editDisplayName_Click(object sender, RoutedEventArgs e)
         {
             panelDName.Visibility = Visibility.Visible;
             DName.IsReadOnly = false;
             DName.Focus();
+            oldDName= DName.Text;
         }
 
         private void editEmail_Click(object sender, RoutedEventArgs e)
@@ -92,6 +98,7 @@ namespace Media_Player.UserControls
             panelEmail.Visibility = Visibility.Visible;
             Email.IsReadOnly = false;
             Email.Focus();
+            oldEmail= Email.Text;
         }
 
         private void editPassword_Click(object sender, RoutedEventArgs e)
@@ -111,6 +118,7 @@ namespace Media_Player.UserControls
             con.Close();
             panelDName.Visibility = Visibility.Collapsed;
             DName.IsReadOnly = true;
+            MainWindow.thisAccount.displayName = DName.Text;
         }
 
         private void OkEmailBtn_Click(object sender, RoutedEventArgs e)
@@ -133,12 +141,14 @@ namespace Media_Player.UserControls
 
         private void cancelDNameBtn_Click(object sender, RoutedEventArgs e)
         {
+            account.displayName = oldDName;
             panelDName.Visibility = Visibility.Collapsed;
             DName.IsReadOnly = true;
         }
 
         private void cancelEmailBtn_Click(object sender, RoutedEventArgs e)
         {
+            account.email = oldEmail;
             panelEmail.Visibility = Visibility.Collapsed;
             Email.IsReadOnly = true;
         }

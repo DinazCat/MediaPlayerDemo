@@ -163,35 +163,50 @@
         <!--Search & control Bar-->
 
         <Grid Grid.Column="1" Background="#000020">
-            <materialDesign:ColorZone Mode="Custom" Padding="15">
+            <materialDesign:ColorZone Mode="Custom" Padding="15 15 30 0">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                        <Button x:Name="BtnLoad" Style="{StaticResource MaterialDesignToolButton}"  Margin="0,0,20,0" Click="BtnLoad_Click">
-                            <materialDesign:PackIcon Kind="TrayArrowUp"  Width="20" Height="20" Foreground="White"/>
+                        <Button x:Name="BtnLoad" Style="{StaticResource MaterialDesignToolButton}"  Margin="0,0,20,0" Click="BtnLoad_Click" ToolTip="Tải nhạc lên">
+                            <materialDesign:PackIcon Kind="TrayArrowUp"  Width="25" Height="25" Foreground="White"/>
                         </Button>
-                        <Button Style ="{StaticResource MaterialDesignIconButton}"  
-                        Height="30" Width="30" MouseDown="userMenudown_MouseDown" Click="userMenudown_Click">
-                            <materialDesign:PackIcon Kind="MenuDown" Height="30" Width="30" Foreground="White"/>
-                            <Button.ContextMenu>
-                                <ContextMenu x:Name ="userMenu" Background="#000020" Foreground="White">
-                                    <MenuItem x:Name="userProfile" Header="Hồ sơ" Click="userProfile_Click">
-                                        <MenuItem.Icon>
-                                            <materialDesign:PackIcon Kind="AccountCircleOutline" Height="18" Width="18" Foreground="White"/>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem  x:Name="logOut" Header="Đăng xuất" Click="logoutBtn_Click">
-                                        <MenuItem.Icon>
-                                            <materialDesign:PackIcon Kind="Logout" Height="18" Width="18" Foreground="White"/>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem  x:Name="logIn" Header="Đăng nhập" Click="loginBtn_Click">
-                                        <MenuItem.Icon>
-                                            <materialDesign:PackIcon Kind="Login" Height="18" Width="18" Foreground="White"/>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </ContextMenu>
-                            </Button.ContextMenu>
-                        </Button>
+                        <Grid Height="40" Width="40">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Opacity" Value="0.6"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Border CornerRadius="25" x:Name="user">
+                                <Button Height="40" Background="Transparent" BorderBrush="Transparent" materialDesign:ButtonAssist.CornerRadius="25"
+                                        MouseDown="userMenudown_MouseDown" Click="userMenudown_Click" ToolTip="{Binding displayName}">
+                                    <Button.ContextMenu>
+                                        <ContextMenu x:Name ="userMenu" Background="#000020" Foreground="White">
+                                            <MenuItem x:Name="userProfile" Header="Hồ sơ" Click="userProfile_Click">
+                                                <MenuItem.Icon>
+                                                    <materialDesign:PackIcon Kind="AccountCircleOutline" Height="18" Width="18" Foreground="White"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem  x:Name="logOut" Header="Đăng xuất" Click="logoutBtn_Click">
+                                                <MenuItem.Icon>
+                                                    <materialDesign:PackIcon Kind="Logout" Height="18" Width="18" Foreground="White"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <MenuItem  x:Name="logIn" Header="Đăng nhập" Click="loginBtn_Click">
+                                                <MenuItem.Icon>
+                                                    <materialDesign:PackIcon Kind="Login" Height="18" Width="18" Foreground="White"/>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                                <Border.Background>
+                                    <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="UniformToFill"/>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
 
                     </StackPanel>
 
@@ -313,9 +328,8 @@
                             FontSize="12">
                     </Button>
                 </Grid>
-                <Button x:Name="Heart" Click="Heart_Click"  
-                        Height="20" Width="20"
-                        Margin="10 0">
+                <Button x:Name="Heart" Click="Heart_Click" ToolTip="Thêm vào thư viện"
+                        Height="20" Width="20" Margin="10 0">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Image Source="{TemplateBinding Content}"/>
@@ -323,8 +337,8 @@
                     </Button.Template>
                 </Button>
 
-                <Button x:Name="addSongToPLBtn" Style ="{StaticResource MaterialDesignIconButton}"  
-                        Height="30" Width="30" Click="addSongToPLbtn_Click" >
+                <Button x:Name="addSongToPLBtn" Style ="{StaticResource MaterialDesignIconButton}" 
+                        Height="30" Width="30" ToolTip="Thêm vào playlist" Click="addSongToPLbtn_Click" >
                     <materialDesign:PackIcon Kind="PlusCircle" Height="25" Width="25" Foreground="White"/>
                     <Button.ContextMenu>
                         <ContextMenu x:Name ="userPlaylistMenu" Background="#000020" Foreground="White">

@@ -23,7 +23,7 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <Border CornerRadius="135" Padding="3">
+                <Border CornerRadius="140" Padding="3">
                     <Button Height="250" Background="Transparent" BorderBrush="Transparent" Click="changePicture_Click">
                         <Button.Template>
                             <ControlTemplate>
