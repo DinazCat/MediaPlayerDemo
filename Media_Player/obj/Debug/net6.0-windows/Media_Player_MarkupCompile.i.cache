@@ -16,5 +16,5 @@ D:\C#\Media Player\MediaPlayerDemo\Media_Player\App.xaml
 205562601438
 Resources\MainResource.xaml;UserControls\GenresView.xaml;UserControls\HomeView.xaml;UserControls\LibView.xaml;UserControls\LikedView.xaml;UserControls\MvView.xaml;UserControls\PlaylistItem.xaml;UserControls\PlayListView.xaml;UserControls\ResultView.xaml;UserControls\SongItem.xaml;UserControls\SongItem2.xaml;UserControls\UserProfile.xaml;View\AddPlaylistWindow.xaml;View\ChangePassword.xaml;View\ConfirmationDialog.xaml;View\CustomMessageBox.xaml;View\LoginWindow.xaml;View\MainWindow.xaml;View\SendCode.xaml;View\SignupWindow.xaml;View\SleepTimer.xaml;
 
-False
+True
 

@@ -34,7 +34,7 @@ namespace Media_Player.ViewModel
 
                 if (loginVM.IsLogin || loginVM.IsSkip)
                 {
-                    p.Show();
+                    p.ShowDialog();
                 }
                 else
                 {
