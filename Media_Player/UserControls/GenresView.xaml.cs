@@ -398,7 +398,22 @@ namespace Media_Player.UserControls
 
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + e.Delta);
+            scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+        }
+        private void RightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string s = (sender as Button).Name;
+            if(s == "RPodcastBtn")
+               scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset + 240);
+            else scrollQG.ScrollToHorizontalOffset(scroll.HorizontalOffset + 240);
+        }
+
+        private void LeftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string s = (sender as Button).Name;
+            if (s == "LPodcastBtn")
+                scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset - 240);
+            else scrollQG.ScrollToHorizontalOffset(scroll.HorizontalOffset - 240);
         }
     }
 }

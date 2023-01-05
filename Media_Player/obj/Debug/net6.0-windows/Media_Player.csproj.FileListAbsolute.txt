@@ -448,3 +448,12 @@ D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\Ch
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\UserProfile.g.cs
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\UserProfile.baml
 D:\C#\Media Player\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\TagLibSharp.dll
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\UserProfile.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ChangePassword.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SendCode.g.cs
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\MailKit.dll
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\MimeKit.dll
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\bin\Debug\net6.0-windows\BouncyCastle.Crypto.dll
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\UserControls\UserProfile.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\ChangePassword.baml
+C:\Users\Admin\Desktop\MediaPlayerDemo\Media_Player\obj\Debug\net6.0-windows\View\SendCode.baml

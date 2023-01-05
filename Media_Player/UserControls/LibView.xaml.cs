@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
+using Media_Player.ViewModel;
 
 namespace Media_Player.UserControls
 {
@@ -275,7 +276,11 @@ namespace Media_Player.UserControls
             p = MainWindow.likedpage;
             MainWindow.nvgPlayListView(p);
         }
-
+        private void viewAllloadedSongBtn_click(object sender, RoutedEventArgs e)
+        {
+            PlayListView page = new PlayListView(UpLoadList, "Bài hát đã tải lên");
+            MainWindow.nvgPlayListView(page);
+        }
         private void ArtistOpen_Click(object sender, RoutedEventArgs e)
         {
             PlayList playList = (sender as Button).DataContext as PlayList;
@@ -437,6 +442,49 @@ namespace Media_Player.UserControls
         private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+        }
+        private void RightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string s = (sender as Button).Name;
+            if (s == "RListenedBtn")
+                scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+            else if(s == "RYourPLBtn")
+                scrollYourPL.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+            else if (s == "RLikedPLBtn")
+                scrollLikedPL.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+            else if (s == "RNghesiBtn")
+                scrollNghesi.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+            else if (s == "RAlbumBtn")
+                scrollAlbum.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+        }
+
+        private void DeleteUpLoad_Click(object sender, RoutedEventArgs e)
+        {
+            Song song = (sender as Button).DataContext as Song;
+            // xóa khỏi db
+            string m = "delete from [UserSongs] where SongName=N'" + song.songName + "' and UserName ='" + MainWindow.userName + "'";
+            Phatnhac.SqlInteract(m);
+            // xóa khỏi folder
+            System.IO.File.Delete(song.savepath);
+            // xóa khỏi thư viện
+            UpLoadList = new List<Song>();
+            InitLoadList(ref UpLoadList);
+            listUpLoad.ItemsSource = UpLoadList;
+        }
+
+        private void LeftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string s = (sender as Button).Name;
+            if (s == "LListenedBtn")
+                scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+            else if (s == "LYourPLBtn")
+                scrollYourPL.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+            else if (s == "LLikedPLBtn")
+                scrollLikedPL.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+            else if (s == "LNghesiBtn")
+                scrollNghesi.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+            else if (s == "LAlbumBtn")
+                scrollAlbum.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
         }
     }
 }
