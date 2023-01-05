@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +38,12 @@ namespace Media_Player.View
             from = "zincat510@gmail.com";
             pass = "jywghiutqphlbaun";
             message = "Mã xác thực tài khoản Music4Life của bạn là: " + randomCode;
-            mailMessage.To.Add(to);
+            if (!Regex.IsMatch(to, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+            {
+                MessageBox.Show("Email không hợp lệ!");
+                return;
+            }
+            else mailMessage.To.Add(to);
             mailMessage.From = new MailAddress(from);
             mailMessage.Body = message;
             mailMessage.Subject = "Mã xác thực";

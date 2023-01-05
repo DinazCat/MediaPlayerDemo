@@ -13,7 +13,7 @@
           "MaterialDesignThemes": "4.6.1",
           "System.Data.SqlClient": "4.8.5",
           "System.Windows.Interactivity.WPF": "2.0.20525",
-          "TagLibSharp": "2.3.0.0"
+          "xNet": "3.3.3.0"
         },
         "runtime": {
           "Media_Player.dll": {}
@@ -182,11 +182,11 @@
           }
         }
       },
-      "TagLibSharp/2.3.0.0": {
+      "xNet/3.3.3.0": {
         "runtime": {
-          "TagLibSharp.dll": {
-            "assemblyVersion": "2.3.0.0",
-            "fileVersion": "2.3.0.0"
+          "xNet.dll": {
+            "assemblyVersion": "3.3.3.0",
+            "fileVersion": "3.3.3.0"
           }
         }
       }
@@ -338,7 +338,7 @@
       "path": "system.windows.interactivity.wpf/2.0.20525",
       "hashPath": "system.windows.interactivity.wpf.2.0.20525.nupkg.sha512"
     },
-    "TagLibSharp/2.3.0.0": {
+    "xNet/3.3.3.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

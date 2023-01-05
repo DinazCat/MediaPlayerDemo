@@ -186,5 +186,15 @@ namespace Media_Player.UserControls
         {
             scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
         }
+
+        private void RightBtn_Click(object sender, RoutedEventArgs e)
+        {
+            scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+        }
+
+        private void LeftBtn_Click(object sender, RoutedEventArgs e)
+        {
+            scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+        }
     }
 }

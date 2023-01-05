@@ -3,26 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Media_Player.UserControls"
+             xmlns:local="clr-namespace:Media_Player.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer Grid.Row="1" Grid.Column="1" Background="#FFCBD0D4"  PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" x:Name="scrollViewer">
         <Grid>
             <StackPanel  Background="#000020">
                 <TextBlock Text="Đã nghe gần đây" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="listListened" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}"  Width="50" Height="50" x:Name="LListenedBtn" Click="LeftBtn_Click" >
+                            <materialDesign:PackIcon Kind="ChevronLeft" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                        </Button>
+                        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" x:Name="scroll">
+                            <ListView x:Name="listListened" Background="#252525" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <local:SongItem2/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <local:SongItem2/>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                    <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}" Width="50" Height="50" x:Name="RListenedBtn" Click="RightBtn_Click" >
+                        <materialDesign:PackIcon Kind="ChevronRight" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                    </Button>
+                </Grid>
+               
 
                 <Grid Margin="0 10">
                     <Grid.ColumnDefinitions>
@@ -42,131 +63,233 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <TextBlock Text="Đã tải lên" Foreground="White" FontSize="20" Margin="10"/>
+                <Grid Margin="0 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Đã tải lên" Foreground="White" FontSize="20" Margin="10"/>
+                    <Button Grid.Column="1" Style="{DynamicResource letterButton}"
+                        Click="viewAllloadedSongBtn_click" Foreground="White"
+                        Content="Hiện tất cả"  FontSize="15" FontWeight="Regular"/>
+                </Grid>
                 <ListView x:Name="listUpLoad" Background="#252525" HorizontalContentAlignment="Stretch" 
                           ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <local:SongItem/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <local:SongItem/>
+                                <Button Grid.Column="1" Width="25" Height="25" HorizontalAlignment="Right" Margin="10" Style="{StaticResource MaterialDesignToolButton}" x:Name="DeleteUpLoad" Click="DeleteUpLoad_Click">
+                                    <materialDesign:PackIcon Kind="Delete" Foreground="White" />
+                                </Button>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
 
                 <TextBlock Text="Danh sách phát của bạn" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="DanhSachPhatlist" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <local:PlaylistItem/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}"  Width="50" Height="50" x:Name="LYourPLBtn" Click="LeftBtn_Click" >
+                            <materialDesign:PackIcon Kind="ChevronLeft" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                        </Button>
+                        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" x:Name="scrollYourPL">
+                            <ListView x:Name="DanhSachPhatlist" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:PlaylistItem/>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                    <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}" Width="50" Height="50" x:Name="RYourPLBtn" Click="RightBtn_Click" >
+                        <materialDesign:PackIcon Kind="ChevronRight" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                    </Button>
+                </Grid>
+                
 
                 <TextBlock Text="Danh sách phát đã thích" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="DanhSachPhatDaThichlist" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel Margin="4">
-                                <Grid Height="180" Width="230" DockPanel.Dock="Top">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Opacity" Value="1"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Opacity" Value="0.6"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-                                    <Border CornerRadius="15">
-                                        <Button Height="180" Background="Transparent" BorderBrush="Transparent" Click="LikedPlaylistOpen_Click"/>
-                                        <Border.Background>
-                                            <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
-                                        </Border.Background>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
-                            </DockPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}"  Width="50" Height="50" x:Name="LLikedPLtn" Click="LeftBtn_Click" >
+                            <materialDesign:PackIcon Kind="ChevronLeft" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                        </Button>
+                        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" x:Name="scrollLikedPL">
+                            <ListView x:Name="DanhSachPhatDaThichlist" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="4">
+                                            <Grid Height="180" Width="230" DockPanel.Dock="Top">
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Opacity" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Opacity" Value="0.6"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <Border CornerRadius="15">
+                                                    <Button Height="180" Background="Transparent" BorderBrush="Transparent" Click="LikedPlaylistOpen_Click"/>
+                                                    <Border.Background>
+                                                        <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                                                    </Border.Background>
+                                                </Border>
+                                            </Grid>
+                                            <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                    <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}" Width="50" Height="50" x:Name="RLikedPLBtn" Click="RightBtn_Click" >
+                        <materialDesign:PackIcon Kind="ChevronRight" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                    </Button>
+                </Grid>
+       
 
 
                 <TextBlock Text="Nghệ sĩ" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="ArtistsList">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel Margin="6 4">
-                                <Grid Height="190"  Width="190" DockPanel.Dock="Top">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Opacity" Value="0.6"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-                                    <Border CornerRadius="100" Padding="3">
-                                        <Button Height="190" Background="Transparent" BorderBrush="Transparent" Click="ArtistOpen_Click"/>
-                                        <Border.Background>
-                                            <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
-                                        </Border.Background>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center"/>
-                            </DockPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}"  Width="50" Height="50" x:Name="LNghesiBtn" Click="LeftBtn_Click" >
+                            <materialDesign:PackIcon Kind="ChevronLeft" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                        </Button>
+                        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" x:Name="scrollNghesi">
+                            <ListView x:Name="ArtistsList">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="6 4">
+                                            <Grid Height="190"  Width="190" DockPanel.Dock="Top">
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Opacity" Value="0.6"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <Border CornerRadius="100" Padding="3">
+                                                    <Button Height="190" Background="Transparent" BorderBrush="Transparent" Click="ArtistOpen_Click"/>
+                                                    <Border.Background>
+                                                        <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                                                    </Border.Background>
+                                                </Border>
+                                            </Grid>
+                                            <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                    <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}" Width="50" Height="50" x:Name="RNghesiBtn" Click="RightBtn_Click" >
+                        <materialDesign:PackIcon Kind="ChevronRight" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                    </Button>
+                </Grid>
+
 
                 <TextBlock Text="Album" Foreground="White" FontSize="20" Margin="10"/>
-                <ListView x:Name="Albumslist" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <DockPanel Margin="4">
-                                <Grid Height="180" Width="230" DockPanel.Dock="Top">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Opacity" Value="1"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Opacity" Value="0.6"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-                                    <Border CornerRadius="15">
-                                        <Button Height="180" Background="Transparent" BorderBrush="Transparent" Click="AlbumOpen_Click"/>
-                                        <Border.Background>
-                                            <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
-                                        </Border.Background>
-                                    </Border>
-                                </Grid>
-                                <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
-                            </DockPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}"  Width="50" Height="50" x:Name="LAlbumBtn" Click="LeftBtn_Click" >
+                            <materialDesign:PackIcon Kind="ChevronLeft" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                        </Button>
+                        <ScrollViewer Grid.Column="1" Grid.ColumnSpan="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" x:Name="scrollAlbum">
+                            <ListView x:Name="Albumslist" Background="#252525" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="4">
+                                            <Grid Height="180" Width="230" DockPanel.Dock="Top">
+                                                <Grid.Style>
+                                                    <Style TargetType="Grid">
+                                                        <Setter Property="Opacity" Value="1"/>
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Opacity" Value="0.6"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                                <Border CornerRadius="15">
+                                                    <Button Height="180" Background="Transparent" BorderBrush="Transparent" Click="AlbumOpen_Click"/>
+                                                    <Border.Background>
+                                                        <ImageBrush x:Name="Picture" ImageSource="{Binding picture}" Stretch="Fill"/>
+                                                    </Border.Background>
+                                                </Border>
+                                            </Grid>
+                                            <TextBlock Text="{Binding title}" Margin="2" Foreground="White" FontSize="15" FontWeight="Medium"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+                    </Grid>
+                    <Button Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource MaterialDesignToolButton}" Width="50" Height="50" x:Name="RAlbumBtn" Click="RightBtn_Click" >
+                        <materialDesign:PackIcon Kind="ChevronRight" Foreground="White"  Width="50" Height="50" Margin="0"/>
+                    </Button>
+                </Grid>
+
             </StackPanel>
         </Grid>
     </ScrollViewer>
