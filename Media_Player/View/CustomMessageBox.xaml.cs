@@ -24,6 +24,12 @@ namespace Media_Player.View
             InitializeComponent();
             messagetxt.Text= message;
         }
+        public CustomMessageBox(string notification, string message)
+        {
+            InitializeComponent();
+            notificationtxt.Text= notification;
+            messagetxt.Text = message;
+        }
 
         private void OkBtn_Click(object sender, RoutedEventArgs e)
         {

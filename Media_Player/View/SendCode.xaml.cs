@@ -29,7 +29,13 @@ namespace Media_Player.View
         string randomCode;
         public static string to;
         private void SendCode_Click(object sender, RoutedEventArgs e)
-        { 
+        {
+            if (!Regex.IsMatch(txbEmail.Text, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+            {
+                MessageBox.Show("Email không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                txbEmail.Focus();
+                return;
+            }
             string from, pass, message;
             Random rd = new Random();
             randomCode = rd.Next(999999).ToString();
@@ -38,12 +44,7 @@ namespace Media_Player.View
             from = "zincat510@gmail.com";
             pass = "jywghiutqphlbaun";
             message = "Mã xác thực tài khoản Music4Life của bạn là: " + randomCode;
-            if (!Regex.IsMatch(to, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
-            {
-                MessageBox.Show("Email không hợp lệ!");
-                return;
-            }
-            else mailMessage.To.Add(to);
+            mailMessage.To.Add(to);
             mailMessage.From = new MailAddress(from);
             mailMessage.Body = message;
             mailMessage.Subject = "Mã xác thực";

@@ -446,16 +446,14 @@ namespace Media_Player.UserControls
         private void RightBtn_Click(object sender, RoutedEventArgs e)
         {
             string s = (sender as Button).Name;
-            if (s == "RListenedBtn")
-                scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
-            else if(s == "RYourPLBtn")
-                scrollYourPL.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+            if(s == "RYourPLBtn")
+                scrollYourPL.ScrollToHorizontalOffset(scrollYourPL.HorizontalOffset + 170);
             else if (s == "RLikedPLBtn")
-                scrollLikedPL.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+                scrollLikedPL.ScrollToHorizontalOffset(scrollLikedPL.HorizontalOffset + 170);
             else if (s == "RNghesiBtn")
-                scrollNghesi.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+                scrollNghesi.ScrollToHorizontalOffset(scrollNghesi.HorizontalOffset + 170);
             else if (s == "RAlbumBtn")
-                scrollAlbum.ScrollToHorizontalOffset(scroll.HorizontalOffset + 170);
+                scrollAlbum.ScrollToHorizontalOffset(scrollAlbum.HorizontalOffset + 170);
         }
 
         private void DeleteUpLoad_Click(object sender, RoutedEventArgs e)
@@ -475,16 +473,14 @@ namespace Media_Player.UserControls
         private void LeftBtn_Click(object sender, RoutedEventArgs e)
         {
             string s = (sender as Button).Name;
-            if (s == "LListenedBtn")
-                scroll.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
-            else if (s == "LYourPLBtn")
-                scrollYourPL.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+            if (s == "LYourPLBtn")
+                scrollYourPL.ScrollToHorizontalOffset(scrollYourPL.HorizontalOffset - 170);
             else if (s == "LLikedPLBtn")
-                scrollLikedPL.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+                scrollLikedPL.ScrollToHorizontalOffset(scrollLikedPL.HorizontalOffset - 170);
             else if (s == "LNghesiBtn")
-                scrollNghesi.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+                scrollNghesi.ScrollToHorizontalOffset(scrollNghesi.HorizontalOffset - 170);
             else if (s == "LAlbumBtn")
-                scrollAlbum.ScrollToHorizontalOffset(scroll.HorizontalOffset - 170);
+                scrollAlbum.ScrollToHorizontalOffset(scrollAlbum.HorizontalOffset - 170);
         }
     }
 }

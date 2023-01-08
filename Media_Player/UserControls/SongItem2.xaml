@@ -51,7 +51,7 @@
                         <materialDesign:PackIcon Kind="DeleteOutline" Height="18" Width="18" Foreground="White"/>
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem x:Name="userPlaylistMenuItem" Header="Thêm vào playlist" Background="#000020" Foreground="White" >
+                <MenuItem x:Name="userPlaylistMenuItem" Header="Thêm vào playlist" Background="#000020" Foreground="White" Click="addSongToUserPL_Click">
                     <MenuItem.Icon>
                         <materialDesign:PackIcon Kind="PlusCircle" Height="17" Width="17" Foreground="White"/>
                     </MenuItem.Icon>

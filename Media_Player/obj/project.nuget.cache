@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1Bzb23EjbBFzdhh5t2TkGMvRaVBCzXzo19xkmdHD2ICjb/PZLDG8dyOvjPd56isjLnUKJ1NE7SP2lwJAx7770Q==",
+  "dgSpecHash": "YboMemKjgEw1nt6taujOujBUOWTA4blsr93FeVb4RaWSLSIyBvcrj0101P5n+zNsuoBKr3gBYzykMZQo25pTuA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\MediaPlayerDemo\\Media_Player\\Media_Player.csproj",
+  "projectFilePath": "D:\\C#\\MediaPlayer2\\MediaPlayerDemo\\Media_Player\\Media_Player.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\mahapps.metro.iconpacks.material\\4.11.0\\mahapps.metro.iconpacks.material.4.11.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mailkit\\3.4.3\\mailkit.3.4.3.nupkg.sha512",

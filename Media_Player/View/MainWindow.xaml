@@ -14,8 +14,8 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="#000015"
-        Title=""
-        Name="mainWindow"
+        Title="Media Player"
+        Name="mainWindow"       
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen" Height="750" Width="1180"
         DataContext="{StaticResource MainVM}" PreviewMouseMove="MainWindow_MouseMove" Closing="Mainwindow_Closing" Icon="/Images/earphonesIcon.png">
@@ -25,7 +25,7 @@
                                    CommandParameter="{Binding ElementName=mainWindow}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <!--WindowStyle="None"-->
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220" />
@@ -357,7 +357,7 @@
                     </Button.ContextMenu>
                 </Button>
 
-                <Button Style ="{StaticResource MaterialDesignIconButton}"  
+                <Button Style ="{StaticResource MaterialDesignIconButton}"  ToolTip="Khác"
                         Height="30" Width="30" Click="otherOptionsBtn_Click" >
                     <materialDesign:PackIcon Kind="DotsHorizontal" Height="25" Width="25" Foreground="White"/>
                     <Button.ContextMenu>
@@ -401,7 +401,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Style ="{StaticResource MaterialDesignIconButton}"  
+                    <Button Style ="{StaticResource MaterialDesignIconButton}" ToolTip="Phát ngẫu nhiên"  
                         Height="40" Width="40" Click="shufflebtn_click" Foreground="White">
                         <materialDesign:PackIcon x:Name="shuffleicon" Height="22" Kind="ShuffleVariant"/>
                     </Button>
@@ -420,7 +420,7 @@
                         Height="40" Width="40" Click="Nextsongbtn_click">
                         <materialDesign:PackIcon Kind="SkipNext" Foreground="White"/>
                     </Button>
-                    <Button Style ="{StaticResource MaterialDesignIconButton}"  
+                    <Button Style ="{StaticResource MaterialDesignIconButton}" ToolTip="Phát lại"
                         Height="40" Width="40" Click="repeatbtn_click" Foreground="White">
                         <materialDesign:PackIcon x:Name="repeaticon" Kind="RepeatOnce"/>
                     </Button>
@@ -437,7 +437,7 @@
 
             <!--Right Section-->
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="Mv"
+                <Button x:Name="Mv" ToolTip="MV"
                         Height="20" Width="20" Margin="10 0" Click="Mv_Click">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">

@@ -19,7 +19,7 @@
             </LinearGradientBrush>
         </Border.Background>
         <StackPanel>
-            <TextBlock Text="Success"
+            <TextBlock x:Name="notificationtxt" Text="Success"
                    FontSize="20" Margin="20 30 0 15"
                    Foreground="White" FontFamily="Sitka Text" FontWeight="Heavy"/>
             <TextBlock x:Name="messagetxt" HorizontalAlignment="Center"
