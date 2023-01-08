@@ -126,39 +126,48 @@ namespace Media_Player.UserControls
         private void ButtonArtist_Click(object sender, RoutedEventArgs e)
         {
             PlayList playList = (sender as Button).DataContext as PlayList;
-            List<Song> songs = new List<Song>();
-            string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
-            SqlParameter param1 = new SqlParameter("@Artist", playList.title);
-            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            if (MainWindow.getListName != null && MainWindow.getListName == playList.title)
             {
-                DataTable dt = new DataTable();
-                if (reader.HasRows)
+                page = new PlayListView(MainWindow.getList, playList.title);
+            }
+            else
+            {
+                MainWindow.getListName = playList.title;
+                List<Song> songs = new List<Song>();
+                string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
+                SqlParameter param1 = new SqlParameter("@Artist", playList.title);
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
                 {
-                    dt.Load(reader);
-                    int n = 0;
-                    foreach (DataRow dr in dt.Rows)
+                    DataTable dt = new DataTable();
+                    if (reader.HasRows)
                     {
-                        Song s = new Song();
-                        s.songName = dr[0].ToString();
-                        s.singerName = dr[1].ToString();
-                        s.album = dr[2].ToString();
-                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
-                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
-                        s.time = dr["Duration"].ToString();
-                        s.getPL = playList.title;
-                        if (PlayListView.CheckLiked(s.songName) == true)
-                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
-                        songs.Add(s);
-                  
-                        n++;
-                    }
-                    foreach (Song s in songs)
-                    {
-                        s.getList = songs;
+                        dt.Load(reader);
+                        int n = 0;
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Song s = new Song();
+                            s.songName = dr[0].ToString();
+                            s.singerName = dr[1].ToString();
+                            s.album = dr[2].ToString();
+                            s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                            s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                            s.time = dr["Duration"].ToString();
+                            s.getPL = playList.title;
+                            if (PlayListView.CheckLiked(s.songName) == true)
+                                s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                            songs.Add(s);
+
+                            n++;
+                        }
+                        foreach (Song s in songs)
+                        {
+                            s.getList = songs;
+                        }
                     }
                 }
+
+                page = new PlayListView(songs, playList.title);
             }
-            page = new PlayListView(songs, playList.title);
             p = page;
             MainWindow.nvgPlayListView(p);
         }

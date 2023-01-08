@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Media_Player.View;
 
 namespace Media_Player.UserControls
 {
@@ -60,44 +61,50 @@ namespace Media_Player.UserControls
         private void artistBtn_click(object sender, RoutedEventArgs e)
         {
             Song song = (sender as Button).DataContext as Song;
-
-            songs = new List<Song>();
-            string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
-            SqlParameter param1 = new SqlParameter("@Artist", song.singerName);
-            using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
+            if (MainWindow.getListName != null && MainWindow.getListName == song.singerName)
             {
-                DataTable dt = new DataTable();
-                if (reader.HasRows)
+                page = new PlayListView(MainWindow.getList, song.singerName);
+            }
+            else
+            {
+                songs = new List<Song>();
+                string query = "SELECT DISTINCT S.Name, Artist, Album, Duration, Thumbnail, Savepath FROM Song S WHERE Artist=@Artist";
+                SqlParameter param1 = new SqlParameter("@Artist", song.singerName);
+                using (SqlDataReader reader = DataProvider.ExecuteReader(query, CommandType.Text, param1))
                 {
-                    dt.Load(reader);
-                    int n = 0;
-                    foreach (DataRow dr in dt.Rows)
+                    DataTable dt = new DataTable();
+                    if (reader.HasRows)
                     {
-                        Song s = new Song();
-                        s.songName = dr[0].ToString();
-                        s.singerName = dr[1].ToString();
-                        s.album = dr[2].ToString();
-                        s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
-                        s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
-                        s.time = dr["Duration"].ToString();
-                        s.getPL = song.singerName;
-                        if (PlayListView.CheckLiked(s.songName) == true)
+                        dt.Load(reader);
+                        int n = 0;
+                        foreach (DataRow dr in dt.Rows)
                         {
-                            s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
-                            s.isLike = true;
-                        }    
-                           
-                        songs.Add(s);
-                        n++;
-                    }
-                    foreach (Song s in songs)
-                    {
-                        s.getList = songs;
+                            Song s = new Song();
+                            s.songName = dr[0].ToString();
+                            s.singerName = dr[1].ToString();
+                            s.album = dr[2].ToString();
+                            s.linkanh = AppDomain.CurrentDomain.BaseDirectory + "Pictures/" + dr["Thumbnail"].ToString();
+                            s.savepath = AppDomain.CurrentDomain.BaseDirectory + "Songs/" + dr["Savepath"].ToString();
+                            s.time = dr["Duration"].ToString();
+                            s.getPL = song.singerName;
+                            if (PlayListView.CheckLiked(s.songName) == true)
+                            {
+                                s.LinkLikeIcon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "RedHeart.png";
+                                s.isLike = true;
+                            }
+
+                            songs.Add(s);
+                            n++;
+                        }
+                        foreach (Song s in songs)
+                        {
+                            s.getList = songs;
+                        }
                     }
                 }
-            }
 
-            page = new PlayListView(songs, song.singerName);
+                page = new PlayListView(songs, song.singerName);
+            }
             p = page;
             MainWindow.nvgPlayListView(p);
         }
@@ -178,5 +185,13 @@ namespace Media_Player.UserControls
             Phatnhac.thisList = MainWindow.getList;
         }
 
+        private void addSongToUserPL_Click(object sender, RoutedEventArgs e)
+        {
+            if(userPlaylistMenuItem.Items.Count < 1)
+            {
+                CustomMessageBox messageBox = new CustomMessageBox("Thông báo", "Bạn chưa có playlist nào!");
+                messageBox.ShowDialog();
+            }
+        }
     }
 }
