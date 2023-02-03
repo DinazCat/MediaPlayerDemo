@@ -825,7 +825,8 @@ namespace Media_Player
                 Phatnhac.isplaying = true;
                 getSong.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png";
                 BtnPlay2.Content = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "play.png"));
-                PlayListView.thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLplay.png";
+                if(PlayListView.thisPlayList != null)
+                    PlayListView.thisPlayList.Linkicon = AppDomain.CurrentDomain.BaseDirectory + "Icon\\" + "PLplay.png";
                 Timer.Stop();
                 ThanhPN.Visibility = Visibility.Collapsed;
                 mvView = new MvView();
