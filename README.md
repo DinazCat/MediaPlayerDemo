@@ -2,6 +2,7 @@
 Ứng dụng phát nhạc, podcast, video kỹ thuật số
 #
 <img src="https://user-images.githubusercontent.com/100663723/216764151-de6d79a7-c4cb-4d32-8e3e-27855b622972.png" />
+#
 ## Một số tính năng
 * Phát nhạc và video
 * Quản lý thư viện nhạc(lưu, xóa bài hát, nghệ sĩ yêu thích; tạo playlist của riêng;...)
